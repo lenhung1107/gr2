@@ -1,0 +1,124 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header mới */
+.header {
+  height: 60px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+}
+
+.header .logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.header .avatar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  p {
+    color: black;
+    font-size: 1.6rem;
+  }
+}
+
+.header .avatar img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar {
+  width: 300px;
+  /* Điều chỉnh chiều rộng sidebar */
+  background-color: #f4f6f9;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #ddd;
+  height: calc(100vh - 60px);
+  /* Chiều cao trừ đi header */
+  overflow-y: auto;
+}
+
+.doctor-info {
+  display: flex;
+  font-size: 1.6rem;
+  gap:15px;
+  // text-align: center;
+  // align-items: center;
+}
+.doctor-info .info{
+  display: flex;
+  flex-direction: column;
+  p{
+    margin: 0;
+    line-height: 1.5;
+  }
+  .doctor-name{
+    font-size: 2rem;
+    font-weight: 500;
+  }
+}
+.icon {
+  font-size: 40px;
+  color: rgb(0, 151, 123);
+}
+.menu {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 12px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  transition: background 0.3s;
+}
+
+.menu-item:hover,
+.active {
+  background-color: rgb(39, 214, 131);
+  color: white;
+  border-radius: 5px;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.tab-content {
+  margin-top: 20px;
+}

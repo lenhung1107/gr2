@@ -1,0 +1,68 @@
+.doctor-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px; // khoảng cách giữa các cột
+    
+}
+
+.doctor-item {
+    
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    // margin-bottom: 34px; // khoảng cách dưới của mỗi doctor-item
+}
+
+.imgDoctor {
+    text-align: center;
+}
+
+.img {
+    border-radius: 50%;
+}
+
+.infor {
+    margin-top: 16px;
+}
+.infor h3{
+    font-size: 2rem;
+}
+
+.name {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.detail {
+    margin-top: 8px;
+    text-align: center;
+}
+.detail span{
+   display: block;
+   font-size: 1.6rem;
+}
+.icon{
+    color: rgb(75, 192, 140);
+}
+
+.order {
+ 
+    width: 100%;
+    margin-top: 16px;
+    text-align: center;
+    cursor: pointer;
+    padding: 8px 16px;
+    background: linear-gradient(to left, rgb(68, 164, 150), rgb(76, 196, 139)); 
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+a {
+    text-decoration: none !important;
+}
+.order span {
+    text-decoration: none !important;
+    font-size: 1.6rem;
+}

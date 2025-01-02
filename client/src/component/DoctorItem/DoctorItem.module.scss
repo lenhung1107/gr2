@@ -1,0 +1,104 @@
+
+
+.container {
+    position: relative; /* Để định vị mũi tên */
+    display: flex;
+    align-items: center;
+    // margin-top: 10px;
+    margin-bottom: 40px;
+    
+}
+.wrapper {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth; /* Cuộn mượt */
+    scrollbar-width: none; /* Ẩn thanh cuộn trên Firefox */
+    justify-content: space-between;
+    padding: 0 20px 0 20px;
+}
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.arrow.left {
+    left: 10px; /* Căn bên trái */
+}
+
+.arrow.right {
+    right: 10px; /* Căn bên phải */
+}
+
+.arrow:hover {
+    background: rgba(0, 0, 0, 0.8); /* Đổi màu khi hover */
+}
+.wrapper::-webkit-scrollbar {
+    display: none; /* Ẩn thanh cuộn trên Chrome */
+}
+.pack-list{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px; // khoảng cách giữa các cột
+   
+    margin-bottom: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 35% 65%; /* Chia thành 2 cột, cột đầu chiếm 40%, cột thứ hai chiếm 60% */
+    gap: 2px; /* Khoảng cách giữa các ô */
+    background-color: white; /* Màu nền cho grid-container */
+    padding: 20px; /* Đệm để tạo khoảng cách với nội dung bên trong */
+    box-shadow: 0 0 10px 3px rgba(139, 139, 139, 0.3);
+}
+.grid-container{
+   width: 450px;
+   height: 180px;
+   border-radius: 8px;
+   box-sizing: border-box;
+}
+
+.image {
+    grid-column: 1 / 2; /* Chiếm từ cột 1 đến cột 2 (cột đầu tiên) */
+    line-height: 0; /* Giảm khoảng trống xung quanh ảnh */
+    margin-right: 5px;
+    // margin-top: 17px;
+    margin-left: 10px;
+}
+
+.image img {
+    max-width: 100%; /* Đảm bảo ảnh không vượt quá phần tử cha */
+    height: auto; /* Đảm bảo tỷ lệ khung hình */
+}
+
+
+.info {
+    margin-left: 10px;
+    grid-column: 2 / 3; /* Chiếm từ cột 2 đến cột 3 (cột thứ hai) */
+}
+
+.info h2 {
+    margin-top: 0; /* Xóa khoảng trống đầu đoạn */
+    font-size:  2rem;
+
+}
+.info p {
+    margin: 4px 0; /* Khoảng cách giữa các dòng */
+    font-weight: 400;
+    font-size: 18px;
+}

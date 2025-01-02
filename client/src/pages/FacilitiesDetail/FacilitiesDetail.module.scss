@@ -1,0 +1,59 @@
+.wrapper{
+    background-image: url('bg-info.png');
+    background-size: cover; /* Đảm bảo ảnh phủ kín toàn bộ phần tử */
+    background-position: center; /* Canh giữa ảnh */
+    // width: 100%;
+    // height: 95vh; /* Chiều cao toàn màn hình */
+    display: flex;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    width: 70%;
+    margin: 50px auto;
+    background-color: white;
+}
+.detail{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 10px;
+    box-shadow: 0 0 2px 2px rgba(188, 188, 188, 0.3);
+}
+
+.facilitiesImage {
+    width: 180px;
+    height: 150px;
+    border-radius: 20px; /* Bo tròn hình ảnh */
+    object-fit: cover;
+   margin-top: 10px;
+   margin-left: 30px;
+  }
+  .descri {
+    margin-top: 10px;
+    margin-right: 10px;
+    h2{
+        font-size: 2.5rem;
+        
+    }
+    p{
+        font-size: 1.6rem;
+    }
+    
+  }
+  .listDoctor{
+    display: flex;
+      box-shadow: 0 0 2px 2px rgba(188, 188, 188, 0.3);
+      flex-direction: column;
+      text-align: center;
+    h2{
+        font-size: 2.5rem;
+        color: rgb(0, 151, 123);
+    }
+    .item{
+        margin-left: 35px;
+        margin-right: 35px;
+        margin-bottom: 30px;
+    }
+}

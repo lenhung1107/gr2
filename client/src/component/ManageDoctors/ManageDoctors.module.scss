@@ -1,0 +1,84 @@
+.wrapper{
+  h1{
+    font-size: 2.6rem;
+    color: black;
+  }
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  /* Đặt cỡ chữ toàn bộ bảng */
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+
+  a {
+    color: blue;
+    text-decoration: underline;
+    margin: 0 0.5rem;
+  }
+}
+
+.table td a:hover {
+  text-decoration: underline;
+  /* Gạch chân khi hover */
+}
+
+.filter {
+  display: flex;
+  gap: 20px;
+
+  .input {
+    font-size: 1.6rem;
+  }
+
+  .select {
+    font-size: 1.6rem;
+  }
+}
+
+.button {
+  display: flex;
+  gap: 15px;
+  margin: 15px 0;
+ 
+}
+
+.button button {
+  font-size: 1.6rem;
+  /* Cỡ chữ chung */
+  padding: 0.5rem 1.2rem;
+  /* Làm cho nút nhỏ gọn */
+  background-color: #f5f5f5;
+  /* Màu nền nhẹ */
+  border: 1px solid #ccc;
+  /* Viền */
+  border-radius: 5px;
+  /* Bo góc nhẹ */
+  cursor: pointer;
+  min-width: 100px;
+  /* Đảm bảo các nút bằng nhau */
+  text-align: center;
+}
+.button button[type="submit"]:hover {
+  background-color: rgb(58, 181, 138);
+  color: white;
+  /* Màu nền khi hover */
+}
+
+.button button[type="reset"]:hover {
+  background-color: rgb(244, 67, 54);
+  color: white;
+  /* Màu nền khi hover */
+}

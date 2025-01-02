@@ -1,0 +1,26 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 1.6rem; /* Đặt cỡ chữ toàn bộ bảng */
+  
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.5rem;
+      text-align: left;
+    }
+  
+    th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+    }
+  
+    a {
+      color: blue;
+      text-decoration: underline;
+      margin: 0 0.5rem;
+    }
+  }
+  .table td a:hover {
+    text-decoration: underline; /* Gạch chân khi hover */
+  }
