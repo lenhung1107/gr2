@@ -4,10 +4,13 @@ import styles from "./ListOrderPack.module.scss";
 
 import Search from "../../component/Layout/DefaultLayout/Search"
 import OrderByPack from "../../component/Pack"
-import packData from "../../data/packData";
+import useFetchData from "../../CustomHook/useFetchData";
+
 const cx = classNames.bind(styles);
 
 function ListOrder() {
+    const apiUrl = "http://localhost:3000/pack"; // URL API khác cho từng trang
+    const { data: packs, loading, error } = useFetchData(apiUrl);
     return (
 
         <div className={cx('wrapper')}>
@@ -21,8 +24,11 @@ function ListOrder() {
                         </span>
                     </div>
                     <div className={cx('menu-pack')}>
-                        <OrderByPack packData={packData} />
-                        
+                        {loading && <div>Đang tải danh sách bác sĩ...</div>}
+                        {error && <div>Có lỗi xảy ra: {error}</div>}
+                        {!loading && !error && packs && (
+                            <OrderByPack packData={packs} /> // Truyền dữ liệu từ API
+                        )}
                     </div>
 
                 </div>

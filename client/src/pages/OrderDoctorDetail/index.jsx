@@ -8,13 +8,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faHouseMedicalCircleCheck, faLocationDot, faStar, faVideo } from "@fortawesome/free-solid-svg-icons";
 import Hour from "../../component/Hour/Hour";
 import Form from "../../component/Form";
-import dataDoctor from "../../data/doctorData";
+import useFetchData from "../../CustomHook/useFetchData";
 
 const cx = classNames.bind(styles);
 
 function OrderDoctor() {
     const { id } = useParams();
-    const doctor = dataDoctor.find((doc) => doc.id === parseInt(id));
+    const apiUrl = `http://localhost:3000/orderDoctor/${id}`;
+    const { data: doctor, loading, error } = useFetchData(apiUrl);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [order, setOrder] = useState(false);
@@ -54,9 +55,9 @@ function OrderDoctor() {
                             <p>{doctor.price}</p>
                         </div>
                         <div className={cx('evaluate')}>
-                            <span><FontAwesomeIcon icon={faCalendarDays} className={cx('icon')} /> Lượt đặt khám: 4567</span>
+                            <span><FontAwesomeIcon icon={faCalendarDays} className={cx('icon')} /> Lượt đặt khám: {doctor.appointments}</span>
                             <span><FontAwesomeIcon icon={faVideo} className={cx('icon')} /> Lượt gọi khám: 47</span>
-                            <span><FontAwesomeIcon icon={faStar} className={cx('icon')} /> Đánh giá: 4.5 (21 lượt đánh giá)</span>
+                            <span><FontAwesomeIcon icon={faStar} className={cx('icon')} /> Đánh giá: {doctor.rating}</span>
                         </div>
                     </div>
                     <div className={cx('order')}>
@@ -87,13 +88,13 @@ function OrderDoctor() {
                             </div>
                             ); */}
                             <div className={cx('hour')}>
-                            {hoursData.map(({ hour, status }) => (
+                                {hoursData.map(({ hour, status }) => (
                                     <Hour
-                                    key={hour}
-                                    hourText={hour}
-                                    onClick={handleHourSelect}
-                                    isSelected={selectedTime === hour} // Kiểm tra giờ đang chọn
-                                    isDisabled={status === 'booked'} // Vô hiệu hóa giờ đã đặt
+                                        key={hour}
+                                        hourText={hour}
+                                        onClick={handleHourSelect}
+                                        isSelected={selectedTime === hour} // Kiểm tra giờ đang chọn
+                                        isDisabled={status === 'booked'} // Vô hiệu hóa giờ đã đặt
                                     />))}
                             </div>
                         </div>

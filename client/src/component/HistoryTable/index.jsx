@@ -14,7 +14,6 @@ function HistoryTable({ historyData }) {
           <th>Bác sĩ</th>
           <th>Đơn thuốc</th>
           <th>Lời dặn của bác sĩ</th>
-          <th>Hóa đơn</th>
         </tr>
       </thead>
       <tbody>
@@ -30,10 +29,6 @@ function HistoryTable({ historyData }) {
               ))}
             </td>
             <td>{item.notes}</td>
-            <td>
-              <a href={item.invoiceViewLink}>Xem</a> |{" "}
-              <a href={item.invoiceDownloadLink}>Tải xuống</a>
-            </td>
           </tr>
         ))}
       </tbody>

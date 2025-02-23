@@ -17,7 +17,7 @@
       padding: 0.5rem;
       text-align: center;
       .iconEdit{
-       margin-right: 30px;
+       margin-right: 20px;
       }
     }
   
@@ -83,3 +83,173 @@
     color: white;
     /* Màu nền khi hover */
   }
+  .iconEdit {
+    color: rgb(70, 222, 163); // Đổi màu icon edit
+    cursor: pointer; // Hiển thị bàn tay khi hover
+    &:hover {
+      color: rgb(58, 181, 138); // Màu đậm hơn khi di chuột
+    }
+  }
+  
+  .iconTrash {
+    color: red; // Đổi màu icon xóa
+    cursor: pointer; 
+    &:hover {
+      color: rgb(142, 6, 6); // Màu đậm hơn khi di chuột
+    }
+  }
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+  }
+  
+  .popupContent {
+    background: white;
+    width: 380px;
+    height: 180px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .popupButtons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .popupButtons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .popupButtons button:first-child {
+    background: red;
+    color: white;
+    &:hover{
+      background:rgb(157, 12, 12);
+    }
+  }
+  
+  .popupButtons button:last-child {
+    background: rgb(146, 146, 146);
+    color: white;
+    &:hover{
+      background:rgb(108, 108, 108);
+  }
+}
+.popupEdit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); // Mờ nền
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .popupContent-Edit {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px; // Bo góc đẹp hơn
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: 500px;
+      max-width: 90%;
+      animation: fadeIn 0.3s ease-in-out;
+
+      h3 {
+          text-align: center;
+          margin-bottom: 15px;
+          color: #333;
+      }
+
+      label {
+          display: block;
+          margin-top: 10px;
+          font-weight: bold;
+          font-size: 14px;
+          color: #555;
+      }
+
+      input,
+      select {
+          width: 100%;
+          padding: 8px;
+          margin-top: 5px;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          font-size: 14px;
+          transition: 0.3s ease-in-out;
+
+          &:focus {
+              border-color: rgb(70, 222, 163);
+              box-shadow: 0 0 5px rgb(58, 181, 138);
+              outline: none;
+          }
+      }
+
+      .popupButtons {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 20px;
+
+          button {
+              flex: 1;
+              padding: 10px;
+              border: none;
+              border-radius: 6px;
+              font-size: 14px;
+              font-weight: bold;
+              cursor: pointer;
+              transition: 0.3s ease-in-out;
+
+              &:first-child {
+                  background-color: rgb(70, 222, 163);
+                  color: white;
+                  margin-right: 10px;
+
+                  &:hover {
+                      background-color: rgb(58, 181, 138);
+                  }
+              }
+
+              &:last-child {
+                  background-color: #ccc;
+                  color: black;
+
+                  &:hover {
+                      background-color: #999;
+                  }
+              }
+          }
+      }
+  }
+}
+
+// Hiệu ứng xuất hiện
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}

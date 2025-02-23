@@ -11,6 +11,10 @@ function ManageUsers() {
     const [searchName, setSearchName] = useState("");
 
     const [filteredUsers, setFilteredUsers] = useState(users); // Lưu danh sách bác sĩ được lọc
+    const [showConfirmDelete, setshowConfirmDelete] = useState(false);
+    const [userToDelete, setUserToDelete] = useState(null);
+    const [showEditForm, setShowEditForm] = useState(false);
+    const [editUser, setEditUser] = useState(null);
     const handleSearch = () => {
         const filtered = users.filter((user) => {
             // Chuyển chuỗi tìm kiếm về chữ thường
@@ -35,6 +39,31 @@ function ManageUsers() {
         setSearchName(""); // Xóa giá trị tìm kiếm theo tên
         setFilteredUsers(users); // Hiển thị lại toàn bộ dữ liệu
     }
+    const handleDeleteClick = (user) => {
+        setUserToDelete(user);
+        setshowConfirmDelete(true); // Hiện popup xác nhận
+    };
+
+    const confirmDelete = () => {
+        setFilteredUsers(filteredUsers.filter((u) => u !== userToDelete));
+        setshowConfirmDelete(false);
+        setUserToDelete(null);
+    };
+    const handleEditClick = (user) => {
+        setEditUser(user);
+        setShowEditForm(true);
+    };
+    const handleEditChange = (e) => {
+        setEditUser({ ...editUser, [e.target.name]: e.target.value });
+    };
+
+    const handleSaveEdit = () => {
+        setFilteredUsers(
+            filteredUsers.map((user) => (user === editUser ? editUser : user))
+        );
+        setShowEditForm(false);
+        setEditUser(null);
+    };
     return (<div className={cx('wrapper')}>
         <h1>Quản lý Người dùng</h1>
         <h3>Bộ lọc </h3>
@@ -78,14 +107,87 @@ function ManageUsers() {
                         <td>{item.phone}</td>
                         <td>{item.phone}</td>
                         <td>
-                            <span><FontAwesomeIcon icon={faPenToSquare} className={cx('iconEdit')} /></span>
-                            <span><FontAwesomeIcon icon={faTrash} className={cx('iconTrash')} /></span>
+                            <span><FontAwesomeIcon icon={faPenToSquare} className={cx('iconEdit')} onClick={() => handleEditClick(item)} /></span>
+                            <span><FontAwesomeIcon icon={faTrash} className={cx('iconTrash')} onClick={() => { handleDeleteClick(item) }} /></span>
                         </td>
                     </tr>
                 ))}
             </tbody>
         </table>
+        {showConfirmDelete && (
+            <div className={cx("popup")}>
+                <div className={cx("popupContent")}>
+                    <p>Bạn có chắc chắn muốn xóa <strong>{userToDelete?.name}</strong>  không?</p>
+                    <div className={cx("popupButtons")}>
+                        <button onClick={confirmDelete}>Có</button>
+                        <button onClick={() => setshowConfirmDelete(false)}>Không</button>
+                    </div>
+                </div>
+            </div>
+        )}
+        {showEditForm && (
+            <div className={cx("popupEdit")}>
+                <div className={cx("popupContent-Edit")}>
+                    <h3>Chỉnh sửa thông tin</h3>
+                    <label>Họ và tên:</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={editUser?.name || ""}
+                        onChange={handleEditChange}
+                    />
 
+                    <label>Tuổi:</label>
+                    <input
+                        type="number"
+                        name="age"
+                        value={editUser?.age || ""}
+                        onChange={handleEditChange}
+                    />
+
+                    <label>Giới tính:</label>
+                    <select
+                        name="gender"
+                        value={editUser?.gender || ""}
+                        onChange={handleEditChange}
+                    >
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+
+                    <label>Địa chỉ:</label>
+                    <input
+                        type="text"
+                        name="address"
+                        value={editUser?.address || ""}
+                        onChange={handleEditChange}
+                    />
+
+                    <label>Số điện thoại:</label>
+                    <input
+                        type="text"
+                        name="phone"
+                        value={editUser?.phone || ""}
+                        onChange={handleEditChange}
+                    />
+
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={editUser?.email || ""}
+                        onChange={handleEditChange}
+                    />
+
+                    <div className={cx("popupButtons")}>
+                        <button onClick={handleSaveEdit}>Lưu</button>
+                        <button onClick={() => setShowEditForm(false)}>
+                            Hủy
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
     </div>);
 }
 

@@ -1,5 +1,5 @@
 .brg{
-    background-image: url('bg-info.png');
+    background-image: url('/bg-info.png');
     background-size: cover; /* Đảm bảo ảnh phủ kín toàn bộ phần tử */
     background-position: center; /* Canh giữa ảnh */
     width: 100%;
@@ -13,20 +13,12 @@
     // height: 500px;
 }
 .menu-pack{
-    display: grid;
-    grid-template-columns: 50% 50%; /* Chia thành 2 cột, cột đầu chiếm 40%, cột thứ hai chiếm 60% */
-    gap: 5px; /* Khoảng cách giữa các ô */
+   
     
     padding: 20px; /* Đệm để tạo khoảng cách với nội dung bên trong */
-    // max-height: calc(110vh - 200px); /* Điều chỉnh để vừa khung */
-    // overflow-y: scroll; /* Bật khả năng cuộn */
-    // scrollbar-width: none; /* Ẩn thanh cuộn trong Firefox */
-    margin-top: 30px;
     row-gap: 30px; 
 }
-// .menu-pack::-webkit-scrollbar {
-//     display: none; /* Ẩn thanh cuộn trong Chrome, Edge và Safari */
-// }
+
 .title span{
     font-size: 2.2rem;
     font-weight: 600;

@@ -1,15 +1,26 @@
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import styles from './Header.module.scss'
 import { Wrapper as PopperWrapper } from '../../../Popper';
-import Button from '../../../Button';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useSelector, useDispatch } from 'react-redux';
+import { loginSuccess } from '../../../../redux/authSlice';
 const cx = classNames.bind(styles)
-const currentUser = true
 function Header() {
+    const navigate = useNavigate(); // Khai báo hook useNavigate
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            dispatch(loginSuccess(JSON.parse(storedUser))); 
+        }
+    }, [dispatch]);
+    const currentUser = useSelector((state) => state.auth.login.currentUser);
+    console.log(currentUser);
     const [isMenuVisible, setIsMenuVisible] = useState(false);
     const toggleMenu = () => {
         setIsMenuVisible((prev) => !prev);
@@ -18,6 +29,9 @@ function Header() {
     const hideMenu = () => {
         setIsMenuVisible(false);
     };
+    const handleClick=()=>{
+        navigate("/login")
+    }
     return (
         <div className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -62,9 +76,7 @@ function Header() {
                             </div>
                         ) : (
                             <>
-                                <Button primary onClick={() => alert('click')}>
-                                    Log In
-                                </Button>
+                            <button className={cx("button")} onClick={handleClick}>Đăng ký/Đăng nhập</button>  
                             </>
                         )}
                     </div>

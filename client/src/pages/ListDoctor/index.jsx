@@ -2,13 +2,12 @@ import classNames from "classnames/bind";
 import styles from "./ListDoctor.module.scss";
 import Search from "../../component/Layout/DefaultLayout/Search";
 import Doctor from "../../component/Doctor";
-// import useFetchData from "../../CustomHook/useFetchData";
-import doctorData  from "../../data/doctorData"
+import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
 
 function ListDoctor() {
-    // const apiUrl = "https://api.example.com/doctors"; // URL API khác cho từng trang
-    // const { data: doctors, loading, error } = useFetchData(apiUrl);
+    const apiUrl = "http://localhost:3000/doctor"; // URL API khác cho từng trang
+    const { data: doctors, loading, error } = useFetchData(apiUrl);
 
     return (
         <div className={cx("wrapper")}>
@@ -19,11 +18,12 @@ function ListDoctor() {
                         <span>Chọn bác sĩ đặt khám</span>
                     </div>
                     <div className={cx("menu-doctor")}>
-                        {/* {loading && <div>Đang tải danh sách bác sĩ...</div>}
+                        {loading && <div>Đang tải danh sách bác sĩ...</div>}
                         {error && <div>Có lỗi xảy ra: {error}</div>}
-                        {!loading && !error && doctors && ( */}
-                            <Doctor doctors={doctorData} />
-                        {/* )} */}
+                        {!loading && !error && doctors && (
+                            <Doctor doctors={doctors} /> // Truyền dữ liệu từ API
+                        )}
+
                     </div>
                 </div>
             </div>

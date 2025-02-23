@@ -23,18 +23,7 @@ function Facilities() {
                         <Button to={'/facilitiesDetail'}>
                             <FacilitiesItem />
                         </Button>
-                        <Button to={'/facilitiesDetail'}>
-                            <FacilitiesItem />
-                        </Button>
-                        <Button to={'/facilitiesDetail'}>
-                            <FacilitiesItem />
-                        </Button>
-                        <Button to={'/facilitiesDetail'}>
-                            <FacilitiesItem />
-                        </Button>
-                        <Button to={'/facilitiesDetail'}>
-                            <FacilitiesItem />
-                        </Button>
+                        
 
                     </div>
 

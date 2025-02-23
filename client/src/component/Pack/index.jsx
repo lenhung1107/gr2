@@ -1,8 +1,8 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from "classnames/bind";
 import styles from "./Pack.module.scss";
-
+import Paginations from '../Pagination';
 const cx = classNames.bind(styles);
 
 function OrderByPack({ packData }) {
@@ -12,26 +12,35 @@ function OrderByPack({ packData }) {
         navigate(`/orderPack/${id}`); // Điều hướng đến URL tương ứng
     };
 
-    return (
+    const renderPacks = (currentItems) => (
         <div className={cx('pack-list')}>
-            {packData.map((pack) => (
-                <div
-                    className={cx('grid-container')}
-                    key={pack.id} // Sử dụng `id` thay vì `index` làm key
-                    onClick={() => handlePackClick(pack.id)} // Xử lý khi click
-                >
-                    <div className={cx('image')}>
-                        <img src={pack.image} height={100} width={200} alt="Logo" />
+            {currentItems.map((pack) => (
+                <Link to={`/orderPack/${pack.id}`} key={pack.id}>
+                    <div
+                        className={cx('grid-container')}
+                        onClick={() => handlePackClick(pack.id)} // Xử lý khi click
+                    >
+                        <div className={cx('image')}>
+                            <img src={pack.image} height={100} width={200} alt="Logo" />
+                        </div>
+                        <div className={cx('info')}>
+                            <h2>{pack.name}</h2>
+                            <p>{pack.room}</p>
+                            <p style={{ color: 'rgb(75, 192, 140)' }}>{pack.price}</p>
+                        </div>
                     </div>
-                    <div className={cx('info')}>
-                        <h2>{pack.name}</h2>
-                        <p>{pack.room}</p>
-                        <p style={{ color: 'rgb(75, 192, 140)' }}>{pack.price}</p>
-                    </div>
-                </div>
+                </Link>
+
             ))}
         </div>
     );
+    return (
+        <Paginations
+            data={packData}
+            renderItems={renderPacks}
+            itemsPerPage={6}
+        />
+    )
 }
 
 OrderByPack.propTypes = {

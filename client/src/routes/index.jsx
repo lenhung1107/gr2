@@ -10,6 +10,7 @@ import HistoryPage from "../pages/HistoryPage"
 import Profile from "../pages/Profile"
 import DoctorPage from "../pages/DoctorPage"
 import AdminPage from "../pages/AdminPage"
+import Login from "../pages/Login"
 const publicRouters=[
     {path:'/', component :Home, layout :HomeLayout},
     {path:'/listDoctor', component :ListDoctor},
@@ -22,6 +23,7 @@ const publicRouters=[
     {path:'/historypage', component :HistoryPage},
     {path:'/doctorpage', component :DoctorPage, layout:null},
     {path:'/adminpage', component :AdminPage, layout:null},
+    {path:'/login', component :Login, layout:null},
 ]
 const privateRouters=[
 

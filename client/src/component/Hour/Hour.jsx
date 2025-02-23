@@ -6,20 +6,10 @@ import styles from "./Hour.module.scss";
 const cx = classNames.bind(styles);
 
 // eslint-disable-next-line react/prop-types
-function Hour({ hourText, onClick, isSelected, isDisabled ,isInSchedule}) {
-  const handleClick = () => {
-    if (onClick ) {
-      onClick(hourText); // Gửi lại hourText khi click
-    }
-  };
+function Hour({ hourText, onClick, isSelected}) {
   return (
-
-    <div className={cx('select')} onClick={handleClick}>
-      <div className={cx('hour', {
-        selected: isSelected,  // Hiển thị màu xanh nếu được chọn
-        disabled: isDisabled,  
-        inSchedule: isInSchedule,// Vô hiệu hóa nếu booked
-      })}>
+    <div className={cx("select")} onClick={() => onClick(hourText)}>
+      <div className={cx("hour", { selected: isSelected })}>
         <p>{hourText}</p>
       </div>
     </div>
