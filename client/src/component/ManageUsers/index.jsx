@@ -4,6 +4,7 @@ import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ManageUsers.module.scss";
 import users from "../../data/userData";
 import { useState } from "react";
+import EditForm from "../EditForm";
 const cx = classNames.bind(styles);
 
 
@@ -126,67 +127,12 @@ function ManageUsers() {
             </div>
         )}
         {showEditForm && (
-            <div className={cx("popupEdit")}>
-                <div className={cx("popupContent-Edit")}>
-                    <h3>Chỉnh sửa thông tin</h3>
-                    <label>Họ và tên:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={editUser?.name || ""}
-                        onChange={handleEditChange}
-                    />
-
-                    <label>Tuổi:</label>
-                    <input
-                        type="number"
-                        name="age"
-                        value={editUser?.age || ""}
-                        onChange={handleEditChange}
-                    />
-
-                    <label>Giới tính:</label>
-                    <select
-                        name="gender"
-                        value={editUser?.gender || ""}
-                        onChange={handleEditChange}
-                    >
-                        <option value="Nam">Nam</option>
-                        <option value="Nữ">Nữ</option>
-                    </select>
-
-                    <label>Địa chỉ:</label>
-                    <input
-                        type="text"
-                        name="address"
-                        value={editUser?.address || ""}
-                        onChange={handleEditChange}
-                    />
-
-                    <label>Số điện thoại:</label>
-                    <input
-                        type="text"
-                        name="phone"
-                        value={editUser?.phone || ""}
-                        onChange={handleEditChange}
-                    />
-
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={editUser?.email || ""}
-                        onChange={handleEditChange}
-                    />
-
-                    <div className={cx("popupButtons")}>
-                        <button onClick={handleSaveEdit}>Lưu</button>
-                        <button onClick={() => setShowEditForm(false)}>
-                            Hủy
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <EditForm
+             user={editUser}
+             onChange={handleEditChange}
+             onSave={handleSaveEdit}
+             onCancel={()=> setShowEditForm(false)}
+             />
         )}
     </div>);
 }

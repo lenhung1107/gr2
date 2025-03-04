@@ -1,18 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './AdminLayout.module.scss'; // Import styles riêng cho layout
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMd } from '@fortawesome/free-solid-svg-icons';
 
 // Các component quản lý
-import ManageUsers from '../../ManageUsers';  // Quản lý bệnh nhân
+import ManageUsers from '../../ManageUsers'; // Quản lý bệnh nhân
 import ManageSchedules from '../../ManageSchedules'; // Quản lý ca khám
-import ManageDoctors from '../../ManageDoctors'; //Quản lý bác sĩ
+import ManageDoctors from '../../ManageDoctors'; // Quản lý bác sĩ
 
 const cx = classNames.bind(styles);
 
 const AdminLayout = () => {
   const [activeTab, setActiveTab] = useState('patients'); // Quản lý bệnh nhân là mặc định
+  const [adminName, setAdminName] = useState(''); // Tên admin
+  const[userName, setUserName]=useState('');
+  useEffect(() => {
+    // Lấy thông tin user từ localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        if (userData.admin) {
+          setAdminName(userData.name); // Gán tên admin
+          setUserName(userData.username)
+        }
+      } catch (error) {
+        console.error('Lỗi khi đọc user từ localStorage:', error);
+      }
+    }
+  }, []);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -26,7 +43,7 @@ const AdminLayout = () => {
           <img src="ava_v2.png" alt="Logo ứng dụng" />
         </div>
         <div className={cx('avatar')}>
-          <p>NT Quỳnh</p>
+          <p>{userName}</p> {/* Hiển thị tên admin */}
           <img src="doctor.jpg" alt="Avatar bác sĩ" />
         </div>
       </div>
@@ -37,7 +54,7 @@ const AdminLayout = () => {
               <FontAwesomeIcon icon={faUserMd} className={cx('icon')} />
             </div>
             <div className={cx('info')}>
-              <p className={cx('doctor-name')}>Lê Nhung</p>
+              <p className={cx('doctor-name')}>{adminName}</p>
               <p className={cx('doctor-role')}>Quản trị viên</p>
             </div>
           </div>
@@ -69,11 +86,9 @@ const AdminLayout = () => {
             {activeTab === 'doctors' && <ManageDoctors />}
           </div>
         </div>
-
       </div>
     </div>
-
-
   );
 };
+
 export default AdminLayout;

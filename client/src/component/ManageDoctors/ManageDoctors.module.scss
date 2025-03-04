@@ -82,3 +82,72 @@
   color: white;
   /* Màu nền khi hover */
 }
+.iconEdit {
+  color: rgb(70, 222, 163); // Đổi màu icon edit
+  cursor: pointer; // Hiển thị bàn tay khi hover
+  margin-right: 20px;
+  &:hover {
+    color: rgb(58, 181, 138); // Màu đậm hơn khi di chuột
+  }
+}
+
+.iconTrash {
+  color: red; // Đổi màu icon xóa
+  cursor: pointer; 
+  &:hover {
+    color: rgb(142, 6, 6); // Màu đậm hơn khi di chuột
+  }
+}
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+}
+
+.popupContent {
+  background: white;
+  width: 380px;
+  height: 180px;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popupButtons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.popupButtons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.popupButtons button:first-child {
+  background: red;
+  color: white;
+  &:hover{
+    background:rgb(157, 12, 12);
+  }
+}
+
+.popupButtons button:last-child {
+  background: rgb(146, 146, 146);
+  color: white;
+  &:hover{
+    background:rgb(108, 108, 108);
+}
+}

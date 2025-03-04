@@ -1,7 +1,7 @@
 import axios from "axios";
 import { loginFailed, loginStart, loginSuccess, registerStart, registerFailed,registerSuccess } from "./authSlice";
 import { deleteUserStart, deleteUserFailed, deleteUserSuccess } from "./userSlice";
-export const loginUser= async(user, dispatch, navigate)=>{
+export const loginUser= async(user, dispatch, callback)=>{
     dispatch(loginStart());
     try{
         const res = await axios.post("http://localhost:3000/auth/login",user,{
@@ -9,7 +9,7 @@ export const loginUser= async(user, dispatch, navigate)=>{
         );
         dispatch(loginSuccess(res.data));
         localStorage.setItem("user", JSON.stringify(res.data)); // ✅ Lưu vào localStorage
-        navigate("/");
+        if(callback) callback(res.data);
     }
     catch(err){
         const errorMessage = err.response?.data?.message || "Đăng nhập thất bại!";

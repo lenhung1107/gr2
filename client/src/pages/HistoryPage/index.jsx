@@ -117,12 +117,18 @@ function HistoryPage() {
     };
     return (
         <div className={cx('wrapper')}>
-            <h1>Lịch sử khám bệnh</h1>
-            <div className={cx('filter-container')}>
-                <HistoryFilter onFilter={handleFilter} />
+            <div className={cx('brg')}>
+                <div className={cx('content')}>
+                    <h1>Lịch sử khám bệnh</h1>
+                    <div className={cx('filter-container')}>
+                        <HistoryFilter onFilter={handleFilter} />
+                    </div>
+
+                    <HistoryTable historyData={historyData} />
+                </div>
+
             </div>
 
-            <HistoryTable historyData={historyData} />
         </div>
     );
 }

@@ -26,7 +26,13 @@ export default function Login() {
       username: username,
       password: password
     };
-    loginUser(newUser, dispatch, navigate);
+    loginUser(newUser, dispatch, (userData)=>{
+      if (userData?.admin) {
+        navigate("/adminpage"); // Nếu là admin thì chuyển đến trang admin
+      } else {
+        navigate("/"); // Nếu không phải admin thì về trang chính
+      }
+    });
   };
   const handleRegister = (e) => {
     e.preventDefault();

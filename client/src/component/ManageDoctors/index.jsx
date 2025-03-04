@@ -1,8 +1,9 @@
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ManageDoctors.module.scss";
 import doctorData from "../../data/doctorData"
+import EditForm from "../EditForm";
 import { useState } from "react";
 const cx = classNames.bind(styles);
 
@@ -11,6 +12,10 @@ function ManageDoctors() {
     const [searchName, setSearchName] = useState("");
     const [selectBio, setSelectBio] = useState("");
     const [filteredDoctors, setFilteredDoctors] = useState(doctorData); // Lưu danh sách bác sĩ được lọc
+    const [showConfirmDelete, setshowConfirmDelete] = useState(false);
+    const [userToDelete, setUserToDelete] = useState(null);
+    const [showEditForm, setShowEditForm] = useState(false);
+    const [editUser, setEditUser] = useState(null);
     const handleSearch = () => {
         const filtered = doctorData.filter((doctor) => {
             const matchesName = searchName === "" || doctor.name.toLowerCase().includes(searchName.toLowerCase());
@@ -25,6 +30,25 @@ function ManageDoctors() {
         setSelectBio(""); // Xóa giá trị chọn chức vụ
         setFilteredDoctors(doctorData); // Hiển thị lại toàn bộ dữ liệu
     }
+    const handleDeleteClick = (user) => {
+        setUserToDelete(user);
+        setshowConfirmDelete(true); // Hiện popup xác nhận
+    };
+    const confirmDelete = () => {
+        setshowConfirmDelete(false);
+        setUserToDelete(null);
+    };
+    const handleEditClick = (user) => {
+        setEditUser(user);
+        setShowEditForm(true);
+    };
+    const handleEditChange = (e) => {
+        setEditUser({ ...editUser, [e.target.name]: e.target.value });
+    };
+    const handleSaveEdit = () => {
+        setShowEditForm(false);
+        setEditUser(null);
+    };
     return (<div className={cx('wrapper')}>
         <h1>Quản lý bác sĩ</h1>
         <h3>Bộ lọc </h3>
@@ -76,13 +100,32 @@ function ManageDoctors() {
                         <td>{item.bio}</td>
                         <td>{item.specialty}</td>
                         <td>
-                            <span><FontAwesomeIcon icon={faPenToSquare} className={cx('icon')} /></span>
+                            <span><FontAwesomeIcon icon={faPenToSquare} className={cx('iconEdit')} onClick={() => handleEditClick(item)} /></span>
+                            <span><FontAwesomeIcon icon={faTrash} className={cx('iconTrash')} onClick={() => { handleDeleteClick(item) }} /></span>
                         </td>
                     </tr>
                 ))}
             </tbody>
         </table>
-
+        {showConfirmDelete && (
+            <div className={cx("popup")}>
+                <div className={cx("popupContent")}>
+                    <p>Bạn có chắc chắn muốn xóa <strong>{userToDelete?.name}</strong>  không?</p>
+                    <div className={cx("popupButtons")}>
+                        <button onClick={confirmDelete}>Có</button>
+                        <button onClick={() => setshowConfirmDelete(false)}>Không</button>
+                    </div>
+                </div>
+            </div>
+        )}
+        {showEditForm && (
+            <EditForm
+                user={editUser}
+                onChange={handleEditChange}
+                onSave={handleSaveEdit}
+                onCancel={() => setShowEditForm(false)}
+            />
+        )}
     </div>);
 }
 

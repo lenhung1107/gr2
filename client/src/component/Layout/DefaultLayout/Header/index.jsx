@@ -16,7 +16,7 @@ function Header() {
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
-            dispatch(loginSuccess(JSON.parse(storedUser))); 
+            dispatch(loginSuccess(JSON.parse(storedUser)));
         }
     }, [dispatch]);
     const currentUser = useSelector((state) => state.auth.login.currentUser);
@@ -29,7 +29,7 @@ function Header() {
     const hideMenu = () => {
         setIsMenuVisible(false);
     };
-    const handleClick=()=>{
+    const handleClick = () => {
         navigate("/login")
     }
     return (
@@ -37,50 +37,51 @@ function Header() {
             <div className={cx('inner')}>
                 <div className={cx('infor')}>
                     <span>Hotline đặt khám: 0982333</span>
-                        {currentUser ? (
-                            <div className={cx('action')}>
-                                <span>Xin chào nyung1107</span>
-                                <div className={cx('avatar')}
-                                    onClick={toggleMenu}
-                                >
-                                    <img
-                                        src="/path-to-avatar.jpg"
-                                        alt="Avatar"
-                                        className={cx('avatar-img')}
-                                    />
-                                    {isMenuVisible && (
-                                        <div
-                                            className={cx('menu-dropdown')}
-                                            onMouseLeave={hideMenu} // Ẩn menu khi chuột rời khỏi
+                    {currentUser ? (
+                        <div className={cx('action')}>
+                            <span>Xin chào {currentUser.username}
+                            </span>
+                            <div className={cx('avatar')}
+                                onClick={toggleMenu}
+                            >
+                                <img
+                                    src="/path-to-avatar.jpg"
+                                    alt="Avatar"
+                                    className={cx('avatar-img')}
+                                />
+                                {isMenuVisible && (
+                                    <div
+                                        className={cx('menu-dropdown')}
+                                        onMouseLeave={hideMenu} // Ẩn menu khi chuột rời khỏi
+                                    >
+                                        <Link
+                                            to="/profile"
+                                            className={cx('menu-item')}
+                                            onClick={hideMenu}
                                         >
-                                            <Link
-                                                to="/profile"
-                                                className={cx('menu-item')}
-                                                onClick={hideMenu}
-                                            >
-                                                Hồ sơ cá nhân
-                                            </Link>
-                                            <Link
-                                                className={cx('menu-item')}
-                                                onClick={() => {
-                                                    alert('Đăng xuất thành công');
-                                                    hideMenu();
-                                                }}
-                                            >
-                                                Đăng xuất
-                                            </Link>
-                                        </div>
-                                    )}
+                                            Hồ sơ cá nhân
+                                        </Link>
+                                        <Link
+                                            className={cx('menu-item')}
+                                            onClick={() => {
+                                                alert('Đăng xuất thành công');
+                                                hideMenu();
+                                            }}
+                                        >
+                                            Đăng xuất
+                                        </Link>
+                                    </div>
+                                )}
 
-                                </div>
                             </div>
-                        ) : (
-                            <>
-                            <button className={cx("button")} onClick={handleClick}>Đăng ký/Đăng nhập</button>  
-                            </>
-                        )}
-                    </div>
-                    {/* <div className={cx('user')}>
+                        </div>
+                    ) : (
+                        <>
+                            <button className={cx("button")} onClick={handleClick}>Đăng ký/Đăng nhập</button>
+                        </>
+                    )}
+                </div>
+                {/* <div className={cx('user')}>
                 
               </div> */}
 
