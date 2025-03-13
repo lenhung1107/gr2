@@ -18,7 +18,7 @@ function Footer() {
                     <span><FontAwesomeIcon icon={faEnvelope} className={cx('icon')} /> Nyungcare@booking.com</span>
                 </div>
                 <div className={cx('function')}>
-                    <p>Các dịch vụ đặt lịch cung cấp</p>
+                    <p>Các dịch vụ đặt lịch cung cấp </p>
                     <ul>
                         <li>Bác sĩ</li>
                         <li>Cơ sở y tế</li>

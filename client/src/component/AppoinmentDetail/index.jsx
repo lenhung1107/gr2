@@ -1,9 +1,9 @@
 
 import PropTypes from "prop-types";
-import styles from "./HistoryTable.module.scss";
+import styles from "./AppoinmentDetail.module.scss";
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
-function HistoryTable({ historyData }) {
+function AppoinmentDetail({ historyData }) {
   return (
     <table className={cx('table')}>
       <thead>
@@ -36,7 +36,7 @@ function HistoryTable({ historyData }) {
   );
 }
 
-HistoryTable.propTypes = {
+AppoinmentDetail.propTypes = {
   historyData: PropTypes.arrayOf(
     PropTypes.shape({
       date: PropTypes.string.isRequired, // Ngày khám (bắt buộc)
@@ -50,8 +50,8 @@ HistoryTable.propTypes = {
   ).isRequired,
 };
 
-HistoryTable.defaultProps = {
+AppoinmentDetail.defaultProps = {
   historyData: [], // Mặc định là mảng rỗng nếu không có dữ liệu
 };
 
-export default HistoryTable;
+export default AppoinmentDetail;

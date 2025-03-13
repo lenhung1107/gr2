@@ -10,7 +10,6 @@
     display: grid;
     grid-template-columns: auto auto auto; /* Hai cột ngoài tự điều chỉnh theo nội dung */
     gap: 16px;
-    font-size: 1.6rem;
     margin-left: 300px;
     color: white;
 }
@@ -26,9 +25,18 @@
     flex: 1; /* Mỗi cột có độ rộng bằng nhau */
     padding: 5px; /* Thêm khoảng cách bên trong */
 }
-
+.infor h2{
+    color: white;
+    font-size: 24px;
+}
+.function p{
+    font-size: 18px;
+    color: white;
+}
 /* Thêm một số phong cách cụ thể */
-.infor span, .privacy span {
+.infor span, .privacy span, .function li {
+    font-weight: 400;
+    font-size: 16px;
     color: white;
     display: block; /* Mỗi mục nằm trên một dòng */
     margin-bottom: 8px; /* Thêm khoảng cách giữa các dòng */
@@ -39,11 +47,12 @@
     margin: 8px 0 0 20px; /* Căn lề cho danh sách */
 }
 .privacy {
-    margin-top: 25px;
+    padding-left: 20px;
+    margin-top: 70px;
 }
-.function{
-    margin-top: 10px;
-}
+// .function{
+//     margin-top: 10px;
+// }
 .icon1{
     font-size: 3.5rem;
 }

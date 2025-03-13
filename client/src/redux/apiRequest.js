@@ -1,5 +1,6 @@
 import axios from "axios";
-import { loginFailed, loginStart, loginSuccess, registerStart, registerFailed,registerSuccess } from "./authSlice";
+import { loginFailed, loginStart, loginSuccess, registerStart, registerFailed,registerSuccess, logOutFailed,logOutStart,logOutSuccess
+ } from "./authSlice";
 import { deleteUserStart, deleteUserFailed, deleteUserSuccess } from "./userSlice";
 export const loginUser= async(user, dispatch, callback)=>{
     dispatch(loginStart());
@@ -41,5 +42,20 @@ export const deleteUser=async(accessToken, dispatch, id) =>{
     }
     catch(err){
         dispatch(deleteUserFailed(err.response.data));
+    }
+}
+export const logOut= async(dispatch, id,navigate,accessToken,axiosJWT)=>{
+    dispatch(logOutStart());
+    try{
+        console.log("AccessToken trước logout:", accessToken); // Kiểm tra token
+        await axiosJWT.post("http://localhost:3000/auth/logout",id,{
+             headers:{token: `Bearer ${accessToken}`}
+        });
+        dispatch(logOutSuccess());
+        localStorage.removeItem("user");
+        navigate("/login");
+    } catch(err){
+        console.error("Lỗi logout:", err.response?.data);
+        dispatch(logOutFailed(err))
     }
 }

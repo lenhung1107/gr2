@@ -1,9 +1,11 @@
-const user = require('../models/TestUser')
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
-let refreshTokens=[]
+const user = require('../models/TestUser');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+let refreshTokens = [];
+
 class AuthenticationController {
-    //signup
+    // Đăng ký
     async register(req, res, next) {
         try {
             const salt = await bcrypt.genSalt(10);
@@ -16,87 +18,106 @@ class AuthenticationController {
             });
 
             await newUser.save();
-            res.status(200).json(newUser);
+            return res.status(200).json(newUser);
         } catch (err) {
-            res.status(500).json(err);
+            return res.status(500).json(err);
         }
     }
 
-    //login
+    // Đăng nhập
     async login(req, res) {
         try {
             const User = await user.findOne({ username: req.body.username });
             if (!User) {
-                return res.status(404).json({ message: "Sai tên đăng nhập !" });
+                return res.status(404).json({ message: "Sai tên đăng nhập!" });
             }
 
             const pass = await bcrypt.compare(req.body.password, User.password);
             if (!pass) {
-                return res.status(404).json({ message: "Sai mật khẩu !" });
+                return res.status(404).json({ message: "Sai mật khẩu!" });
             }
 
-            // Nếu đến đây, tức là cả User và pass đều hợp lệ
+            // Tạo token
             const accessToken = jwt.sign(
                 { id: User._id, admin: User.admin },
                 process.env.JWT_ACCESS_KEY,
-                { expiresIn: "20s" }
+                { expiresIn: "365d" }
             );
-            const refreshToken = jwt.sign({ id: User._id, admin: User.admin },
+
+            const refreshToken = jwt.sign(
+                { id: User._id, admin: User.admin },
                 process.env.JWT_REFRESH_KEY,
-                { expiresIn: "365d" })
-            refreshTokens.push(refreshToken)   
+                { expiresIn: "365d" }
+            );
+
+            refreshTokens.push(refreshToken);
+
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
                 secure: false,
                 path: "/",
                 sameSite: "Lax"
-            })
-            const { password, ...others } = User._doc
-            res.status(200).json({ ...others, accessToken });
+            });
+
+            const { password, ...others } = User._doc;
+            return res.status(200).json({ ...others, accessToken });
         } catch (err) {
-            res.status(500).json(err)
+            return res.status(500).json(err);
         }
     }
+
+    // Yêu cầu refresh token
     async requestRefreshToken(req, res) {
-        const refresh = req.cookies.refreshToken
+        const refresh = req.cookies.refreshToken;
+
         if (!refresh) {
-            res.status(401).json("you're not authenticated")
+            return res.status(401).json({ message: "Bạn chưa đăng nhập!" });
         }
-        if(!refreshTokens.includes(refresh))
-        {
-            return res.status(403).json("Refresh token is not valid")
+
+        if (!refreshTokens.includes(refresh)) {
+            return res.status(403).json({ message: "Refresh token không hợp lệ!" });
         }
+
         jwt.verify(refresh, process.env.JWT_REFRESH_KEY, (err, User) => {
             if (err) {
-                console.log(err)
+                return res.status(403).json({ message: "Token hết hạn hoặc không hợp lệ!" });
             }
-            refreshTokens=refreshTokens.filter((token)=> token!=refresh)
+
+            // Xóa token cũ khỏi danh sách
+            refreshTokens = refreshTokens.filter((token) => token !== refresh);
+
+            // Tạo token mới
             const newAccessToken = jwt.sign(
-                { id: User._id, admin: User.admin },
+                { id: User.id, admin: User.admin },
                 process.env.JWT_ACCESS_KEY,
                 { expiresIn: "20s" }
             );
-            const newRefreshToken = jwt.sign({ id: User._id, admin: User.admin },
+
+            const newRefreshToken = jwt.sign(
+                { id: User.id, admin: User.admin },
                 process.env.JWT_REFRESH_KEY,
-                { expiresIn: "365d" })
-            refreshTokens.push(newRefreshToken)   
+                { expiresIn: "365d" }
+            );
+
+            refreshTokens.push(newRefreshToken);
+
             res.cookie("refreshToken", newRefreshToken, {
                 httpOnly: true,
                 secure: false,
                 path: "/",
                 sameSite: "Lax"
-            })
-            res.status(200).json({accessToken: newAccessToken });
-        })
-      
+            });
+
+            return res.status(200).json({ accessToken: newAccessToken });
+        });
     }
-    async logout(req, res){
-        res.clearCookie("refreshToken")
-        refreshTokens=refreshTokens.filter(token => token !== req.cookies.refreshToken )
-        res.status(200).json("Logged out success")
+
+    // Đăng xuất
+    async logout(req, res) {
+        res.clearCookie("refreshToken");
+        refreshTokens = refreshTokens.filter(token => token !== req.cookies.refreshToken);
+        return res.status(200).json({ message: "Đăng xuất thành công!" });
     }
 }
-
-
 
 module.exports = new AuthenticationController();

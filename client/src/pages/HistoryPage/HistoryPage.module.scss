@@ -1,24 +1,156 @@
-
-.brg{
-    background-image: url('/bg-info.png');
-    background-size: cover; /* Đảm bảo ảnh phủ kín toàn bộ phần tử */
-    background-position: center; /* Canh giữa ảnh */
+.wrapper{
+    // margin-top: 30px;
+    display: flex;
     width: 100%;
-    height:100%;/* Chiều cao toàn màn hình */
-    
-}
-.content{
-    display: flex; 
     flex-direction: column;
-    align-items: center;
+}
+.wrapper h2 {
     text-align: center;
-    margin: 0 100px;
-    h1{
-        font-size: 2.1rem;
+    color: #333;
+    font-size: 26px;
+    font-weight: 600;
+}
+.container {
+    // max-width: 800px;
+    width: 80%;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    button {
+        padding: 8px 15px;
+        border: none;
+        background: #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+        &.active {
+            background: rgb(39, 214, 131);
+            color: white;
+        }
+
+        &:hover {
+            background: rgb(75, 192, 140);
+            color: white;
+        }
     }
 }
-.filter-container {
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.6rem;
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: rgb(39, 214, 131);
+        color: white;
+    }
+}
+.icon {
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: auto;
+    position: relative;
+   
+}
+.icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+}
+/* Hiện tooltip khi hover */
+.icon:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+.view-info {
+    color: rgb(39, 214, 131); /* Màu xanh */
+}
+
+/* Loại bỏ màu đỏ của icon hủy (nếu có) */
+.cancel-icon {
+    color: rgb(244, 67, 54); /* Hoặc có thể đặt màu đen/màu gốc tùy ý */
+}
+/* Popup Overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Popup Container */
+.popup {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 500px;
+    font-size: 1.6rem;
+}
+
+/* Popup Buttons */
+.popup-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.confirm-btn {
+    background: #ff4d4d;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: #ddd;
+    color: black;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.confirm-btn:hover {
+    background: #cc0000;
+}
+
+.cancel-btn:hover {
+    background: #bbb;
 }
