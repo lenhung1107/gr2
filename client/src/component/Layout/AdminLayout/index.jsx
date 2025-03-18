@@ -6,9 +6,8 @@ import { faUserMd } from '@fortawesome/free-solid-svg-icons';
 
 // Các component quản lý
 import ManageUsers from '../../ManageUsers'; // Quản lý bệnh nhân
-import ManageSchedules from '../../ManageSchedules'; // Quản lý ca khám
 import ManageDoctors from '../../ManageDoctors'; // Quản lý bác sĩ
-
+import ManageMedicals from '../../ManageMedicals';
 const cx = classNames.bind(styles);
 
 const AdminLayout = () => {
@@ -65,25 +64,31 @@ const AdminLayout = () => {
             >
               Quản Lý Người dùng
             </button>
-            <button
+            {/* <button
               className={cx('menu-item', { active: activeTab === 'schedules' })}
               onClick={() => handleTabChange('schedules')}
             >
               Quản Lý Ca Khám Bệnh
-            </button>
+            </button> */}
             <button
               className={cx('menu-item', { active: activeTab === 'doctors' })}
               onClick={() => handleTabChange('doctors')}
             >
               Quản Lý Bác Sĩ
             </button>
+            <button
+              className={cx('menu-item', { active: activeTab === 'medical' })}
+              onClick={() => handleTabChange('medical')}
+            >
+              Quản lý hồ sơ khám bệnh
+            </button>
           </div>
         </div>
         <div className={cx('content')}>
           <div className={cx('tab-content')}>
             {activeTab === 'patients' && <ManageUsers />}
-            {activeTab === 'schedules' && <ManageSchedules />}
             {activeTab === 'doctors' && <ManageDoctors />}
+            {activeTab ==='medical' && <ManageMedicals />}
           </div>
         </div>
       </div>

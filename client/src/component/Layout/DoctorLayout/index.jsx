@@ -7,6 +7,7 @@ import { faUserMd } from '@fortawesome/free-solid-svg-icons';
 // Các component quản lý
 import ManagePatients from '../../ManagePatients';  // Quản lý bệnh nhân
 import ManageSchedules from '../../ManageSchedules'; // Quản lý ca khám
+import ManageMedicals from '../../ManageMedicals';
 
 const cx = classNames.bind(styles);
 
@@ -53,11 +54,19 @@ const DoctorLayout = () => {
             >
               Quản Lý Ca Khám Bệnh
             </button>
+            <button
+              className={cx('menu-item', { active: activeTab === 'medical' })}
+              onClick={() => handleTabChange('medical')}
+            >
+              Quản Lý Hồ Sơ Khám Bệnh
+            </button>
           </div>
         </div>
         <div className={cx('content')}>
           <div className={cx('tab-content')}>
-            {activeTab === 'patients' ? <ManagePatients /> : <ManageSchedules />}
+            {activeTab === 'patients' && <ManagePatients  />}
+            {activeTab === 'schedules' && <ManageSchedules />}
+            {activeTab ==='medical' && <ManageMedicals />}
           </div>
         </div>
       </div>

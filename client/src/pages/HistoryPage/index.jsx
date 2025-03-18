@@ -3,25 +3,62 @@ import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./HistoryPage.module.scss";
 import { faCalendarXmark, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import AppoinmentDetail from "../../component/AppoinmentDetail";
 
 const cx = classNames.bind(styles);
+const appointments = [
+    { 
+        id: 1, 
+        date: "2025-03-10", 
+        doctor: "BS. Nguyễn Văn A", 
+        status: "Đang chờ khám",
+        reason: "Khám tổng quát",
+        medicine: ["Thuốc A", "Thuốc B"],
+        notes: "Uống thuốc đúng giờ",
+        invoiceViewLink: "#",
+        invoiceDownloadLink: "#"
+    },
+    { 
+        id: 2, 
+        date: "2025-03-15", 
+        doctor: "BS. Trần Thị B", 
+        status: "Đã khám",
+        reason: "Khám tai mũi họng",
+        medicine: ["Thuốc X", "Thuốc Y"],
+        notes: "Tránh tiếp xúc khói bụi",
+        invoiceViewLink: "#",
+        invoiceDownloadLink: "#"
+    },
+    { 
+        id: 3, 
+        date: "2025-03-20", 
+        doctor: "BS. Lê Văn C", 
+        status: "Đã hủy",
+        reason: "Khám nội soi",
+        medicine: [],
+        notes: "",
+        invoiceViewLink: "#",
+        invoiceDownloadLink: "#"
+    },
+];
 
 function HistoryPage() {
-    const [filter, setFilter] = useState("all");
-    const [showPopup, setShowPopup] = useState(false);
+    const [filter, setFilter] = useState("Tất cả");
+    const [showPopupCancel, setShowPopupCancel] = useState(false);
+    const [showPopupView, setShowPopupView] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
-    const appointments = [
-        { id: 1, date: "2025-03-10", doctor: "BS. Nguyễn Văn A", status: "Đang chờ khám" },
-        { id: 2, date: "2025-03-15", doctor: "BS. Trần Thị B", status: "Đã khám" },
-        { id: 3, date: "2025-03-20", doctor: "BS. Lê Văn C", status: "Đã hủy" },
-    ];
+    
     const handleCancelClick = (appointment) => {
         setSelectedAppointment(appointment);
-        setShowPopup(true);
+        setShowPopupCancel(true);
     };
     const confirmCancel = () => {
         alert(`Bạn đã hủy lịch hẹn với ${selectedAppointment.doctor} vào ngày ${selectedAppointment.date}`);
-        setShowPopup(false);
+        setShowPopupCancel(false);
+    };
+    const handleViewClick = (appointment) => {
+        setSelectedAppointment(appointment);
+        setShowPopupView(true);
     };
     const statusLabels = ["Tất cả", "Đang chờ khám", "Đã khám", "Đã hủy"];
 
@@ -62,7 +99,8 @@ function HistoryPage() {
                                 <td>{app.status}</td>
                                 <td>
                                     {app.status === "Đã khám" && (
-                                        <div className={cx('icon', 'view-info')} data-tooltip="Xem chi tiết">
+                                        <div className={cx('icon', 'view-info')} data-tooltip="Xem chi tiết"
+                                        onClick={() => handleViewClick(app)}>
                                             <FontAwesomeIcon icon={faInfoCircle} />
                                         </div>
                                     )}
@@ -79,14 +117,22 @@ function HistoryPage() {
                     </tbody>
                 </table>
             </div>
-            {showPopup && (
+            {showPopupCancel && (
                 <div className={cx("popup-overlay")}>
                     <div className={cx("popup")}>
                         <p>Bạn có chắc chắn muốn hủy lịch hẹn với <b>{selectedAppointment.doctor}</b> vào ngày <b>{selectedAppointment.date}</b> không?</p>
                         <div className={cx("popup-buttons")}>
                             <button onClick={confirmCancel} className={cx("confirm-btn")}>Xác nhận</button>
-                            <button onClick={() => setShowPopup(false)} className={cx("cancel-btn")}>Hủy</button>
+                            <button onClick={() => setShowPopupCancel(false)} className={cx("cancel-btn")}>Hủy</button>
                         </div>
+                    </div>
+                </div>
+            )}
+            {showPopupView && (
+                <div className={cx("popup-overlay")} >
+                    <div className={cx("popup-content")}>
+                        <button className={cx("close-btn")} onClick={() => setShowPopupView(false)}>×</button>
+                        <AppoinmentDetail historyData={[selectedAppointment]} />
                     </div>
                 </div>
             )}

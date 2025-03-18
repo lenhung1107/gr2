@@ -1,0 +1,118 @@
+.popupEdit {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); // Mờ nền
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+
+    .buttonClose {
+        margin-top: 15px;
+        margin-left: 450px;
+        color: black;
+        font-size: 1.6rem;
+        cursor: pointer;
+        height: 30px;
+        width: 80px;
+        border: none;
+        border-radius: 2px;
+
+        &:hover {
+            color: white;
+            background-color: #da2e2e;
+        }
+    }
+
+    .popupContent-Edit {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px; // Bo góc đẹp hơn
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        width: 1000px;
+        max-width: 90%;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+}
+
+.infoContent {
+    display: flex;
+    align-items: flex-start;
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 900px;
+    margin: 0 auto;
+   span{
+    font-size: 1.6rem;
+   }
+    img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 40px;
+        border: 2px solid #ddd;
+    }
+
+    .infoText {
+        display: flex;
+        font-size: 1.6rem;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    p {
+        margin: 4px 0;
+        line-height: 1.5;
+        strong {
+            color: #333;
+        }
+    }
+}
+
+.menu {
+    display: flex;
+    gap: 10px;
+
+    button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.1s ease-in-out;
+        background-color: #ddd;
+        /* Màu mặc định */
+        color: #333;
+        font-size: 1.6rem;
+        &:hover {
+            background-color: #bbb;
+        }
+
+        &.active {
+            /* Chỉ tab nào được chọn mới có màu đỏ */
+            background-color: #da2e2e !important;
+            color: white;
+        }
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    // font-size: 1.6rem;
+}
