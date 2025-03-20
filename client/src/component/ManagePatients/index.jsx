@@ -50,7 +50,7 @@ function ManagePatients() {
   ];
 
   const [selectedDate, setSelectedDate] = useState("");
-  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [filteredPatients, setFilteredPatients] = useState( patientsData);
   const [prescripCreat, setPrescripCreat] = useState(false);
   const [prescripList, setPrescripList] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null); // Lưu bệnh nhân được chọn

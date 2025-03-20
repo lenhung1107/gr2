@@ -1,105 +1,123 @@
 .container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .image-section {
-    width: 50%;
-    background-color: rgb(240, 252, 252);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .image {
-    width: 700px;
-    height: 600px;
-    border-radius: 10px;
-    
-  }
-  
-  .form-section {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .form-card {
-    width: 600px;
-    height: 400px;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 16px;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    span{
-      font-size: 16px;
-      text-align: right;
-      margin-right: 70px;
-      cursor: pointer;
-    }
-    p{
-      font-size: 14px;
-      margin-left: 70px;
-      color: red;
-    }
-    
-  }
-  .button {
-    width: 30%;
-    padding: 10px;
-    background-color: rgb(70, 222, 163);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    margin-left: 200px;
+  display: flex;
+  height: 100vh;
+}
 
-  }
-  .button:hover{
-    background-color: rgb(75, 192, 140);
-  }
-  .infor{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
-    
-  }
- 
-  .input {
-    width: 75%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 18px;
-  }
-  
-  
-  
-  .switch-text {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 18px;
-  }
-  
-  .switch-link {
-    color: #3b82f6;
-    cursor: pointer;
-  }
-  
+.image-section {
+  width: 50%;
+  background-color: rgb(240, 252, 252);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 700px;
+  height: 600px;
+  border-radius: 10px;
+}
+
+.form-section {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-card {
+  width: 600px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form span {
+  font-size: 16px;
+  text-align: right;
+  margin-right: 70px;
+  cursor: pointer;
+}
+
+.form p {
+  font-size: 14px;
+  margin-left: 70px;
+  color: red;
+}
+
+.button {
+  width: 30%;
+  padding: 10px;
+  background-color: rgb(70, 222, 163);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.button:hover {
+  background-color: rgb(75, 192, 140);
+}
+
+.infor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+}
+
+.input {
+  width: 75%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.switch-text {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.switch-link {
+  color: #3b82f6;
+  cursor: pointer;
+}
+
+/* Thêm CSS cho các trường mới trong form đăng ký */
+.select {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.input[type="number"]::-webkit-inner-spin-button,
+.input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input[type="number"] {
+  -moz-appearance: textfield;
+}

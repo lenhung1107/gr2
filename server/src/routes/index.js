@@ -3,6 +3,7 @@ const packRoute =require('./packs')
 const doctorDetailRoute =require('./doctorDetail')
 const userRoute=require('./user')
 const authentication= require('./auththentication')
+const specialtiesRouter = require('./specialties');
 function route(app){
     
     // app.use('/news',newsRouter)  
@@ -11,5 +12,6 @@ function route(app){
     app.use('/orderDoctor',doctorDetailRoute);
     app.use('/adminpage',userRoute);
     app.use('/auth',authentication);
+    app.use('/specialties', specialtiesRouter);
 }
 module.exports = route;

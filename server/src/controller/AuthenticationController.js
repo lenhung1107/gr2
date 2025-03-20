@@ -15,6 +15,11 @@ class AuthenticationController {
                 name: req.body.name,
                 username: req.body.username,
                 password: hashed,
+                age: req.body.age,
+                phone: req.body.phone,
+                address: req.body.address,
+                email: req.body.email,
+                gender: req.body.gender
             });
 
             await newUser.save();
