@@ -20,11 +20,12 @@ const TestUser = new Schema(
             default: false
         },
         age: { type: Number },
-        phone: { type: Number },
+        phone: { type: String },
         address: { type: String },
         email: { type: String },
-        gender: { type: String }
-    }, { timestamps: true }
+        gender: { type: String },
+        rold:{type: Number, default:1}
+    }
 );
 module.exports = mongoose.model('TestUser', TestUser);
                                                        

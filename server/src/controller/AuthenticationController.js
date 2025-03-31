@@ -95,7 +95,7 @@ class AuthenticationController {
             const newAccessToken = jwt.sign(
                 { id: User.id, admin: User.admin },
                 process.env.JWT_ACCESS_KEY,
-                { expiresIn: "20s" }
+                { expiresIn: "365d" }
             );
 
             const newRefreshToken = jwt.sign(

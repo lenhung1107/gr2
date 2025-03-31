@@ -3,7 +3,7 @@ const Doctor = require('../models/Doctor');
 
 class DoctorDetailController {
     async getDoctor(req, res, next) {
-        Doctor.findOne({id:req.params.id})
+        Doctor.findOne({_id:req.params.id})
             .then(doctor =>{
                 res.json(doctor);
             })

@@ -15,17 +15,20 @@ const cx = classNames.bind(styles);
 function OrderDoctor() {
     const { id } = useParams();
     const apiUrl = `http://localhost:3000/orderDoctor/${id}`;
+    console.log(id);
     const { data: doctor, loading, error } = useFetchData(apiUrl);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [order, setOrder] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const hoursData = [
-        { hour: '9:00 ', status: 'available' },
-        { hour: '10:00 ', status: 'booked' },
-        { hour: '11:00', status: 'available' },
+       '8:00','9:00','10:00','11:00','13:00','14:00','13:00','14:00','15:00','16:00','17:00'
     ];
     const openPopup = () => {
+        if (!selectedDate) {
+            alert("Vui lòng chọn ngày khám trước khi đặt lịch!")
+            return;
+        }
         setIsPopupOpen(true);
     };
     const closePopup = () => {
@@ -40,6 +43,10 @@ function OrderDoctor() {
     if (!doctor) {
         return <div>Bác sĩ không tồn tại!</div>;
     }
+    if(loading)
+        return <div>Đang tải thông tin bác si...</div>;
+    if(error)
+        return <div>Có loi xảy ra: {error}</div>;
 
     return (
         <div className={cx('wrapper')}>
@@ -76,25 +83,14 @@ function OrderDoctor() {
                                     className={cx('datePicker')}
                                 />
                             </div>
-
-                            {/* ví dụ get text hour */}
-                            {/* const hours = ['9:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00'];
-
-                            return (
                             <div className={cx('hour')}>
-                                {hours.map((hour) => (
-                                    <Hour key={hour} hourText={hour} onClick={handleHourSelect} />
-                                ))}
-                            </div>
-                            ); */}
-                            <div className={cx('hour')}>
-                                {hoursData.map(({ hour, status }) => (
+                                {hoursData.map((hour,index) => (
                                     <Hour
-                                        key={hour}
+                                        key={index}
                                         hourText={hour}
                                         onClick={handleHourSelect}
                                         isSelected={selectedTime === hour} // Kiểm tra giờ đang chọn
-                                        isDisabled={status === 'booked'} // Vô hiệu hóa giờ đã đặt
+                                         
                                     />))}
                             </div>
                         </div>

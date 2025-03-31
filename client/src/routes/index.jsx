@@ -16,6 +16,7 @@ const publicRouters=[
     {path:'/listDoctor', component :ListDoctor},
     {path:'/listOrderPack', component :ListOrderPack,},
     {path:'/facilities', component :Facilities},
+    {path:'//facilitiesDetail/:id', component :FacilitiesDetail},
     {path:'/orderDoctor/:id', component :OrderDoctorDetail},
     {path:'/orderPack/:id', component :OrderPackDetail},
     {path:'/facilitiesDetail', component :FacilitiesDetail},

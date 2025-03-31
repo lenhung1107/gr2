@@ -2,18 +2,33 @@ import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo} from "@fortawesome/free-solid-svg-icons";
 import styles from "./ManageMedicals.module.scss";
-import users from "../../data/userData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MedicalDetail from "../MedicalDetail";
+import axios from "axios";
+
 const cx = classNames.bind(styles);
 
 
 function ManageMedicals() {
+    const [users, setUsers] = useState([]);  // Danh sách tất cả người dùng
     const [searchName, setSearchName] = useState("");
 
     const [filteredUsers, setFilteredUsers] = useState(users); // Lưu danh sách bác sĩ được lọc
     const [ShowMedical, setShowMedical] = useState(false);
     const [editUser, setEditUser] = useState(null);
+     useEffect(() => {
+            const fetchUsers = async () => {
+                try {
+                    const response = await axios.get("http://localhost:3000/adminpage/getUser", {
+                    });
+                    setUsers(response.data);
+                    setFilteredUsers(response.data); // Cập nhật danh sách ban đầu
+                } catch (error) {
+                    console.error("Lỗi khi lấy danh sách người dùng:", error);
+                }
+            };
+            fetchUsers();
+        }, []);
     const handleSearch = () => {
         const filtered = users.filter((user) => {
             // Chuyển chuỗi tìm kiếm về chữ thường

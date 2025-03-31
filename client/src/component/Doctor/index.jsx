@@ -24,7 +24,7 @@ function Doctor({ doctors }) {
                                 <span><FontAwesomeIcon icon={faCalendarCheck} className={cx('icon')} /> Số lượt đặt khám: {doctor.appointments}</span>
                             </div>
                         </div>
-                        <Link to={`/orderDoctor/${doctor.id}`}>
+                        <Link to={`/orderDoctor/${doctor._id}`}>
                             <div className={cx('order')}>
                                 <span>Đặt khám</span>
                             </div>

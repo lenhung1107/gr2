@@ -302,3 +302,13 @@
     border: 2px solid #00b699;
     /* Đánh dấu ngày hôm nay */
 }
+.descript {
+    font-size: 1.6rem;  // Cỡ chữ 1.6rem
+    background-color: #fff;  // Nền trắng
+    padding: 20px;  // Khoảng cách bên trong
+    border-radius: 10px;  // Bo góc mềm mại
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);  // Hiệu ứng nổi (bóng)
+    border: 1px solid #ddd;  // Viền nhẹ
+    margin-top: 20px;  // Khoảng cách với phần trên
+    line-height: 1.8;  // Dãn dòng dễ đọc hơn
+}
