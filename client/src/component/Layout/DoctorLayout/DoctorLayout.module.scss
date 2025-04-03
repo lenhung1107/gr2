@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden; // Ngăn cuộn toàn bộ trang
 }
 
 /* Header mới */
@@ -15,6 +16,11 @@
   color: white;
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
 .header .logo {
@@ -48,6 +54,8 @@
 .main {
   display: flex;
   flex-direction: row;
+  margin-top: 60px; // Để không bị che bởi header
+  height: calc(100vh - 60px);
 }
 
 .sidebar {
@@ -61,6 +69,9 @@
   border-right: 1px solid #ddd;
   height: calc(100vh - 60px);
   /* Chiều cao trừ đi header */
+  position: fixed;
+  left: 0;
+  top: 60px;
   overflow-y: auto;
 }
 
@@ -117,6 +128,9 @@
 .content {
   flex: 1;
   padding: 20px;
+  margin-left: 300px; // Để tránh bị sidebar che mất
+  height: calc(100vh - 60px);
+  overflow-y: auto;
 }
 
 .tab-content {

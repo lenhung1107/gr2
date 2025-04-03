@@ -6,6 +6,11 @@ const TestUser = new Schema(
             type: String,
             require: true,
         },
+        age: { type: Number },
+        phone: { type: String },
+        address: { type: String },
+        email: { type: String },
+        gender: { type: String },
         username: {
             type: String,
             require: true,
@@ -18,12 +23,7 @@ const TestUser = new Schema(
         admin: {
             type: Boolean,
             default: false
-        },
-        age: { type: Number },
-        phone: { type: String },
-        address: { type: String },
-        email: { type: String },
-        gender: { type: String },
+        }, 
         rold:{type: Number, default:1}
     }
 );

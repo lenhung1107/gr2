@@ -8,9 +8,10 @@ class AuthenticationController {
     // Đăng ký
     async register(req, res, next) {
         try {
+            // console.log("Dữ liệu gửi lên:", req.body); // Kiểm tra dữ liệu từ FE
             const salt = await bcrypt.genSalt(10);
             const hashed = await bcrypt.hash(req.body.password, salt);
-
+            // console.log("Mật khẩu đã mã hóa:", hashed);
             const newUser = new user({
                 name: req.body.name,
                 username: req.body.username,
@@ -23,6 +24,7 @@ class AuthenticationController {
             });
 
             await newUser.save();
+            // console.log("Đã lưu user vào DB:", newUser);
             return res.status(200).json(newUser);
         } catch (err) {
             return res.status(500).json(err);

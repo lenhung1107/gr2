@@ -4,6 +4,7 @@ import styles from "./Login.module.scss";
 import { loginUser, registerUser } from "../../redux/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { registerReset } from "../../redux/authSlice";
 
 const cx = classNames.bind(styles);
 
@@ -26,8 +27,11 @@ export default function Login() {
   useEffect(() => {
     if (registerSuccess) {
       setIsLogin(true);
+      navigate("/login"); // Điều hướng sang trang login
+      dispatch(registerReset()); // ✅ Reset trạng thái sau khi chuyển trang
+
     }
-  }, [registerSuccess]);
+  }, [registerSuccess, navigate,dispatch]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -56,7 +60,7 @@ export default function Login() {
       email,
       gender,
     };
-    registerUser(newUser, dispatch, navigate);
+    registerUser(newUser, dispatch);
   };
 
   return (

@@ -17,17 +17,21 @@ export const loginUser= async(user, dispatch, callback)=>{
         dispatch(loginFailed(errorMessage));
     }
 }
-export const registerUser= async(user, dispatch, navigate)=>{
+export const registerUser= async(user, dispatch)=>{
     dispatch(registerStart());
     try{
         const res = await axios.post("http://localhost:3000/auth/signup",user,{
             withCredentials: true
         });
         dispatch(registerSuccess(res.data));
-        navigate("/login");
+        await Promise.resolve(); // ✅ Đợi Redux cập nhật trạng thái
+        // navigate("/login");
     }
     catch(err){
-        dispatch(registerFailed(err));
+        console.error("Lỗi đăng ký:", err);
+        const errorMessage = err.response?.data?.message || "Đăng ký thất bại!";
+        dispatch(registerFailed(errorMessage));  // Chỉ truyền chuỗi thông báo
+        
     }
 }
 export const deleteUser=async(accessToken, dispatch, id) =>{
