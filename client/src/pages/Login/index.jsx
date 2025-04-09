@@ -42,10 +42,12 @@ export default function Login() {
     loginUser(newUser, dispatch, (userData) => {
       if (userData?.admin) {
         navigate("/adminpage");
+      } else if (userData?.role === 2) {
+        navigate("/doctorpage");
       } else {
         navigate("/");
       }
-    });
+    });    
   };
 
   const handleRegister = (e) => {

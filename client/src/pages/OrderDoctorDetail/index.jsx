@@ -22,7 +22,7 @@ function OrderDoctor() {
     const [order, setOrder] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const hoursData = [
-       '8:00','9:00','10:00','11:00','13:00','14:00','13:00','14:00','15:00','16:00','17:00'
+       '8:00','9:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'
     ];
     const openPopup = () => {
         if (!selectedDate) {

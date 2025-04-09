@@ -16,7 +16,6 @@ const Appointment = new Schema({
     appointment_time: { type: String, required: true }, // Giờ khám
     status: { type: String, default: 'Pending' }, // Trạng thái cuộc hẹn
     symptoms: { type: String }, // Triệu chứng
-    doctor_note: { type: String } // Ghi chú của bác sĩ
 });
 
 module.exports = mongoose.model('Appointment', Appointment);

@@ -24,7 +24,7 @@ const TestUser = new Schema(
             type: Boolean,
             default: false
         }, 
-        rold:{type: Number, default:1}
+        role:{type: Number, default:1}
     }
 );
 module.exports = mongoose.model('TestUser', TestUser);

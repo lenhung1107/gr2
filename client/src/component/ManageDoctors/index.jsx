@@ -2,16 +2,32 @@ import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ManageDoctors.module.scss";
-import doctorData from "../../data/doctorData"
 import EditForm from "../EditForm";
-import { useState } from "react";
+import { useState, useEffect} from "react";
+import axios from "axios";
 const cx = classNames.bind(styles);
 
 
 function ManageDoctors() {
+    const [doctorData, setDoctorData]= useState([]);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get("http://localhost:3000/doctor", {
+                });
+                setDoctorData(response.data); // Cập nhật danh sách ban đầu
+                setFilteredDoctors(response.data); // C)
+            } catch (error) {
+                console.error("Lỗi khi lấy danh sách người dùng:", error);
+            }
+        };
+        fetchUsers();
+        
+    }, []); 
+    console.log(doctorData);// Lắng nghe thay đ��i tên tìm kiếm và chức vụ, tự đ��ng lọc dữ liệu
     const [searchName, setSearchName] = useState("");
     const [selectBio, setSelectBio] = useState("");
-    const [filteredDoctors, setFilteredDoctors] = useState(doctorData); // Lưu danh sách bác sĩ được lọc
+    const [filteredDoctors, setFilteredDoctors] = useState([]); // Lưu danh sách bác sĩ được lọc
     const [showConfirmDelete, setshowConfirmDelete] = useState(false);
     const [userToDelete, setUserToDelete] = useState(null);
     const [showEditForm, setShowEditForm] = useState(false);

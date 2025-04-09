@@ -8,8 +8,8 @@ import AppoinmentDetail from "../../component/AppoinmentDetail";
 const cx = classNames.bind(styles);
 const appointments = [
     { 
-        id: 1, 
         date: "2025-03-10", 
+        hour:"10:00",
         doctor: "BS. Nguyễn Văn A", 
         status: "Đang chờ khám",
         reason: "Khám tổng quát",
@@ -19,8 +19,8 @@ const appointments = [
         invoiceDownloadLink: "#"
     },
     { 
-        id: 2, 
         date: "2025-03-15", 
+        hour:"10:00",
         doctor: "BS. Trần Thị B", 
         status: "Đã khám",
         reason: "Khám tai mũi họng",
@@ -30,10 +30,21 @@ const appointments = [
         invoiceDownloadLink: "#"
     },
     { 
-        id: 3, 
         date: "2025-03-20", 
+        hour:"10:00",
         doctor: "BS. Lê Văn C", 
         status: "Đã hủy",
+        reason: "Khám nội soi",
+        medicine: [],
+        notes: "",
+        invoiceViewLink: "#",
+        invoiceDownloadLink: "#"
+    },
+    { 
+        date: "2025-03-20", 
+        hour:"10:00",
+        doctor: "BS. Lê Văn C", 
+        status: "Đang chờ xác nhận",
         reason: "Khám nội soi",
         medicine: [],
         notes: "",
@@ -60,7 +71,7 @@ function HistoryPage() {
         setSelectedAppointment(appointment);
         setShowPopupView(true);
     };
-    const statusLabels = ["Tất cả", "Đang chờ khám", "Đã khám", "Đã hủy"];
+    const statusLabels = ["Tất cả","Đang chờ xác nhận", "Đang chờ khám", "Đã khám", "Đã hủy"];
 
     const filteredAppointments =
         filter === "Tất cả" ? appointments : appointments.filter(app => app.status === filter);
@@ -85,6 +96,7 @@ function HistoryPage() {
                         <tr>
                             <th>Số Thứ Tự</th>
                             <th>Ngày Khám</th>
+                            <th>Giờ Khám</th>
                             <th>Bác Sĩ / Gói Khám</th>
                             <th>Trạng Thái</th>
                             <th></th>
@@ -95,6 +107,7 @@ function HistoryPage() {
                             <tr key={app.id}>
                                 <td>{index + 1}</td>
                                 <td>{app.date}</td>
+                                <td>{app.hour}</td>
                                 <td>{app.doctor}</td>
                                 <td>{app.status}</td>
                                 <td>
@@ -104,7 +117,7 @@ function HistoryPage() {
                                             <FontAwesomeIcon icon={faInfoCircle} />
                                         </div>
                                     )}
-                                    {app.status === "Đang chờ khám" && (
+                                    {app.status === "Đang chờ xác nhận" && (
                                         <div className={cx('icon', 'cancel-icon')} data-tooltip="Hủy lịch hẹn"
                                         onClick={() => handleCancelClick(app)}>
                                             <FontAwesomeIcon icon={faCalendarXmark} />

@@ -8,6 +8,7 @@ import { faUserMd } from '@fortawesome/free-solid-svg-icons';
 import ManageUsers from '../../ManageUsers'; // Quản lý bệnh nhân
 import ManageDoctors from '../../ManageDoctors'; // Quản lý bác sĩ
 import ManageMedicals from '../../ManageMedicals';
+import ManageAppointments from '../../ManageAppointments';
 const cx = classNames.bind(styles);
 
 const AdminLayout = () => {
@@ -64,12 +65,12 @@ const AdminLayout = () => {
             >
               Quản Lý Người dùng
             </button>
-            {/* <button
-              className={cx('menu-item', { active: activeTab === 'schedules' })}
-              onClick={() => handleTabChange('schedules')}
+            <button
+              className={cx('menu-item', { active: activeTab === 'appointments' })}
+              onClick={() => handleTabChange('appointments')}
             >
-              Quản Lý Ca Khám Bệnh
-            </button> */}
+              Quản Lý Các Cuộc hẹn khám
+            </button>
             <button
               className={cx('menu-item', { active: activeTab === 'doctors' })}
               onClick={() => handleTabChange('doctors')}
@@ -89,6 +90,7 @@ const AdminLayout = () => {
             {activeTab === 'patients' && <ManageUsers />}
             {activeTab === 'doctors' && <ManageDoctors />}
             {activeTab ==='medical' && <ManageMedicals />}
+            {activeTab ==='appointments' && <ManageAppointments />}
           </div>
         </div>
       </div>
