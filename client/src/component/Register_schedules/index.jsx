@@ -16,22 +16,40 @@ const hoursData = [
     { hour: "17:00" },
 ];
 // Giả lập dữ liệu lịch làm việc của bác sĩ từ database
-const initialSchedules = {
-    "2025-02-11": ["9:00", "10:00"], // Ngày này đã có giờ 9:00 và 10:00 được lưu
-    "2025-02-12": ["14:00", "15:00"],
-};
+// const initialSchedules = {
+//     "2025-02-11": ["9:00", "10:00"], // Ngày này đã có giờ 9:00 và 10:00 được lưu
+//     "2025-02-12": ["14:00", "15:00"],
+// };
 function Register_schedules() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user?._id;
+
     const [selectedDate, setSelectedDate] = useState(""); // Ngày được chọn
     const [selectedHours, setSelectedHours] = useState([]); // Giờ được chọn
-    const [workSchedules, setWorkSchedules] = useState(initialSchedules); // Giả lập 
+    const [workSchedules, setWorkSchedules] = useState({}); // Giả lập 
     // Cập nhật giờ được chọn khi chọn ngày
+    useEffect(() => {
+        const fetchSchedules = async () => {
+            if (!userId) return;
+    
+            try {
+                const res = await fetch(`http://localhost:3000/schedule/schedulesGetByUserID/${userId}`);
+                const data = await res.json();
+                setWorkSchedules(data);
+            } catch (err) {
+                console.error("Lỗi khi tải lịch làm việc:", err);
+            }
+        };
+    
+        fetchSchedules();
+    }, [userId]);
     useEffect(() => {
         if (selectedDate && workSchedules[selectedDate]) {
             setSelectedHours(workSchedules[selectedDate]); // Lấy giờ từ database
         } else {
             setSelectedHours([]); // Nếu ngày chưa có trong DB, reset giờ chọn
         }
-    }, [selectedDate]);
+    }, [selectedDate, workSchedules]);
 
     // Xử lý chọn/bỏ chọn giờ
     const handleHourClick = (hour) => {
@@ -41,20 +59,45 @@ function Register_schedules() {
     };
 
     // Xử lý lưu thông tin
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!selectedDate) {
             alert("Vui lòng chọn ngày!");
             return;
         }
 
-        // Cập nhật lại danh sách lịch làm việc
-        setWorkSchedules((prev) => ({
-            ...prev,
+        const newWorkSchedules = {
+            ...workSchedules,
             [selectedDate]: selectedHours,
-        }));
+        };
+        setWorkSchedules(newWorkSchedules);
 
-        alert("Lịch làm việc đã được cập nhật!");
+        try {
+            const response = await fetch("http://localhost:3000/schedule/registerSchedule", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    schedules: {
+                        [selectedDate]: selectedHours,
+                    },
+                }),
+            });
+
+            const text = await response.text(); // dùng text để debug dễ hơn
+            console.log("==> Raw response:", response.status, text);
+
+            if (response.ok) {
+                alert("Lịch làm việc đã được lưu vào hệ thống!");
+            } else {
+                alert("Lỗi từ server: " + text);
+            }
+        } catch (err) {
+            console.error("Lỗi gửi request:", err);
+            alert("Không thể gửi dữ liệu!");
+        }
     };
     return (
         <div className={cx("wrapper")}>

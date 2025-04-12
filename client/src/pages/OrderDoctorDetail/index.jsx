@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,22 +15,39 @@ const cx = classNames.bind(styles);
 function OrderDoctor() {
     const { id } = useParams();
     const apiUrl = `http://localhost:3000/orderDoctor/${id}`;
+    const scheduleUrl = `http://localhost:3000/schedule/schedulesGetByDoctorID/${id}`;
 
     const { data: doctor, loading, error } = useFetchData(apiUrl);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [order, setOrder] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const hoursData = [
-       '8:00','9:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'
-    ];
+    const [schedule, setSchedule] = useState({});
+
+    const defaultHours = ['8:00', '9:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+
+    useEffect(() => {
+        const fetchSchedule = async () => {
+            try {
+                const res = await fetch(scheduleUrl);
+                const data = await res.json();
+                setSchedule(data);
+            } catch (err) {
+                console.error("Lỗi khi lấy lịch làm việc:", err);
+            }
+        };
+
+        fetchSchedule();
+    }, [scheduleUrl]);
+
     const openPopup = () => {
         if (!selectedDate) {
-            alert("Vui lòng chọn ngày khám trước khi đặt lịch!")
+            alert("Vui lòng chọn ngày khám trước khi đặt lịch!");
             return;
         }
         setIsPopupOpen(true);
     };
+
     const closePopup = () => {
         setIsPopupOpen(false);
     };
@@ -40,13 +57,21 @@ function OrderDoctor() {
         setOrder(true);
     };
 
-    if (!doctor) {
-        return <div>Bác sĩ không tồn tại!</div>;
-    }
-    if(loading)
-        return <div>Đang tải thông tin bác si...</div>;
-    if(error)
-        return <div>Có loi xảy ra: {error}</div>;
+    const getFormattedDate = (date) => {
+        if (!date) return "";
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    const hoursForSelectedDate = selectedDate
+        ? schedule[getFormattedDate(selectedDate)] || []
+        : defaultHours;
+
+    if (!doctor) return <div>Bác sĩ không tồn tại!</div>;
+    if (loading) return <div>Đang tải thông tin bác sĩ...</div>;
+    if (error) return <div>Có lỗi xảy ra: {error}</div>;
 
     return (
         <div className={cx('wrapper')}>
@@ -77,21 +102,25 @@ function OrderDoctor() {
                                 <h3>Lịch khám bệnh tại bệnh viện</h3>
                                 <DatePicker
                                     selected={selectedDate}
-                                    onChange={(date) => setSelectedDate(date)}
+                                    onChange={(date) => {
+                                        setSelectedDate(date);
+                                        setSelectedTime(null); // reset giờ nếu đổi ngày
+                                        setOrder(false);
+                                    }}
                                     dateFormat="dd/MM/yyyy"
                                     placeholderText="Chọn ngày"
                                     className={cx('datePicker')}
                                 />
                             </div>
                             <div className={cx('hour')}>
-                                {hoursData.map((hour,index) => (
+                                {(selectedDate ? hoursForSelectedDate : defaultHours).map((hour, index) => (
                                     <Hour
                                         key={index}
                                         hourText={hour}
                                         onClick={handleHourSelect}
-                                        isSelected={selectedTime === hour} // Kiểm tra giờ đang chọn
-                                         
-                                    />))}
+                                        isSelected={selectedTime === hour}
+                                    />
+                                ))}
                             </div>
                         </div>
                         {order && (
