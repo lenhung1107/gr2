@@ -14,7 +14,7 @@ const cx = classNames.bind(styles);
 const AdminLayout = () => {
   const [activeTab, setActiveTab] = useState('patients'); // Quản lý bệnh nhân là mặc định
   const [adminName, setAdminName] = useState(''); // Tên admin
-  const[userName, setUserName]=useState('');
+  const [userName, setUserName] = useState('');
   useEffect(() => {
     // Lấy thông tin user từ localStorage
     const storedUser = localStorage.getItem('user');
@@ -65,17 +65,18 @@ const AdminLayout = () => {
             >
               Quản Lý Người dùng
             </button>
-            <button
-              className={cx('menu-item', { active: activeTab === 'appointments' })}
-              onClick={() => handleTabChange('appointments')}
-            >
-              Quản Lý Các Cuộc hẹn khám
-            </button>
+
             <button
               className={cx('menu-item', { active: activeTab === 'doctors' })}
               onClick={() => handleTabChange('doctors')}
             >
               Quản Lý Bác Sĩ
+            </button>
+            <button
+              className={cx('menu-item', { active: activeTab === 'appointments' })}
+              onClick={() => handleTabChange('appointments')}
+            >
+              Quản Lý Các Cuộc hẹn khám
             </button>
             <button
               className={cx('menu-item', { active: activeTab === 'medical' })}
@@ -89,8 +90,8 @@ const AdminLayout = () => {
           <div className={cx('tab-content')}>
             {activeTab === 'patients' && <ManageUsers />}
             {activeTab === 'doctors' && <ManageDoctors />}
-            {activeTab ==='medical' && <ManageMedicals />}
-            {activeTab ==='appointments' && <ManageAppointments />}
+            {activeTab === 'medical' && <ManageMedicals />}
+            {activeTab === 'appointments' && <ManageAppointments />}
           </div>
         </div>
       </div>

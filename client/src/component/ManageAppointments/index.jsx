@@ -3,40 +3,12 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarXmark, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ManageAppointments.module.scss";
+import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
-const appointments = [
-    {
-        name: " Le Thi Han",
-        phone: "0938592495",
-        age: "35",
-        date: "2025-03-10",
-        hour: "10:00",
-        doctor: "BS. Nguyễn Văn A",
-        status: "Đã xác nhận",
-        reason: "Khám tổng quát",
-    },
-    {
-        name: " Le Thi Han",
-        phone: "0938592495",
-        age: "35",
-        date: "2025-03-10",
-        hour: "10:00",
-        doctor: "BS. Nguyễn Văn A",
-        status: "Đang chờ xác nhận",
-        reason: "Khám tổng quát",
-    },
-    {
-        name: " Le Thi Han",
-        phone: "0938592495",
-        age: "35",
-        date: "2025-03-10",
-        hour: "10:00",
-        doctor: "BS. Nguyễn Văn A",
-        status: "Đang chờ xác nhận",
-        reason: "Khám tổng quát",
-    },
-];
 function ManageAppointments() {
+    const apiUrl = "http://localhost:3000/appointment/getAllAppoinment"; // URL API khác cho từng trang
+    const { data: appointments, loading, error } = useFetchData(apiUrl);
+    // console.log(appointments);
     const [filter, setFilter] = useState("Tất cả");
     const [showPopupCancel, setShowPopupCancel] = useState(false);
     const [showPopupAgree, setShowPopupAgree] = useState(false);
@@ -50,17 +22,48 @@ function ManageAppointments() {
         alert(`Bạn đã hủy lịch hẹn với ${selectedAppointment.doctor} vào ngày ${selectedAppointment.date}`);
         setShowPopupCancel(false);
     };
-     const handleAgreeClick = (appointment) => {
+    const handleAgreeClick = (appointment) => {
         setSelectedAppointment(appointment);
         setShowPopupAgree(true);
     };
-    const confirmAgree = () => {
-        alert(`Bạn đã hủy lịch hẹn với ${selectedAppointment.doctor} vào ngày ${selectedAppointment.date}`);
-        setShowPopupCancel(false);
+    // const confirmAgree = () => {
+    //     alert(`Bạn đã hủy lịch hẹn với ${selectedAppointment.doctor} vào ngày ${selectedAppointment.date}`);
+    //     setShowPopupCancel(false);
+    // };
+    const statusLabels = ["Tất cả", "Đang chờ xác nhận", "Đang chờ khám", "Đã hủy","Đã khám"];
+    console.log("Selected appointment:", selectedAppointment);
+    const handleConfirmAppointment = async (appointment) => {
+        try {
+            const response = await fetch(`http://localhost:3000/appointment/confirmByAdmin/${appointment._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                const updated = await response.json();
+                alert(updated.message);
+
+                // Cập nhật lại danh sách nếu cần (có thể gọi lại API hoặc cập nhật state)
+                window.location.reload(); // Hoặc gọi lại fetchData nếu bạn muốn tối ưu hơn
+            } else {
+                alert('Xác nhận thất bại');
+            }
+        } catch (error) {
+            alert('Có lỗi xảy ra khi xác nhận');
+            console.error(error);
+        }
+
+        setShowPopupAgree(false);
     };
-    const statusLabels = ["Tất cả", "Đang chờ xác nhận", "Đã xác nhận", "Đã hủy"];
+
     const filteredAppointments =
         filter === "Tất cả" ? appointments : appointments.filter(app => app.status === filter);
+    if (loading) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }} >Đang tải dữ liệu...</p>;
+    if (error) return <p style={{ color: 'red', fontSize: '1.8rem', fontWeight: '500' }}>Lỗi: {error}</p>;
+    if (!appointments || appointments.length === 0) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }}>Không có cuộc hẹn nào.</p>;
+
     return (
         <div className={cx("wrapper")}>
             <h2>Thông tin các cuộc hẹn đặt khám</h2>
@@ -93,23 +96,23 @@ function ManageAppointments() {
                     </thead>
                     <tbody>
                         {filteredAppointments.map((app, index) => (
-                            <tr key={app.id}>
+                            <tr key={app._id}>
                                 <td>{index + 1}</td>
                                 <td>{app.name}</td>
                                 <td>{app.phone}</td>
                                 <td>{app.age}</td>
-                                <td>{app.date}</td>
+                                <td>{new Date(app.date).toLocaleDateString('vi-VN')}</td>
                                 <td>{app.hour}</td>
                                 <td>{app.doctor}</td>
-                                <td>{app.reason}</td>
+                                <td>{app.symptoms}</td>
                                 <td>{app.status}</td>
                                 <td>
-                                    {app.status === "Đã xác nhận" && (
+                                    {app.status === "Đang chờ khám" && (
                                         <></>
                                     )}
                                     {app.status === "Đang chờ xác nhận" && (
                                         <div className={cx('icon')}>
-                                            <div className={cx('tooltip')} onClick={()=> handleAgreeClick(app)}>
+                                            <div className={cx('tooltip')} onClick={() => handleAgreeClick(app)}>
                                                 <FontAwesomeIcon icon={faCircleCheck} className={cx('check-icon')} />
                                                 <span className={cx('tooltip-text')}>Xác nhận lịch hẹn</span>
                                             </div>
@@ -119,7 +122,6 @@ function ManageAppointments() {
                                             </div>
                                         </div>
                                     )}
-
                                 </td>
 
                             </tr>
@@ -142,12 +144,12 @@ function ManageAppointments() {
                     </div>
                 </div>
             )}
-            {showPopupAgree && (
+            {showPopupAgree && selectedAppointment &&(
                 <div className={cx("popup-overlay")}>
                     <div className={cx("popup")}>
                         <p>Bạn có chắc chắn muốn xác nhận cuộc hẹn này không?</p>
                         <div className={cx("popup-buttons")}>
-                            <button onClick={confirmAgree} className={cx("confirm-btn")}>Xác nhận</button>
+                            <button  onClick={() => handleConfirmAppointment(selectedAppointment)}className={cx("confirm-btn")}>Xác nhận</button>
                             <button onClick={() => setShowPopupAgree(false)} className={cx("cancel-btn")}>Hủy</button>
                         </div>
                     </div>

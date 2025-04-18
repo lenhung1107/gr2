@@ -1,4 +1,5 @@
 import classNames from "classnames/bind";
+import axios from "axios";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./PrescriptionCreat.module.scss";
@@ -11,8 +12,9 @@ function PrescriptionCreate({ patient, medicines, onClose }) {
         unit: "",
         quantity: "",
         dosage: "",
+        note: "",
     });
-
+    const [note, setNote] = useState("");
     // Hàm xử lý nhập liệu
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -35,6 +37,25 @@ function PrescriptionCreate({ patient, medicines, onClose }) {
         setMedicineList(updatedList); // Cập nhật state
     };
 
+    const handleSubmitPrescription = async () => {
+        try {
+            const response = await axios.post("http://localhost:3000/prescription/createPrescription", {
+                appointment_id: patient._id, // Đảm bảo bạn truyền được prop này từ cha
+                medicines: medicineList,
+                note: note
+            });
+            if (response.status === 201) {
+                alert("Đơn thuốc đã được gửi thành công!");
+                onClose();
+            } else {
+                alert("Gửi đơn thuốc thất bại. Vui lòng thử lại!");
+            }
+        } catch (error) {
+            console.error("Lỗi khi gửi đơn thuốc:", error);
+            alert("Có lỗi khi gửi đơn thuốc!");
+        }
+    };
+
     return (
         <div className={cx("prescription-modal")}>
             <h3>Tạo đơn thuốc</h3>
@@ -45,7 +66,8 @@ function PrescriptionCreate({ patient, medicines, onClose }) {
                 </div>
                 <div>
                     <label>Lý do khám bệnh:</label>
-                    <input type="text" value={patient?.reason} readOnly />
+                    <p style={{ fontSize: '1.6rem' }}>{patient.symptoms}</p>
+                    {/* <input type="text" value={patient.symptoms} readOnly /> */}
                 </div>
             </div>
 
@@ -62,7 +84,7 @@ function PrescriptionCreate({ patient, medicines, onClose }) {
                 ))}
                 {/* Form thêm thuốc */}
                 <div className={cx("add-medicine-form")}>
-                   
+
                     <input
                         type="text"
                         name="name"
@@ -95,6 +117,21 @@ function PrescriptionCreate({ patient, medicines, onClose }) {
                         Thêm thuốc
                     </button>
                 </div>
+                <div className={cx("note-section")}>
+                    <label>Ghi chú của bác sĩ:</label>
+                    <textarea
+                        placeholder="Ghi chú chung cho đơn thuốc"
+                        value={note}
+                        onChange={(e) => setNote(e.target.value)}
+
+                    />
+                </div>
+
+            </div>
+            <div className={cx("btn-submit")}>
+                <button onClick={handleSubmitPrescription}>
+                    Gửi đơn thuốc
+                </button>
             </div>
         </div>
     );
@@ -102,7 +139,8 @@ function PrescriptionCreate({ patient, medicines, onClose }) {
 
 PrescriptionCreate.propTypes = {
     patient: PropTypes.shape({
-        reason: PropTypes.string,
+        _id: PropTypes.string,
+        symptoms: PropTypes.string,
         name: PropTypes.string,
     }),
     medicines: PropTypes.arrayOf(
@@ -111,6 +149,7 @@ PrescriptionCreate.propTypes = {
             unit: PropTypes.string.isRequired,
             quantity: PropTypes.number.isRequired,
             dosage: PropTypes.string.isRequired,
+            note: PropTypes.string
         })
     ).isRequired,
     onClose: PropTypes.func.isRequired,

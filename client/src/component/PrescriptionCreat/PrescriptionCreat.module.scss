@@ -66,21 +66,6 @@
           input[type="number"] {
               width: 60px;
           }
-
-          button {
-              background-color: #ff4d4f;
-              color: #fff;
-              border: none;
-              border-radius: 4px;
-              cursor: pointer;
-            //   padding: 6px 10px;
-              font-size: 1.6rem;
-              margin-bottom: 10px;
-          }
-
-          button:hover {
-              background-color: #e63e42;
-          }
       }
   }
 
@@ -92,6 +77,7 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 1.6rem;
   }
 
   button:hover {
@@ -144,4 +130,16 @@
       background-color: #f4f4f4;
     }
   }
-  
+  .note-section{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    font-size: 1.6rem;
+  }
+.btn-submit{
+  display: flex;
+  margin-top: 20px;
+  button{
+    margin: auto;
+  }
+}

@@ -19,7 +19,7 @@ const Form = ({ onClose, doctor, date, time }) => {
     const appointmentData = {
       user_id: user._id,
       doctor_id: doctor._id,
-      appointment_date: date,
+      appointment_date: date ? date.toISOString().split('T')[0] : null,
       appointment_time: time,
       symptoms: document.getElementById("reason")?.value || "",
       isForSomeoneElse: isForSelf === false,
@@ -29,7 +29,7 @@ const Form = ({ onClose, doctor, date, time }) => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/bookAppointment", {
+      const response = await fetch("http://localhost:3000/appointment/bookAppointment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(appointmentData)

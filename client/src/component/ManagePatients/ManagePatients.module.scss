@@ -1,6 +1,6 @@
 .wrapper {
-  margin-left: 50px;
-
+  margin-left: 40px;
+ margin-right: 20px;
   h3 {
     text-align: center;
     font-size: 2.6rem;
@@ -49,41 +49,20 @@
     vertical-align: middle; /* Căn nội dung giữa theo chiều dọc */
   }
 }
-
-.btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.4rem;
-  margin: 0 5px;
-  color: #fff;
+.patient-table td:nth-child(6),
+.patient-table th:nth-child(6) {
+  max-width: 230px;     // Giới hạn chiều rộng tối đa
+  width: 230px;
+  word-wrap: break-word; // Tự động xuống dòng nếu quá dài
+  white-space: normal;   // Cho phép xuống dòng
 }
-
-.btn-send {
-  background-color: #007bff;
-
-  &:hover {
-    background-color: #0056b3;
-  }
+.patient-table td:nth-child(8),
+.patient-table th:nth-child(8) {
+  max-width: 100px;     // Giới hạn chiều rộng tối đa
+  width: 100px;
+  // word-wrap: break-word; // Tự động xuống dòng nếu quá dài
+  // white-space: normal;   // Cho phép xuống dòng
 }
-
-.btn-create {
-  background-color: #28a745;
-
-  &:hover {
-    background-color: #218838;
-  }
-}
-
-.btn-cancel {
-  background-color: #dc3545;
-
-  &:hover {
-    background-color: #c82333;
-  }
-}
-
 /* Hover cho các nút trong bảng */
 .patient-table td a:hover {
   text-decoration: underline;
@@ -102,5 +81,67 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Màu nền tối mờ */
-  z-index: 999; /* Đảm bảo nằm dưới modal nhưng trên nội dung khác */
+  z-index: 1000; /* Đảm bảo nằm dưới modal nhưng trên nội dung khác */
+}
+.icon {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  margin: auto;
+  position: relative;
+
+}
+
+.check-icon {
+  color: rgb(38, 202, 126);
+  /* Hoặc có thể đặt màu đen/màu gốc tùy ý */
+}
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+
+}
+
+/* Popup Container */
+.popup {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 500px;
+  font-size: 1.6rem;
+}
+
+.reason {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Popup Buttons */
+.popup-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.confirm-btn {
+  background: rgb(38, 202, 126);
+  color: white;
+  border: none;
+  width: 80px;
+  height: 30px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 1.5rem;
 }

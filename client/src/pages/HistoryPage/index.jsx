@@ -4,61 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./HistoryPage.module.scss";
 import { faCalendarXmark, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import AppoinmentDetail from "../../component/AppoinmentDetail";
-
+import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
-const appointments = [
-    { 
-        date: "2025-03-10", 
-        hour:"10:00",
-        doctor: "BS. Nguyễn Văn A", 
-        status: "Đang chờ khám",
-        reason: "Khám tổng quát",
-        medicine: ["Thuốc A", "Thuốc B"],
-        notes: "Uống thuốc đúng giờ",
-        invoiceViewLink: "#",
-        invoiceDownloadLink: "#"
-    },
-    { 
-        date: "2025-03-15", 
-        hour:"10:00",
-        doctor: "BS. Trần Thị B", 
-        status: "Đã khám",
-        reason: "Khám tai mũi họng",
-        medicine: ["Thuốc X", "Thuốc Y"],
-        notes: "Tránh tiếp xúc khói bụi",
-        invoiceViewLink: "#",
-        invoiceDownloadLink: "#"
-    },
-    { 
-        date: "2025-03-20", 
-        hour:"10:00",
-        doctor: "BS. Lê Văn C", 
-        status: "Đã hủy",
-        reason: "Khám nội soi",
-        medicine: [],
-        notes: "",
-        invoiceViewLink: "#",
-        invoiceDownloadLink: "#"
-    },
-    { 
-        date: "2025-03-20", 
-        hour:"10:00",
-        doctor: "BS. Lê Văn C", 
-        status: "Đang chờ xác nhận",
-        reason: "Khám nội soi",
-        medicine: [],
-        notes: "",
-        invoiceViewLink: "#",
-        invoiceDownloadLink: "#"
-    },
-];
-
 function HistoryPage() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user?._id;
+    const apiUrl = `http://localhost:3000/appointment/getAppoinmentByUserId/${userId}`; // URL API khác cho từng trang
+    const { data: appointments, loading, error } = useFetchData(apiUrl);
     const [filter, setFilter] = useState("Tất cả");
     const [showPopupCancel, setShowPopupCancel] = useState(false);
     const [showPopupView, setShowPopupView] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
-    
+
     const handleCancelClick = (appointment) => {
         setSelectedAppointment(appointment);
         setShowPopupCancel(true);
@@ -71,11 +28,13 @@ function HistoryPage() {
         setSelectedAppointment(appointment);
         setShowPopupView(true);
     };
-    const statusLabels = ["Tất cả","Đang chờ xác nhận", "Đang chờ khám", "Đã khám", "Đã hủy"];
+    const statusLabels = ["Tất cả", "Đang chờ xác nhận", "Đang chờ khám", "Đã khám", "Đã hủy"];
 
     const filteredAppointments =
         filter === "Tất cả" ? appointments : appointments.filter(app => app.status === filter);
-
+    if (loading) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }} >Đang tải dữ liệu...</p>;
+    if (error) return <p style={{ color: 'red', fontSize: '1.8rem', fontWeight: '500' }}>Lỗi: {error}</p>;
+    if (!appointments || appointments.length === 0) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }}>Không có cuộc hẹn nào.</p>;
     return (
         <div className={cx("wrapper")}>
             <h2>Lịch sử Đặt Khám</h2>
@@ -105,26 +64,28 @@ function HistoryPage() {
                     <tbody>
                         {filteredAppointments.map((app, index) => (
                             <tr key={app.id}>
-                                <td>{index + 1}</td>
-                                <td>{app.date}</td>
+                                <td>
+                                    {index + 1}
+                                    {app.isForSomeone && <span className={cx("tag")}>Đặt hộ</span>}
+                                </td>
+                                <td>{new Date(app.date).toLocaleDateString('vi-VN')}</td>
                                 <td>{app.hour}</td>
                                 <td>{app.doctor}</td>
                                 <td>{app.status}</td>
                                 <td>
                                     {app.status === "Đã khám" && (
                                         <div className={cx('icon', 'view-info')} data-tooltip="Xem chi tiết"
-                                        onClick={() => handleViewClick(app)}>
+                                            onClick={() => handleViewClick(app)}>
                                             <FontAwesomeIcon icon={faInfoCircle} />
                                         </div>
                                     )}
                                     {app.status === "Đang chờ xác nhận" && (
                                         <div className={cx('icon', 'cancel-icon')} data-tooltip="Hủy lịch hẹn"
-                                        onClick={() => handleCancelClick(app)}>
+                                            onClick={() => handleCancelClick(app)}>
                                             <FontAwesomeIcon icon={faCalendarXmark} />
                                         </div>
                                     )}
                                 </td>
-
                             </tr>
                         ))}
                     </tbody>

@@ -66,7 +66,7 @@ function OrderDoctor() {
     };
 
     const hoursForSelectedDate = selectedDate
-        ? schedule[getFormattedDate(selectedDate)] || []
+        ? schedule[getFormattedDate(selectedDate)] || defaultHours
         : defaultHours;
 
     if (!doctor) return <div>Bác sĩ không tồn tại!</div>;

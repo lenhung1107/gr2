@@ -43,7 +43,7 @@ export default function Login() {
       if (userData?.admin) {
         navigate("/adminpage");
       } else if (userData?.role === 2) {
-        navigate("/doctorpage");
+        navigate(`/doctorpage/${userData._id}`);
       } else {
         navigate("/");
       }

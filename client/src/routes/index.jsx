@@ -22,7 +22,7 @@ const publicRouters=[
     {path:'/facilitiesDetail', component :FacilitiesDetail},
     {path:'/profile', component :Profile},
     {path:'/historypage', component :HistoryPage},
-    {path:'/doctorpage', component :DoctorPage, layout:null},
+    {path:'/doctorpage/:id', component :DoctorPage, layout:null},
     {path:'/adminpage', component :AdminPage, layout:null},
     {path:'/login', component :Login, layout:null},
 ]

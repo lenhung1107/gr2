@@ -1,60 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect,useMemo } from "react";
 import classNames from "classnames/bind";
 import styles from "./ManagePatients.module.scss";
 import PrescriptionCreat from "../PrescriptionCreat";
-import PrescripList from "../PrescripList"
+// import PrescripList from "../PrescripList"
+import { useParams } from "react-router-dom";
+import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
-
+const medicinesData = [
+];
 function ManagePatients() {
-  // Dữ liệu giả lập danh sách bệnh nhân
-  const patientsData = [
-    {
-      id: 1,
-      date: "2024-12-21",
-      time: "9:00 - 10:00",
-      name: "Đỗ Thúy Hằng",
-      address: "Tân Dân, An Lão, Hải Phòng",
-      phone: "0946961811",
-      gender: "Nữ",
-      reason: "Đau đầu",
-      prescription: "Xem",
-    },
-    {
-      id: 2,
-      date: "2024-12-21",
-      time: "10:00 - 11:00",
-      name: "Lê Thị Nhung",
-      address: "Phủ Lý, Hà Nam",
-      phone: "0971623546",
-      gender: "Nữ",
-      reason: "Đau đầu",
-      prescription: "Xem",
-    },
-    {
-      id: 3,
-      date: "2024-12-22",
-      time: "10:00 - 11:00",
-      name: "Nguyễn Văn A",
-      address: "Hà Nội",
-      phone: "0987654321",
-      gender: "Nam",
-      reason: "Sốt cao",
-      prescription: "Xem",
-    },
-  ];
-
-  // Dữ liệu giả lập đơn thuốc
-  const medicinesData = [
-    { name: "Thuốc C", unit: "Viên", quantity: 10, dosage: "2 viên 1 ngày sáng, tối" },
-    { name: "Thuốc D", unit: "Gói", quantity: 5, dosage: "1 gói 1 ngày sáng" },
-  ];
+  const { id } = useParams(); // destructuring để lấy id string
+  console.log(id)
+  const apiUrl = `http://localhost:3000/appointment/getAppoinmentByDoctorId/${id}`;
+  const { data: patientsDataRaw, loading, error } = useFetchData(apiUrl);
+  const patientsData = useMemo(() => patientsDataRaw || [], [patientsDataRaw]);
 
   const [selectedDate, setSelectedDate] = useState("");
-  const [filteredPatients, setFilteredPatients] = useState( patientsData);
+  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [showPopupAgree, setShowPopupAgree] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState(null);
+  
+  useEffect(() => {
+    if (patientsData.length > 0) {
+      setFilteredPatients(patientsData);
+    }
+  }, [patientsData]);
+  
   const [prescripCreat, setPrescripCreat] = useState(false);
-  const [prescripList, setPrescripList] = useState(false);
-  const [selectedPatient, setSelectedPatient] = useState(null); // Lưu bệnh nhân được chọn
-
   // Xử lý tìm kiếm bệnh nhân theo ngày
   const handleDateChange = (e) => {
     const date = e.target.value; // Lấy ngày từ ô input
@@ -70,13 +42,41 @@ function ManagePatients() {
 
   const handleClosePrescription = () => {
     setPrescripCreat(false); // Ẩn PrescriptionCreat
-    setPrescripList(false);
+    // setPrescripList(false);
     setSelectedPatient(null); // Xóa thông tin bệnh nhân được chọn
   };
-  const handlePrescripList = (patient) => {
-    setPrescripList(true);
-    setSelectedPatient(patient); // Lưu thông tin bệnh nhân
-  }
+  const handleAgreeClick = (patient) => {
+    setSelectedPatient(patient);
+    setShowPopupAgree(true);
+  };
+  console.log(showPopupAgree)
+  const handleConfirmAppointment = async (patient) => {
+    try {
+      const response = await fetch(`http://localhost:3000/appointment/confirmByDoctor/${patient._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const updated = await response.json();
+        alert(updated.message);
+        // Cập nhật lại danh sách nếu cần (có thể gọi lại API hoặc cập nhật state)
+        window.location.reload(); // Hoặc gọi lại fetchData nếu bạn muốn tối ưu hơn
+      } else {
+        alert('Xác nhận thất bại');
+      }
+
+    } catch (error) {
+      alert('Có lỗi xảy ra khi xác nhận');
+      console.error(error);
+    }
+
+    setShowPopupAgree(false);
+  };
+  if (loading) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }} >Đang tải dữ liệu...</p>;
+  if (error) return <p style={{ color: 'red', fontSize: '1.8rem', fontWeight: '500' }}>Lỗi: {error}</p>;
 
   return (
     <div className={cx("wrapper")}>
@@ -100,38 +100,37 @@ function ManagePatients() {
             <th>#</th>
             <th>Thời gian khám</th>
             <th>Tên bệnh nhân</th>
-            <th>Địa chỉ</th>
             <th>Số điện thoại</th>
-            <th>Giới tính</th>
+            <th>Tuổi</th>
             <th>Lý do khám</th>
-            <th>Đơn thuốc</th>
-            <th>Hành động</th>
+            <th>Trạng thái</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {filteredPatients.length > 0 ? (
-            filteredPatients.map((patient) => (
-              <tr key={patient.id}>
-                <td>{patient.id}</td>
-                <td>{patient.time}</td>
+            filteredPatients.map((patient, index) => (
+              <tr key={index}>
+                <td>{index}</td>
+                <td>{patient.hour} - {new Date(patient.date).toLocaleDateString('vi-VN')} </td>
                 <td>{patient.name}</td>
-                <td>{patient.address}</td>
                 <td>{patient.phone}</td>
-                <td>{patient.gender}</td>
-                <td>{patient.reason}</td>
-                <td>{patient.prescription}</td>
+                <td>{patient.age}</td>
+                <td>{patient.symptoms}</td>
+                <td>{patient.status}</td>
                 <td>
-                  <button className={cx("btn", "btn-send")}
-                    onClick={()=> handlePrescripList(patient)}
-                  >Xem đơn thuốc</button>
-                  <button
-                    className={cx("btn", "btn-create")}
-                    onClick={() => handleSendPrescription(patient)}
-                  >
-                    Tạo đơn thuốc
-                  </button>
-                  <button className={cx("btn", "btn-cancel")}>Hủy</button>
+                  {patient.status === "Đang chờ khám" && (
+                    <div onClick={() => handleAgreeClick(patient)}>
+                      <button className={cx("confirm-btn")}>Xác nhận</button>
+                    </div>
+                  )}
+                  {patient.status === "Đã khám" && (
+                    <div onClick={() => handleSendPrescription(patient)}>
+                      <button className={cx("confirm-btn")}>Ghi chú</button>
+                    </div>
+                  )}
                 </td>
+
               </tr>
             ))
           ) : (
@@ -154,15 +153,16 @@ function ManagePatients() {
           />
         </>
       )}
-      {prescripList && (
-        <>
-          <div className={cx("prescription-overlay")} ></div>
-          <PrescripList
-            patient={selectedPatient}
-            medicines={medicinesData} // Truyền dữ liệu medicines
-            onClose={handleClosePrescription}
-          />
-        </>
+      {showPopupAgree && (
+        <div className={cx("popup-overlay")}>
+          <div className={cx("popup")}>
+            <p>Bạn có chắc chắn muốn xác nhận cuộc hẹn này không?</p>
+            <div className={cx("popup-buttons")}>
+              <button onClick={() => handleConfirmAppointment(selectedPatient)} className={cx("confirm-btn")}>Xác nhận</button>
+              <button onClick={() => setShowPopupAgree(false)} className={cx("cancel-btn")}>Hủy</button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

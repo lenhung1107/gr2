@@ -36,11 +36,11 @@ const DoctorLayout = () => {
       {/* Header mới */}
       <div className={cx('header')}>
         <div className={cx('logo')}>
-          <img src="ava_v2.png" alt="Logo ứng dụng" />
+          <img src="/ava_v2.png" alt="Logo ứng dụng" />
         </div>
         <div className={cx('avatar')}>
           <p>{doctorName}</p>
-          <img src="doctor.jpg" alt="Avatar bác sĩ" />
+          <img src="/doctor.jpg" alt="Avatar bác sĩ" />
         </div>
       </div>
       <div className={cx('main')}>

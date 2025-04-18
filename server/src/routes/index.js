@@ -6,6 +6,7 @@ const authentication= require('./auththentication');
 const specialtiesRouter = require('./specialties');
 const appointment=require('./appointments');
 const workdate= require('./workdate');
+const prescripttion=require('./prescription')
 function route(app){
     
     // app.use('/news',newsRouter)  
@@ -15,7 +16,9 @@ function route(app){
     app.use('/adminpage',userRoute);
     app.use('/auth',authentication);
     app.use('/specialties', specialtiesRouter);
-    app.use('/bookAppointment', appointment);
+    app.use('/appointment', appointment);
     app.use('/schedule',workdate);
+    app.use('/prescription',prescripttion);
+
 }
 module.exports = route;
