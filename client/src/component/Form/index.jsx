@@ -1,13 +1,41 @@
 import classNames from 'classnames/bind';
 import styles from './Form.module.scss';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 const Form = ({ onClose, doctor, date, time }) => {
   const [isForSelf, setIsForSelf] = useState(null);
+  const [savedPatients, setSavedPatients] = useState([]);
+  const [selectedPatientId, setSelectedPatientId] = useState('');
+  const [addingNew, setAddingNew] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
+
+  useEffect(() => {
+    const fetchSavedPatients = async () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && isForSelf === false) {
+        try {
+          const res = await fetch(`http://localhost:3000/appointment/getAppoinmentByUserId/${user._id}`);
+          const data = await res.json();
+          // Lọc danh sách người từng đặt hộ và loại bỏ trùng lặp theo tên + SĐT
+          const filtered = data.filter(a => a.isForSomeone).map(a => ({
+            id: a._id,
+            name: a.name,
+            phone: a.phone,
+            age: a.age
+          }));
+          const unique = Array.from(new Map(filtered.map(p => [p.phone, p])).values());
+          setSavedPatients(unique);
+        } catch (err) {
+          console.error('Lỗi lấy danh sách bệnh nhân đã đặt hộ:', err);
+        }
+      }
+    };
+
+    fetchSavedPatients();
+  }, [isForSelf]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,17 +44,35 @@ const Form = ({ onClose, doctor, date, time }) => {
       alert('Bạn cần đăng nhập');
       return;
     }
-    const appointmentData = {
+
+    let appointmentData = {
       user_id: user._id,
       doctor_id: doctor._id,
       appointment_date: date ? date.toISOString().split('T')[0] : null,
       appointment_time: time,
       symptoms: document.getElementById("reason")?.value || "",
       isForSomeoneElse: isForSelf === false,
-      patient_name: isForSelf === false ? document.getElementById("name")?.value : null,
-      patient_age: isForSelf === false ? document.getElementById("age")?.value : null,
-      patient_phone: isForSelf === false ? document.getElementById("phone")?.value : null
     };
+
+    if (isForSelf === false) {
+      if (!addingNew) {
+        const selected = savedPatients.find(p => p.id === selectedPatientId);
+        if (!selected) return alert('Vui lòng chọn người bệnh');
+        appointmentData = {
+          ...appointmentData,
+          patient_name: selected.name,
+          patient_age: selected.age,
+          patient_phone: selected.phone,
+        };
+      } else {
+        appointmentData = {
+          ...appointmentData,
+          patient_name: document.getElementById("name")?.value,
+          patient_age: document.getElementById("age")?.value,
+          patient_phone: document.getElementById("phone")?.value,
+        };
+      }
+    }
 
     try {
       const response = await fetch("http://localhost:3000/appointment/bookAppointment", {
@@ -76,7 +122,12 @@ const Form = ({ onClose, doctor, date, time }) => {
             <form className={cx('form')} onSubmit={handleSubmit}>
               <div className={cx('formGroup')}>
                 <label>Loại đặt lịch:</label>
-                <select onChange={(e) => setIsForSelf(e.target.value === 'self')}>
+                <select onChange={(e) => {
+                  const val = e.target.value;
+                  setIsForSelf(val === 'self');
+                  setAddingNew(false);
+                  setSelectedPatientId('');
+                }}>
                   <option value="" hidden>Chọn loại đặt lịch</option>
                   <option value="self">Khám cho bản thân</option>
                   <option value="other">Đặt khám hộ</option>
@@ -92,20 +143,40 @@ const Form = ({ onClose, doctor, date, time }) => {
 
               {isForSelf === false && (
                 <>
-                  <div className={cx('formRow')}>
-                    <div className={cx('formGroup')}>
-                      <label htmlFor="name">Tên bệnh nhân:</label>
-                      <input type="text" id="name" name="name" required />
-                    </div>
-                    <div className={cx('formGroup')}>
-                      <label htmlFor="age">Tuổi:</label>
-                      <input type="number" id="age" name="age" required />
-                    </div>
-                    <div className={cx('formGroup')}>
-                      <label htmlFor="phone">Số điện thoại:</label>
-                      <input type="tel" id="phone" name="phone" required />
-                    </div>
+                  <div className={cx('formGroup')}>
+                    <label>Chọn hồ sơ bệnh nhân cũ:</label>
+                    <select value={selectedPatientId} onChange={e => {
+                      setSelectedPatientId(e.target.value);
+                      setAddingNew(false);
+                    }}>
+                      <option value="">-- Chọn bệnh nhân --</option>
+                      {savedPatients.map(p => (
+                        <option key={p.id} value={p.id}>{p.name} - {p.phone} </option>
+                      ))}
+                    </select>
+                    <button type="button" className={cx('addNewButton')} onClick={() => {
+                      setAddingNew(true);
+                      setSelectedPatientId('');
+                    }}>+ Thêm người mới</button>
                   </div>
+
+                  {(addingNew || savedPatients.length === 0) && (
+                    <div className={cx('formRow')}>
+                      <div className={cx('formGroup')}>
+                        <label htmlFor="name">Tên bệnh nhân:</label>
+                        <input type="text" id="name" name="name" required />
+                      </div>
+                      <div className={cx('formGroup')}>
+                        <label htmlFor="age">Tuổi:</label>
+                        <input type="number" id="age" name="age" required />
+                      </div>
+                      <div className={cx('formGroup')}>
+                        <label htmlFor="phone">Số điện thoại:</label>
+                        <input type="tel" id="phone" name="phone" required />
+                      </div>
+                    </div>
+                  )}
+
                   <div className={cx('formGroup')}>
                     <label htmlFor="reason">Lý do khám:</label>
                     <input type="text" id="reason" name="reason" required />

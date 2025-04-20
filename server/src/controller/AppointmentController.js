@@ -10,34 +10,42 @@ class AppointmentController {
         try {
             let { user_id, doctor_id, appointment_date, appointment_time, symptoms, isForSomeoneElse, patient_name, patient_age, patient_phone } = req.body;
             user_id = new mongoose.Types.ObjectId(user_id);
+
             let patient;
-            if (isForSomeoneElse && !user_id) {
-                return res.status(400).json({ error: "user_id bị thiếu khi đặt hộ" });
-            }
+
             if (isForSomeoneElse) {
-                // Kiểm tra xem người được đặt hộ đã có hồ sơ chưa
-                patient = await Patient.findOne({ name: patient_name, phone: patient_phone });
+                // Kiểm tra đã có hồ sơ bệnh nhân hộ chưa (theo tên và số điện thoại + user_id là người đặt)
+                patient = await Patient.findOne({
+                    user_id,
+                    name: patient_name,
+                    phone: patient_phone,
+                    isForSomeone: true
+                });
+
                 if (!patient) {
-                    // Nếu chưa có, tạo mới hồ sơ bệnh nhân hộ
+                    // Nếu chưa có, tạo mới
                     patient = new Patient({
-                        doctor_id: doctor_id,
-                        user_id: user_id,
+                        doctor_id,
+                        user_id,
                         isForSomeone: true,
                         name: patient_name,
                         age: patient_age,
                         phone: patient_phone,
-                        patient_code: `PAT-${Date.now()}`,
+                        patient_code: `PAT-${Date.now()}`
                     });
                     await patient.save();
                 }
+
             } else {
-                // Nếu đặt cho bản thân, kiểm tra xem Patient đã tồn tại chưa
-                patient = await Patient.findOne({ user_id });
+                // Đặt cho bản thân: tìm theo user_id và isForSomeone = false
+                patient = await Patient.findOne({ user_id, isForSomeone: false });
+
                 if (!patient) {
-                    // Nếu chưa có, tạo mới
+                    // Nếu chưa có, tạo mới hồ sơ cho bản thân
                     patient = new Patient({
                         user_id,
-                        patient_code: `PAT-${Date.now()}`,
+                        isForSomeone: false,
+                        patient_code: `PAT-${Date.now()}`
                     });
                     await patient.save();
                 }
@@ -45,7 +53,7 @@ class AppointmentController {
 
             // Tạo cuộc hẹn
             const newAppointment = new Appointment({
-                user_id: user_id,
+                user_id,
                 patient_id: patient._id,
                 doctor_id,
                 appointment_date,
@@ -62,7 +70,8 @@ class AppointmentController {
             console.error("Lỗi đặt lịch:", error);
             res.status(500).json({ message: "Lỗi đặt lịch!", error: error.message });
         }
-    };
+    }
+
     async getAllAppointments(req, res) {
         try {
             const appointments = await Appointment.find()
@@ -208,7 +217,7 @@ class AppointmentController {
                     path: 'doctor_id',
                     select: 'name'
                 });
-                console.log(appointments)
+            console.log(appointments)
             const prescriptionList = await Prescription.find({
                 appointment_id: { $in: appointments.map(a => a._id) }
             }).select('appointment_id');
