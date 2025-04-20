@@ -5,7 +5,11 @@ const Patient= new Schema({
         type: Schema.Types.ObjectId,
         ref: 'TestUser', // Tham chiếu đến bảng User
     },
-     isForSomeone:{type: Boolean, default: false},
+    doctor_id: {
+        type: Schema.Types.ObjectId,
+        ref:'Doctor',
+    },
+    isForSomeone:{type: Boolean, default: false},
     name: { type: String, default: null }, // Chỉ có nếu là khám hộ
     phone: { type: String, default: null }, // Chỉ có nếu là khám hộ
     age: { type: Number, default: null }, // Chỉ có nếu là khám hộ

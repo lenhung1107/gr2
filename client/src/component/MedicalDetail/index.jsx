@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 function MedicalDetail({ user, historyData = [], onCancel }) {
   const [activeTab, setActiveTab] = useState("info");
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-
+  // console.log(user.patient_code);
   // Dữ liệu giả định cho lịch sử khám bệnh
   const dummyHistoryData = [
     {
@@ -69,7 +69,7 @@ function MedicalDetail({ user, historyData = [], onCancel }) {
                   <p><strong>Liên hệ: </strong> {user.email}</p>
                   <p><strong>Số điện thoại liên hệ: </strong>{user.phone}</p>
                 </div>
-                <span><strong>Mã: #P14000010</strong></span>
+                <span><strong>{user.patient_code}</strong></span>
               </div>
             )}
 
@@ -164,6 +164,7 @@ function MedicalDetail({ user, historyData = [], onCancel }) {
       address: PropTypes.string,
       phone: PropTypes.string,
       email: PropTypes.string,
+      patient_code:PropTypes.string
   }),
       historyData: PropTypes.arrayOf(
       PropTypes.shape({

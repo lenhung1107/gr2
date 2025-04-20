@@ -60,8 +60,6 @@
 .patient-table th:nth-child(8) {
   max-width: 100px;     // Giới hạn chiều rộng tối đa
   width: 100px;
-  // word-wrap: break-word; // Tự động xuống dòng nếu quá dài
-  // white-space: normal;   // Cho phép xuống dòng
 }
 /* Hover cho các nút trong bảng */
 .patient-table td a:hover {

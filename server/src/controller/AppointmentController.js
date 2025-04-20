@@ -1,6 +1,7 @@
 const Appointment = require('../models/Appointment');
 const Patient = require('../models/Patient');
 const Doctor = require('../models/Doctor');
+const Prescription = require('../models/Prescription'); // Nhớ import model Prescription nếu chưa
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -19,6 +20,7 @@ class AppointmentController {
                 if (!patient) {
                     // Nếu chưa có, tạo mới hồ sơ bệnh nhân hộ
                     patient = new Patient({
+                        doctor_id: doctor_id,
                         user_id: user_id,
                         isForSomeone: true,
                         name: patient_name,
@@ -145,6 +147,7 @@ class AppointmentController {
                     ? patient.age
                     : patient.user_id?.age;
                 return {
+                    _id: appt._id,
                     isForSomeone: isForSomeone,
                     name: patientName,
                     phone: patientPhone,
@@ -205,7 +208,12 @@ class AppointmentController {
                     path: 'doctor_id',
                     select: 'name'
                 });
+                console.log(appointments)
+            const prescriptionList = await Prescription.find({
+                appointment_id: { $in: appointments.map(a => a._id) }
+            }).select('appointment_id');
 
+            const appointmentIdsWithPrescription = new Set(prescriptionList.map(p => p.appointment_id.toString()));
             // Xử lý dữ liệu
             const formattedAppointments = appointments.map((appt) => {
                 const patient = appt.patient_id;
@@ -231,7 +239,8 @@ class AppointmentController {
                     hour: appt.appointment_time,
                     doctor: appt.doctor_id?.name,
                     symptoms: appt.symptoms,
-                    status: appt.status
+                    status: appt.status,
+                    hasPrescription: appointmentIdsWithPrescription.has(appt._id.toString())
                 };
             });
             res.status(200).json(formattedAppointments);

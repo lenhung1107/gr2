@@ -1,17 +1,22 @@
 .wrapper {
+    margin-left: 50px;
+    // background-color: aqua;
     h1 {
         font-size: 2.6rem;
         color: black;
     }
 }
-
+.viewInfor{
+    margin-top: 30px;
+    width: 500px;
+    
+}
 .table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
     font-size: 1.6rem;
     /* Đặt cỡ chữ toàn bộ bảng */
-
     th,
     td {
         border: 1px solid #ddd;

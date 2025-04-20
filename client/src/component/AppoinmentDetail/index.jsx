@@ -1,11 +1,42 @@
-
 import PropTypes from "prop-types";
 import styles from "./AppoinmentDetail.module.scss";
 import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 const cx = classNames.bind(styles);
+
 function AppoinmentDetail({ historyData }) {
+  const [prescription, setPrescription] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const appointmentId = historyData?._id;
+  console.log( historyData)
+  useEffect(() => {
+    const fetchPrescription = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/prescription/getPrescriptionByAppointmentId/${appointmentId}`);
+        setPrescription(res.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Lỗi khi tải đơn thuốc.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (appointmentId) {
+      fetchPrescription();
+    }
+  }, [appointmentId]);
+
+  if (loading) return <p style={{ fontSize: "1.6rem", color: "#000" }}>Đang tải đơn thuốc...</p>;
+  if (error) return <p style={{ fontSize: "1.6rem", color: "red" }}>{error}</p>;
+  if (!prescription) return null;
+
   return (
-    <table className={cx('table')}>
+    
+    <table className={cx("table")}>
       <thead>
         <tr>
           <th>#</th>
@@ -17,41 +48,31 @@ function AppoinmentDetail({ historyData }) {
         </tr>
       </thead>
       <tbody>
-        {historyData.map((item, index) => (
-          <tr key={index}>
-            <td>{index + 1}</td>
-            <td>{item.date}</td>
-            <td>{item.reason}</td>
-            <td>{item.doctor}</td>
-            <td>
-              {item.medicine.map((med, idx) => (
-                <div key={idx}>{med}</div>
-              ))}
-            </td>
-            <td>{item.notes}</td>
-          </tr>
-        ))}
+        <tr>
+          <td>1</td>
+          <td>{new Date(prescription.date).toLocaleDateString('vi-VN')}</td>
+          <td>{prescription.reason}</td>
+          <td>{prescription.doctor}</td>
+          <td>
+            {prescription.medicine.map((med, idx) => (
+              <div key={idx}>{med}</div>
+            ))}
+          </td>
+          <td>{prescription.notes || "Không có"}</td>
+        </tr>
       </tbody>
     </table>
   );
 }
 
 AppoinmentDetail.propTypes = {
-  historyData: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired, // Ngày khám (bắt buộc)
-      reason: PropTypes.string.isRequired, // Lý do khám bệnh (bắt buộc)
-      doctor: PropTypes.string.isRequired, // Bác sĩ (bắt buộc)
-      medicine: PropTypes.arrayOf(PropTypes.string).isRequired, // Danh sách đơn thuốc (bắt buộc)
-      notes: PropTypes.string, // Ghi chú của bác sĩ (không bắt buộc)
-      invoiceViewLink: PropTypes.string.isRequired, // Link xem hóa đơn (bắt buộc)
-      invoiceDownloadLink: PropTypes.string.isRequired, // Link tải hóa đơn (bắt buộc)
-    })
-  ).isRequired,
+  historyData: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+  }),
 };
 
 AppoinmentDetail.defaultProps = {
-  historyData: [], // Mặc định là mảng rỗng nếu không có dữ liệu
+  historyData: null,
 };
 
 export default AppoinmentDetail;

@@ -10,7 +10,6 @@ const medicinesData = [
 ];
 function ManagePatients() {
   const { id } = useParams(); // destructuring để lấy id string
-  console.log(id)
   const apiUrl = `http://localhost:3000/appointment/getAppoinmentByDoctorId/${id}`;
   const { data: patientsDataRaw, loading, error } = useFetchData(apiUrl);
   const patientsData = useMemo(() => patientsDataRaw || [], [patientsDataRaw]);
@@ -49,7 +48,6 @@ function ManagePatients() {
     setSelectedPatient(patient);
     setShowPopupAgree(true);
   };
-  console.log(showPopupAgree)
   const handleConfirmAppointment = async (patient) => {
     try {
       const response = await fetch(`http://localhost:3000/appointment/confirmByDoctor/${patient._id}`, {
@@ -77,7 +75,6 @@ function ManagePatients() {
   };
   if (loading) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }} >Đang tải dữ liệu...</p>;
   if (error) return <p style={{ color: 'red', fontSize: '1.8rem', fontWeight: '500' }}>Lỗi: {error}</p>;
-
   return (
     <div className={cx("wrapper")}>
       <h3>QUẢN LÝ BỆNH NHÂN</h3>
@@ -124,10 +121,13 @@ function ManagePatients() {
                       <button className={cx("confirm-btn")}>Xác nhận</button>
                     </div>
                   )}
-                  {patient.status === "Đã khám" && (
+                  {patient.status === "Đã khám" && !patient.hasPrescription && (
                     <div onClick={() => handleSendPrescription(patient)}>
                       <button className={cx("confirm-btn")}>Ghi chú</button>
                     </div>
+                  )}
+                   {patient.status === "Đã khám" && patient.hasPrescription&& (
+                    <p style={{fontStyle: 'italic', fontSize:'1.4rem'}}>Đã gửi đơn thuốc</p>
                   )}
                 </td>
 

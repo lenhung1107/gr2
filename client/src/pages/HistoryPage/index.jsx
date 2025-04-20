@@ -29,12 +29,13 @@ function HistoryPage() {
         setShowPopupView(true);
     };
     const statusLabels = ["Tất cả", "Đang chờ xác nhận", "Đang chờ khám", "Đã khám", "Đã hủy"];
-
+   
     const filteredAppointments =
         filter === "Tất cả" ? appointments : appointments.filter(app => app.status === filter);
     if (loading) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }} >Đang tải dữ liệu...</p>;
     if (error) return <p style={{ color: 'red', fontSize: '1.8rem', fontWeight: '500' }}>Lỗi: {error}</p>;
     if (!appointments || appointments.length === 0) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }}>Không có cuộc hẹn nào.</p>;
+    console.log(selectedAppointment)
     return (
         <div className={cx("wrapper")}>
             <h2>Lịch sử Đặt Khám</h2>
@@ -54,6 +55,7 @@ function HistoryPage() {
                     <thead>
                         <tr>
                             <th>Số Thứ Tự</th>
+                            <th>Tên Bệnh Nhân</th>
                             <th>Ngày Khám</th>
                             <th>Giờ Khám</th>
                             <th>Bác Sĩ / Gói Khám</th>
@@ -68,6 +70,7 @@ function HistoryPage() {
                                     {index + 1}
                                     {app.isForSomeone && <span className={cx("tag")}>Đặt hộ</span>}
                                 </td>
+                                <td>{app.name}</td>
                                 <td>{new Date(app.date).toLocaleDateString('vi-VN')}</td>
                                 <td>{app.hour}</td>
                                 <td>{app.doctor}</td>
@@ -106,7 +109,7 @@ function HistoryPage() {
                 <div className={cx("popup-overlay")} >
                     <div className={cx("popup-content")}>
                         <button className={cx("close-btn")} onClick={() => setShowPopupView(false)}>×</button>
-                        <AppoinmentDetail historyData={[selectedAppointment]} />
+                        <AppoinmentDetail historyData={selectedAppointment} />
                     </div>
                 </div>
             )}
