@@ -1,6 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './Form.module.scss';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
@@ -20,7 +22,9 @@ const Form = ({ onClose, doctor, date, time }) => {
           const res = await fetch(`http://localhost:3000/appointment/getAppoinmentByUserId/${user._id}`);
           const data = await res.json();
           // Lọc danh sách người từng đặt hộ và loại bỏ trùng lặp theo tên + SĐT
-          const filtered = data.filter(a => a.isForSomeone).map(a => ({
+          const filtered = data.filter(a => a.isForSomeone&&
+            a.name !== "Đã xoá" &&
+            a.phone !== "Không có").map(a => ({
             id: a._id,
             name: a.name,
             phone: a.phone,
@@ -82,7 +86,7 @@ const Form = ({ onClose, doctor, date, time }) => {
       });
       const data = await response.json();
       if (response.ok) {
-        setSuccessMessage(data.message || "Đặt lịch thành công!");
+        setSuccessMessage(data.message || "Đặt lịch khám thành công !");
       } else {
         alert("Lỗi: " + data.message);
       }
@@ -93,16 +97,17 @@ const Form = ({ onClose, doctor, date, time }) => {
 
   return (
     <div className={cx('overlay')}>
-      <div className={cx('wrapper')}>
+      {/* <div className={cx('wrapper')}> */}
         <button className={cx('closeButton')} onClick={onClose}>×</button>
         {successMessage ? (
           <div className={cx('successPopup')}>
-            <span className={cx('successIcon')}>✅</span>
+            {/* <span className={cx('successIcon')}>✅</span> */}
+             <FontAwesomeIcon icon={faCircleCheck} className={cx('successIcon')}/>
             <p>{successMessage}</p>
             <button onClick={() => window.location.href = '/'}>OK</button>
           </div>
         ) : (
-          <>
+          <div className={cx("wrapper")}>
             <h2 className={cx('title')}>Thông tin đặt lịch khám bệnh</h2>
             <div className={cx('infoSection')}>
               <img
@@ -191,9 +196,9 @@ const Form = ({ onClose, doctor, date, time }) => {
                 </div>
               )}
             </form>
-          </>
+          </div>
         )}
-      </div>
+      {/* </div> */}
     </div>
   );
 };

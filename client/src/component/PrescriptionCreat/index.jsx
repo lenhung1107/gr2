@@ -12,9 +12,9 @@ function PrescriptionCreate({ patient, medicines, onClose }) {
         unit: "",
         quantity: "",
         dosage: "",
-        note: "",
     });
     const [note, setNote] = useState("");
+    const [diagnosis, setDiagnosis] = useState("");
     // Hàm xử lý nhập liệu
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -42,7 +42,8 @@ function PrescriptionCreate({ patient, medicines, onClose }) {
             const response = await axios.post("http://localhost:3000/prescription/createPrescription", {
                 appointment_id: patient._id, // Đảm bảo bạn truyền được prop này từ cha
                 medicines: medicineList,
-                note: note
+                note: note,
+                diagnosis: diagnosis
             });
             if (response.status === 201) {
                 alert("Đơn thuốc đã được gửi thành công!");
@@ -70,9 +71,20 @@ function PrescriptionCreate({ patient, medicines, onClose }) {
                     {/* <input type="text" value={patient.symptoms} readOnly /> */}
                 </div>
             </div>
-
+            <div className={cx("diagnosis")}>
+                <div className={cx("diagnosis-section")}>
+                    <label>Chuẩn đoán của bác sĩ:</label>
+                    <textarea
+                        placeholder="Chuấn đoán bệnh"
+                        value={diagnosis}
+                        onChange={(e) => setDiagnosis(e.target.value)}
+    
+                    />
+                </div>
+            </div>
             {/* Danh sách thuốc */}
             <div className={cx("medicine-list")}>
+                <p>Thêm thuốc cho bệnh nhân</p>
                 {medicineList.map((medicine, index) => (
                     <div key={index} className={cx("medicine-item")}>
                         <input type="text" value={medicine.name} readOnly placeholder="Tên thuốc" />

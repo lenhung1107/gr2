@@ -20,16 +20,33 @@ function HistoryPage() {
         setSelectedAppointment(appointment);
         setShowPopupCancel(true);
     };
-    const confirmCancel = () => {
-        alert(`Bạn đã hủy lịch hẹn với ${selectedAppointment.doctor} vào ngày ${selectedAppointment.date}`);
-        setShowPopupCancel(false);
+    const confirmCancel = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/appointment/cancelAppointment/${selectedAppointment._id}`, {
+                method: "DELETE"
+            });
+            if (response.ok) {
+                alert("Đã hủy lịch hẹn thành công!");
+                setShowPopupCancel(false);
+
+                // Xoá khỏi danh sách hiện tại trên FE (tùy chọn reload hoặc filter lại)
+                window.location.reload(); // hoặc cập nhật lại state nếu muốn mượt hơn
+            } else {
+                const err = await response.json();
+                alert("Hủy không thành công: " + err.message);
+            }
+        } catch (error) {
+            console.error("Lỗi khi hủy:", error);
+            alert("Đã xảy ra lỗi khi hủy lịch hẹn.");
+        }
     };
+
     const handleViewClick = (appointment) => {
         setSelectedAppointment(appointment);
         setShowPopupView(true);
     };
     const statusLabels = ["Tất cả", "Đang chờ xác nhận", "Đang chờ khám", "Đã khám", "Đã hủy"];
-   
+
     const filteredAppointments =
         filter === "Tất cả" ? appointments : appointments.filter(app => app.status === filter);
     if (loading) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }} >Đang tải dữ liệu...</p>;

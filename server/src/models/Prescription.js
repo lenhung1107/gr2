@@ -15,7 +15,8 @@ const PrescriptionSchema = new Schema({
             dosage: String,
         }
     ],
-    note: {type: String}
+    note: {type: String},
+    diagnosis:{type: String}
 });
 
 module.exports = mongoose.model("Prescription", PrescriptionSchema);

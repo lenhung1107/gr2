@@ -71,7 +71,31 @@ class AppointmentController {
             res.status(500).json({ message: "Lỗi đặt lịch!", error: error.message });
         }
     }
-
+    async cancelAppointment(req, res) {
+        const { id } = req.params;
+        try {
+            const appointment = await Appointment.findById(id);
+            if (!appointment) {
+                return res.status(404).json({ message: "Không tìm thấy cuộc hẹn." });
+            }
+            const patientId = appointment.patient_id;
+            appointment.status = "Đã hủy";
+            await appointment.save();
+            // Kiểm tra xem bệnh nhân này còn dùng cho cuộc hẹn nào khác không
+            const otherAppointments = await Appointment.find({
+                patient_id: patientId,
+                _id: { $ne: new mongoose.Types.ObjectId(id) }, // ép kiểu
+            });
+            const patient = await Patient.findById(patientId);
+            if (otherAppointments.length === 0 && patient?.isForSomeone) {
+                await Patient.findByIdAndDelete(patientId);
+            }
+            return res.status(200).json({ message: "Đã hủy cuộc hẹn thành công." });
+        } catch (error) {
+            console.error("Lỗi BE:", error);
+            return res.status(500).json({ message: "Đã xảy ra lỗi server." }); // ✅ THÊM DÒNG NÀY
+        }
+    }
     async getAllAppointments(req, res) {
         try {
             const appointments = await Appointment.find()
@@ -91,18 +115,18 @@ class AppointmentController {
             // Xử lý dữ liệu
             const formattedAppointments = appointments.map((appt) => {
                 const patient = appt.patient_id;
-                const isForSomeone = patient.isForSomeone;
+                const isForSomeone = patient?.isForSomeone ?? true;
                 const patientName = isForSomeone
-                    ? patient.name
-                    : patient.user_id?.name;
+                    ? patient?.name || "Đã xoá"
+                    : patient?.user_id?.name || "Đã xoá";
 
                 const patientPhone = isForSomeone
-                    ? patient.phone
-                    : patient.user_id?.phone;
+                    ? patient?.phone || "Không có"
+                    : patient?.user_id?.phone || "Không có";
 
                 const patientAge = isForSomeone
-                    ? patient.age
-                    : patient.user_id?.age;
+                    ? patient?.age || "Không rõ"
+                    : patient?.user_id?.age || "Không rõ";
 
                 return {
                     _id: appt._id,
@@ -143,18 +167,21 @@ class AppointmentController {
             // Xử lý dữ liệu
             const formattedAppointments = appointments.map((appt) => {
                 const patient = appt.patient_id;
-                const isForSomeone = patient.isForSomeone;
+
+                // Nếu không còn thông tin bệnh nhân (bị xoá), gán giá trị mặc định
+                const isForSomeone = patient?.isForSomeone ?? true; // mặc định là true
                 const patientName = isForSomeone
-                    ? patient.name
-                    : patient.user_id?.name;
+                    ? patient?.name || "Đã xoá"
+                    : patient?.user_id?.name || "Đã xoá";
 
                 const patientPhone = isForSomeone
-                    ? patient.phone
-                    : patient.user_id?.phone;
+                    ? patient?.phone || "Không có"
+                    : patient?.user_id?.phone || "Không có";
 
                 const patientAge = isForSomeone
-                    ? patient.age
-                    : patient.user_id?.age;
+                    ? patient?.age || "Không rõ"
+                    : patient?.user_id?.age || "Không rõ";
+
                 return {
                     _id: appt._id,
                     isForSomeone: isForSomeone,
@@ -226,18 +253,18 @@ class AppointmentController {
             // Xử lý dữ liệu
             const formattedAppointments = appointments.map((appt) => {
                 const patient = appt.patient_id;
-                const isForSomeone = patient.isForSomeone;
+                const isForSomeone = patient?.isForSomeone ?? true;
                 const patientName = isForSomeone
-                    ? patient.name
-                    : patient.user_id?.name;
+                    ? patient?.name || "Đã xoá"
+                    : patient?.user_id?.name || "Đã xoá";
 
                 const patientPhone = isForSomeone
-                    ? patient.phone
-                    : patient.user_id?.phone;
+                    ? patient?.phone || "Không có"
+                    : patient?.user_id?.phone || "Không có";
 
                 const patientAge = isForSomeone
-                    ? patient.age
-                    : patient.user_id?.age;
+                    ? patient?.age || "Không rõ"
+                    : patient?.user_id?.age || "Không rõ";
                 return {
                     _id: appt._id,
                     isForSomeone: isForSomeone,

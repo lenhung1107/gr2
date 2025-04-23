@@ -9,7 +9,16 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
   z-index: 1000;
-
+  .diagnosis{
+    display: flex;
+    .diagnosis-section{
+      display: flex;
+      flex-direction: column;
+      width: 90%;
+      font-size: 1.6rem;
+      
+    }
+  }
   h3 {
       margin-bottom: 20px;
       font-size: 2.5rem;
@@ -50,6 +59,8 @@
   }
 
   .medicine-list {
+    font-size: 1.6rem;
+    font-weight: 500;
       .medicine-item {
           display: flex;
           align-items: center;

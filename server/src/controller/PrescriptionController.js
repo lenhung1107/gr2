@@ -3,7 +3,7 @@ const Appointment = require('../models/Appointment');
 class PrescriptionController {
     async createPrescription(req, res) {
         try {
-            const { appointment_id, medicines, note } = req.body;
+            const { appointment_id, medicines, note,diagnosis } = req.body;
 
             if (!appointment_id || !Array.isArray(medicines) || medicines.length === 0) {
                 return res.status(400).json({ message: 'Thiếu dữ liệu hoặc danh sách thuốc rỗng' });
@@ -12,7 +12,8 @@ class PrescriptionController {
             const newPrescription = new Prescription({
                 appointment_id,
                 medicines,
-                note
+                note,
+                diagnosis
             });
 
             await newPrescription.save();
@@ -47,6 +48,7 @@ class PrescriptionController {
                 doctor: prescription.appointment_id.doctor_id?.name || 'Không rõ',
                 medicine: prescription.medicines.map(med => `${med.name} - ${med.quantity} ${med.unit} - ${med.dosage}`),
                 notes: prescription.note || '',
+                diagnosis: prescription.diagnosis ||''
             });
         }
         catch (error) {

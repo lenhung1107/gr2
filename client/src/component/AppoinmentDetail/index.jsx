@@ -33,7 +33,7 @@ function AppoinmentDetail({ historyData }) {
   if (loading) return <p style={{ fontSize: "1.6rem", color: "#000" }}>Đang tải đơn thuốc...</p>;
   if (error) return <p style={{ fontSize: "1.6rem", color: "red" }}>{error}</p>;
   if (!prescription) return null;
-
+ console.log(prescription);
   return (
     
     <table className={cx("table")}>
@@ -41,8 +41,9 @@ function AppoinmentDetail({ historyData }) {
         <tr>
           <th>#</th>
           <th>Ngày khám</th>
-          <th>Lý do</th>
           <th>Bác sĩ</th>
+          <th>Lý do</th>
+          <th>Chuẩn đoán của bác sĩ</th>
           <th>Đơn thuốc</th>
           <th>Lời dặn của bác sĩ</th>
         </tr>
@@ -51,8 +52,9 @@ function AppoinmentDetail({ historyData }) {
         <tr>
           <td>1</td>
           <td>{new Date(prescription.date).toLocaleDateString('vi-VN')}</td>
-          <td>{prescription.reason}</td>
           <td>{prescription.doctor}</td>
+          <td>{prescription.reason}</td>
+          <td>{prescription.diagnosis}</td>
           <td>
             {prescription.medicine.map((med, idx) => (
               <div key={idx}>{med}</div>
