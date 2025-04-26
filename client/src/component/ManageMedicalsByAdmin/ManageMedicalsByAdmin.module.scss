@@ -1,0 +1,115 @@
+.wrapper {
+    margin-left: 50px;
+    // background-color: aqua;
+    h1 {
+        font-size: 2.6rem;
+        color: black;
+    }
+}
+.viewInfor{
+    margin-top: 30px;
+    width: 500px;
+    
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 1.6rem;
+    /* Đặt cỡ chữ toàn bộ bảng */
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 0.5rem;
+        text-align: center;
+
+        .iconEdit {
+            margin-right: 20px;
+        }
+    }
+
+    th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+
+    a {
+        color: blue;
+        text-decoration: underline;
+        margin: 0 0.5rem;
+    }
+}
+
+.table td a:hover {
+    text-decoration: underline;
+    /* Gạch chân khi hover */
+}
+
+.filter {
+    display: flex;
+    gap: 20px;
+
+    .input {
+        font-size: 1.6rem;
+    }
+
+
+}
+
+.button {
+    display: flex;
+    gap: 15px;
+    margin: 15px 0;
+
+}
+
+.button button {
+    font-size: 1.6rem;
+    /* Cỡ chữ chung */
+    padding: 0.5rem 1.2rem;
+    /* Làm cho nút nhỏ gọn */
+    background-color: #f5f5f5;
+    /* Màu nền nhẹ */
+    border: 1px solid #ccc;
+    /* Viền */
+    border-radius: 5px;
+    /* Bo góc nhẹ */
+    cursor: pointer;
+    min-width: 100px;
+    /* Đảm bảo các nút bằng nhau */
+    text-align: center;
+}
+
+.button button[type="submit"]:hover {
+    background-color: rgb(58, 181, 138);
+    color: white;
+    /* Màu nền khi hover */
+}
+
+.button button[type="reset"]:hover {
+    background-color: rgb(244, 67, 54);
+    color: white;
+    /* Màu nền khi hover */
+}
+
+.iconEdit {
+    color: rgb(70, 222, 163); // Đổi màu icon edit
+    cursor: pointer; // Hiển thị bàn tay khi hover
+    font-size: 1.8rem;
+    &:hover {
+        color: rgb(58, 181, 138); // Màu đậm hơn khi di chuột
+    }
+}
+
+// Hiệu ứng xuất hiện
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

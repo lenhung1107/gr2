@@ -2,8 +2,8 @@
 const express = require('express');
 const router = express.Router();
 
-const doctorController = require('../controller/PackController');
+const packController = require('../controller/PackController');
 
-router.get('/', doctorController.getPack);
-
+router.get('/getAll', packController.getPack);
+router.get('/getById/:id',packController.getPackById);
 module.exports = router;

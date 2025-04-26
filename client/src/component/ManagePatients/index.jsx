@@ -75,6 +75,7 @@ function ManagePatients() {
   };
   if (loading) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }} >Đang tải dữ liệu...</p>;
   if (error) return <p style={{ color: 'red', fontSize: '1.8rem', fontWeight: '500' }}>Lỗi: {error}</p>;
+  console.log(patientsData)
   return (
     <div className={cx("wrapper")}>
       <h3>QUẢN LÝ BỆNH NHÂN</h3>
@@ -95,7 +96,8 @@ function ManagePatients() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Thời gian khám</th>
+            <th>Ngày khám</th>
+            <th>Giờ khám</th>
             <th>Tên bệnh nhân</th>
             <th>Số điện thoại</th>
             <th>Tuổi</th>
@@ -109,7 +111,8 @@ function ManagePatients() {
             filteredPatients.map((patient, index) => (
               <tr key={index}>
                 <td>{index}</td>
-                <td>{patient.hour} - {new Date(patient.date).toLocaleDateString('vi-VN')} </td>
+                <td>{new Date(patient.date).toLocaleDateString('vi-VN')}</td>
+                <td>{patient.hour} </td>
                 <td>{patient.name}</td>
                 <td>{patient.phone}</td>
                 <td>{patient.age}</td>

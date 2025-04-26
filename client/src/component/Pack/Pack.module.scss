@@ -1,54 +1,66 @@
-.pack-list{
+.pack-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 45px; // khoảng cách giữa các cột
+    gap: 45px; /* khoảng cách giữa các cột */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+/* Responsive: Khi màn nhỏ lại thì 1 cột thôi */
+@media (max-width: 768px) {
+    .pack-list {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
 .grid-container {
     display: grid;
-    grid-template-columns: 45% 55%; /* Chia thành 2 cột, cột đầu chiếm 40%, cột thứ hai chiếm 60% */
-    gap: 20px; /* Khoảng cách giữa các ô */
-    background-color: white; /* Màu nền cho grid-container */
-    padding: 20px; /* Đệm để tạo khoảng cách với nội dung bên trong */
+    grid-template-columns: 45% 55%;
+    gap: 20px;
+    background-color: white;
+    padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
+    width: 480px;
+    height: 180px;
+    border-radius: 8px;
 }
-.grid-container{
-   width: 480px;
-   height: 180px;
-   border-radius: 8px;
+
+/* Responsive cho grid-container */
+@media (max-width: 768px) {
+    .grid-container {
+        width: 100%;
+        height: auto; /* Chiều cao tự động */
+        grid-template-columns: 40% 60%; /* nhẹ nhàng cho mobile */
+    }
 }
 
 .image {
-    grid-column: 1 / 2; /* Chiếm từ cột 1 đến cột 2 (cột đầu tiên) */
-    line-height: 0; /* Giảm khoảng trống xung quanh ảnh */
+    grid-column: 1 / 2;
+    line-height: 0;
     margin-right: 5px;
-    // margin-top: 17px;
     margin-left: 10px;
 }
 
 .image img {
-    max-width: 100%; /* Đảm bảo ảnh không vượt quá phần tử cha */
-    height: auto; /* Đảm bảo tỷ lệ khung hình */
+    max-width: 100%;
+    height: auto;
 }
-
 
 .info {
     margin-left: 5px;
-    grid-column: 2 / 3; /* Chiếm từ cột 2 đến cột 3 (cột thứ hai) */
+    grid-column: 2 / 3;
 }
 
 .info h2 {
-    margin-top: 0; /* Xóa khoảng trống đầu đoạn */
+    margin-top: 0;
     color: black;
     margin-bottom: 8px;
     font-size: 2rem;
 }
 
 .info p {
-    margin: 8px 0; /* Khoảng cách giữa các dòng */
+    margin: 8px 0;
     color: black;
     font-size: 1.8rem;
-    font-weight: 500
-
+    font-weight: 500;
 }

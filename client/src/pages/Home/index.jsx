@@ -10,21 +10,6 @@ import Button from '../../component/Button'
 // import Search from '../../component/Layout/DefaultLayout/Search';
 const cx = classNames.bind(styles);
 function Home() {
-    // const user = useSelector((state) => state.auth.login?.currentUser)
-    // let axiosJWT = axios.create();
-    // const dispatch = useDispatch();
-    // const refreshToken = async()=>{
-    //     try{
-    //         const res= await axios.post("http://localhost:3000/auth/refresh",{
-    //             withCredentials: true,
-    //         })
-    //         return res.data;
-    //     }
-    //     catch(err){
-    //         console.log(err);
-    //     }
-
-    // }
     return (
         <div className={cx('background')}>
             <div className={cx('wrapper')}>

@@ -10,6 +10,15 @@ class PackController {
             res.status(400).json({ error: 'error!' });
         }
     }
+    async getPackById(req, res) {
+        const { id } = req.params;
+        try {
+            const packs = await Pack.findById(id);
+            res.json(packs);
+        } catch (err) {
+            res.status(400).json({ error: 'error!' });
+        }
+    }
 }
 
 module.exports = new PackController();

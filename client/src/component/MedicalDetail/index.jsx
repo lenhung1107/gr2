@@ -2,14 +2,16 @@ import classNames from "classnames/bind";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./MedicalDetail.module.scss";
-
+import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
 
-function MedicalDetail({ user, historyData = [], onCancel }) {
+function MedicalDetail({ user, onCancel }) {
+  const apiUrl = `http://localhost:3000/appointment/getAppointmentsByPatientId/${user._id}`;
+  const { data: historyData, loading, error } = useFetchData(apiUrl);
+  console.log(historyData);
+  console.log(user._id);
   const [activeTab, setActiveTab] = useState("info");
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-  // console.log(user.patient_code);
-  // Dữ liệu giả định cho lịch sử khám bệnh
   const dummyHistoryData = [
     {
       id: "65fd1a9e9c8b2b001c4f7a01",
@@ -38,8 +40,9 @@ function MedicalDetail({ user, historyData = [], onCancel }) {
   ];
 
   // Nếu `historyData` rỗng, dùng dữ liệu giả định
-  const finalHistoryData = historyData.length > 0 ? historyData : dummyHistoryData;
-
+  const finalHistoryData = Array.isArray(historyData) && historyData.length > 0 ? historyData : dummyHistoryData;
+  if (loading) return <p style={{ fontSize: "1.6rem", color: "#000" }}>Đang tải đơn thuốc...</p>;
+  if (error) return <p style={{ fontSize: "1.6rem", color: "red" }}>{error}</p>;
   return (
     <div className={cx("popupEdit")}>
       <div className={cx("popupContent-Edit")}>
@@ -88,7 +91,7 @@ function MedicalDetail({ user, historyData = [], onCancel }) {
                   <tbody>
                     {finalHistoryData.map((item) => (
                       <tr key={item.id} className={cx("tableRow")}>
-                        <td>{item.date}</td>
+                        <td>{new Date(item.date).toLocaleDateString('vi-VN')}</td>
                         <td>{item.doctor}</td>
                         <td>{item.symptoms}</td>
                         <td>
@@ -109,22 +112,25 @@ function MedicalDetail({ user, historyData = [], onCancel }) {
                         x
                       </button>
                       <h3 className={cx("detailTitle")}>Chi tiết lần khám</h3>
-                      <p><strong>Ngày khám:</strong> {selectedAppointment.date}</p>
+                      <p><strong>Ngày khám:</strong> {new Date(selectedAppointment.date).toLocaleDateString('vi-VN')}</p>
+                      <p><strong>Giờ khám: </strong>{selectedAppointment.hour}</p>
                       <p><strong>Bác sĩ:</strong> {selectedAppointment.doctor}</p>
                       <p><strong>Chẩn đoán:</strong> {selectedAppointment.diagnosis}</p>
                       <p><strong>Ghi chú:</strong> {selectedAppointment.note}</p>
                       {selectedAppointment.prescription.length > 0 && (
                         <div className={cx("prescriptionContainer")}>
-                          <h4 className={cx("prescriptionTitle")}>Đơn thuốc</h4>
+                          <h4 className={cx("prescriptionTitle")}>Đơn thuốc: </h4>
                           <ul className={cx("prescriptionList")}>
                             {selectedAppointment.prescription.map((med, index) => (
-                              <li key={index} className={cx("prescriptionItem")}>
-                                {med.medicine} - {med.dosage} ({med.instructions})
-                                <br /><em>{med.remind}</em>
-                              </li>
+                              <div key={index}>
+                                 💊 Thuốc: {med.name}<br/>
+                                 🧪 Liều lượng: {med.quantity} {med.unit} <br/>
+                                  📋 Hướng dẫn sử dụng:{med.dosage}
+                                <br/>
+                              </div>
                             ))}
                           </ul>
-                          <p className={cx("remindText")}><em>Lưu ý: Hãy tuân thủ theo chỉ dẫn của bác sĩ để đảm bảo hiệu quả điều trị.</em></p>
+                          <p className={cx("remindText")}><em>🔔Lưu ý: Hãy tuân thủ theo chỉ dẫn của bác sĩ để đảm bảo hiệu quả điều trị.</em></p>
                         </div>
                       )}
 
@@ -136,7 +142,6 @@ function MedicalDetail({ user, historyData = [], onCancel }) {
                 )}
               </div>
             )}
-
             {/* {activeTab === "treatment" && (
               <div className={cx("treatmentContent")}>
                 <h2>Thông tin các phiếu xét nghiệm của bệnh nhân</h2>
@@ -152,38 +157,40 @@ function MedicalDetail({ user, historyData = [], onCancel }) {
           </button>
         </div>
       </div>
-      </div>
-      );
+    </div>
+  );
 }
 
-      MedicalDetail.propTypes = {
-        user: PropTypes.shape({
-        name: PropTypes.string,
-      age: PropTypes.number,
-      gender: PropTypes.string,
-      address: PropTypes.string,
-      phone: PropTypes.string,
-      email: PropTypes.string,
-      patient_code:PropTypes.string
+MedicalDetail.propTypes = {
+
+  user: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    age: PropTypes.number,
+    gender: PropTypes.string,
+    address: PropTypes.string,
+    phone: PropTypes.string,
+    email: PropTypes.string,
+    patient_code: PropTypes.string
   }),
-      historyData: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string,
+  historyData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
       date: PropTypes.string,
       doctor: PropTypes.string,
       symptoms: PropTypes.string,
       diagnosis: PropTypes.string,
       note: PropTypes.string,
       prescription: PropTypes.arrayOf(
-      PropTypes.shape({
-        medicine: PropTypes.string,
-      dosage: PropTypes.string,
-      instructions: PropTypes.string,
+        PropTypes.shape({
+          medicine: PropTypes.string,
+          dosage: PropTypes.string,
+          instructions: PropTypes.string,
         })
       ),
     })
-      ),
-      onCancel: PropTypes.func.isRequired,
+  ),
+  onCancel: PropTypes.func.isRequired,
 };
 
-      export default MedicalDetail;
+export default MedicalDetail;

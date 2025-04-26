@@ -244,7 +244,7 @@ class AppointmentController {
                     path: 'doctor_id',
                     select: 'name'
                 });
-            console.log(appointments)
+            // console.log(appointments)
             const prescriptionList = await Prescription.find({
                 appointment_id: { $in: appointments.map(a => a._id) }
             }).select('appointment_id');
@@ -305,6 +305,45 @@ class AppointmentController {
             });
         } catch (error) {
             res.status(500).json({ message: 'Lỗi server', error });
+        }
+    }
+    async getAppointmentsByPatientId(req, res) {
+        const { patientId } = req.params;
+        try {
+            const appointments = await Appointment.find({ patient_id: patientId,
+                status: "Đã khám"
+             })
+                .populate({
+                    path: 'doctor_id',
+                    select: 'name specialty' // Chỉ lấy name và specialty của bác sĩ
+                })
+                .populate({
+                    path: 'patient_id',
+                    select: 'name' // nếu bạn cần tên bệnh nhân được khám hộ
+                });
+            const result = await Promise.all(
+                appointments.map(async (appointment) => {
+                    const prescription = await Prescription.findOne({
+                        appointment_id: appointment._id
+                    });
+
+                    return {
+                        date: appointment.appointment_date,
+                        hour: appointment.appointment_time,
+                        doctor: appointment.doctor_id?.name || 'N/A',
+                        symptoms: appointment.symptoms,
+                        diagnosis: prescription?.diagnosis || '',
+                        note: prescription?.note || '',
+                        prescription: prescription?.medicines || []
+                    };
+                })
+            );
+
+            res.status(200).json(result);
+        }
+        catch (err) {
+            console.log("Lỗi lấy danh sách cuộc hẹn theo bệnh nhân:", err);
+            res.status(500).json({ message: "Lỗi server", err: err.message })
         }
     }
 

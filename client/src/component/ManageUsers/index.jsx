@@ -1,4 +1,6 @@
 import classNames from "classnames/bind";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ManageUsers.module.scss";
@@ -58,11 +60,28 @@ function ManageUsers() {
         setshowConfirmDelete(true);
     };
 
-    const confirmDelete = () => {
-        setFilteredUsers(filteredUsers.filter((u) => u !== userToDelete));
-        setshowConfirmDelete(false);
-        setUserToDelete(null);
+    const confirmDelete = async () => {
+        try {
+            await axios.delete(`http://localhost:3000/adminpage/deleteUser/${userToDelete._id}`);
+    
+            // Cập nhật lại danh sách
+            const updatedUsers = users.filter((u) => u._id !== userToDelete._id);
+            setUsers(updatedUsers);
+            setFilteredUsers(updatedUsers);
+    
+            // Reset lại popup
+            setUserToDelete(null);
+            setshowConfirmDelete(false);
+    
+            // Thông báo
+            toast.success("Xóa người dùng thành công!");
+
+        } catch (error) {
+            console.error("Lỗi khi xóa người dùng:", error);
+            alert("Không thể xóa người dùng!");
+        }
     };
+    
 
     const handleEditClick = (user) => {
         setEditUser(user);
@@ -150,6 +169,7 @@ function ManageUsers() {
                     onCancel={() => setShowEditForm(false)}
                 />
             )}
+            <ToastContainer />
         </div>
     );
 }

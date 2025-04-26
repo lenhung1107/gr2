@@ -8,14 +8,14 @@ const cx = classNames.bind(styles);
 function OrderByPack({ packData }) {
     const navigate = useNavigate(); // Hook để điều hướng
 
-    const handlePackClick = (id) => {
-        navigate(`/orderPack/${id}`); // Điều hướng đến URL tương ứng
+    const handlePackClick = (_id) => {
+        navigate(`/orderPack/${_id}`); // Điều hướng đến URL tương ứng
     };
 
     const renderPacks = (currentItems) => (
         <div className={cx('pack-list')}>
             {currentItems.map((pack) => (
-                <Link to={`/orderPack/${pack.id}`} key={pack.id}>
+                <Link to={`/orderPack/${pack._id}`} key={pack._idid}>
                     <div
                         className={cx('grid-container')}
                         onClick={() => handlePackClick(pack.id)} // Xử lý khi click

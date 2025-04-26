@@ -1,4 +1,6 @@
 import classNames from "classnames/bind";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ManageDoctors.module.scss";
@@ -6,7 +8,6 @@ import EditForm from "../EditForm";
 import { useState, useEffect} from "react";
 import axios from "axios";
 const cx = classNames.bind(styles);
-
 
 function ManageDoctors() {
     const [doctorData, setDoctorData]= useState([]);
@@ -24,7 +25,6 @@ function ManageDoctors() {
         fetchUsers();
         
     }, []); 
-    console.log(doctorData);// Lắng nghe thay đ��i tên tìm kiếm và chức vụ, tự đ��ng lọc dữ liệu
     const [searchName, setSearchName] = useState("");
     const [selectBio, setSelectBio] = useState("");
     const [filteredDoctors, setFilteredDoctors] = useState([]); // Lưu danh sách bác sĩ được lọc
@@ -50,9 +50,28 @@ function ManageDoctors() {
         setUserToDelete(user);
         setshowConfirmDelete(true); // Hiện popup xác nhận
     };
-    const confirmDelete = () => {
-        setshowConfirmDelete(false);
-        setUserToDelete(null);
+    // const confirmDelete = () => {
+    //     setshowConfirmDelete(false);
+    //     setUserToDelete(null);
+    // };
+    const confirmDelete = async () => {
+        try {
+            await axios.delete(`http://localhost:3000/adminpage/deleteDoctor/${userToDelete._id}`);
+    
+            // Cập nhật lại danh sách
+            const updatedUsers = doctorData.filter((u) => u._id !== userToDelete._id);
+            setDoctorData(updatedUsers);
+            setFilteredDoctors(updatedUsers);
+            // Reset lại popup
+            setUserToDelete(null);
+            setshowConfirmDelete(false);
+            // Thông báo
+            toast.success("Xóa bác sĩ thành công!");
+
+        } catch (error) {
+            console.error("Lỗi khi xóa bác sĩ:", error);
+            alert("Không thể xóa bác sĩ!");
+        }
     };
     const handleEditClick = (user) => {
         setEditUser(user);
@@ -142,6 +161,7 @@ function ManageDoctors() {
                 onCancel={() => setShowEditForm(false)}
             />
         )}
+        <ToastContainer />
     </div>);
 }
 

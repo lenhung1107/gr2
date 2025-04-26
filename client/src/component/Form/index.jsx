@@ -77,7 +77,6 @@ const Form = ({ onClose, doctor, date, time }) => {
         };
       }
     }
-
     try {
       const response = await fetch("http://localhost:3000/appointment/bookAppointment", {
         method: "POST",

@@ -7,7 +7,9 @@ import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
 function ManageAppointments() {
     const apiUrl = "http://localhost:3000/appointment/getAllAppoinment"; // URL API khác cho từng trang
-    const { data: appointments, loading, error } = useFetchData(apiUrl);
+    const { data, loading, error } = useFetchData(apiUrl);
+    const appointments = data || [];
+
     // console.log(appointments);
     const [filter, setFilter] = useState("Tất cả");
     const [showPopupCancel, setShowPopupCancel] = useState(false);
@@ -30,7 +32,7 @@ function ManageAppointments() {
     //     alert(`Bạn đã hủy lịch hẹn với ${selectedAppointment.doctor} vào ngày ${selectedAppointment.date}`);
     //     setShowPopupCancel(false);
     // };
-    const statusLabels = ["Tất cả", "Đang chờ xác nhận", "Đang chờ khám", "Đã hủy","Đã khám"];
+    const statusLabels = ["Tất cả", "Đang chờ xác nhận", "Đang chờ khám", "Đã hủy", "Đã khám"];
     console.log("Selected appointment:", selectedAppointment);
     const handleConfirmAppointment = async (appointment) => {
         try {
@@ -58,8 +60,9 @@ function ManageAppointments() {
         setShowPopupAgree(false);
     };
 
-    const filteredAppointments =
-        filter === "Tất cả" ? appointments : appointments.filter(app => app.status === filter);
+    const filteredAppointments = appointments
+        .filter(app => app.name !== "Đã xoá" && app.phone !== "Không có" && app.age !== "Không rõ")
+        .filter(app => filter === "Tất cả" || app.status === filter);
     if (loading) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }} >Đang tải dữ liệu...</p>;
     if (error) return <p style={{ color: 'red', fontSize: '1.8rem', fontWeight: '500' }}>Lỗi: {error}</p>;
     if (!appointments || appointments.length === 0) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }}>Không có cuộc hẹn nào.</p>;
@@ -144,12 +147,12 @@ function ManageAppointments() {
                     </div>
                 </div>
             )}
-            {showPopupAgree && selectedAppointment &&(
+            {showPopupAgree && selectedAppointment && (
                 <div className={cx("popup-overlay")}>
                     <div className={cx("popup")}>
                         <p>Bạn có chắc chắn muốn xác nhận cuộc hẹn này không?</p>
                         <div className={cx("popup-buttons")}>
-                            <button  onClick={() => handleConfirmAppointment(selectedAppointment)}className={cx("confirm-btn")}>Xác nhận</button>
+                            <button onClick={() => handleConfirmAppointment(selectedAppointment)} className={cx("confirm-btn")}>Xác nhận</button>
                             <button onClick={() => setShowPopupAgree(false)} className={cx("cancel-btn")}>Hủy</button>
                         </div>
                     </div>

@@ -1,25 +1,58 @@
-.brg{
+.brg {
     background-image: url('/bg-info.png');
-    background-size: cover; /* Đảm bảo ảnh phủ kín toàn bộ phần tử */
-    background-position: center; /* Canh giữa ảnh */
+    background-size: cover;
+    background-position: center;
     width: 100%;
-    // height: 95vh; /* Chiều cao toàn màn hình */
-    
-}
-.content{
-    margin-top: 40px;
-    margin-left: 250px;
-    width:1100px;
-    // height: 500px;
-}
-.menu-pack{
-   
-    
-    padding: 20px; /* Đệm để tạo khoảng cách với nội dung bên trong */
-    row-gap: 30px; 
+    /* height: 95vh; */ /* bạn để comment thì mình giữ nguyên */
 }
 
-.title span{
+.content {
+    margin-top: 40px;
+    margin-left: 250px;
+    width: 1100px;
+    /* height: 500px; */
+}
+
+/* Responsive cho content */
+@media (max-width: 1200px) {
+    .content {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.menu-pack {
+    padding: 20px;
+    row-gap: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Responsive cho menu-pack nếu cần */
+@media (max-width: 768px) {
+    .menu-pack {
+        padding: 10px;
+        row-gap: 20px;
+    }
+}
+
+.title span {
     font-size: 2.2rem;
     font-weight: 600;
+}
+
+/* Responsive cho title */
+@media (max-width: 768px) {
+    .title span {
+        font-size: 1.8rem;
+    }
 }

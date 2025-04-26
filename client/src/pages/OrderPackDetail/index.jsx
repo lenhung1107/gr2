@@ -8,14 +8,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faHouseMedicalCircleCheck, faLocationDot, faStar, faVideo } from "@fortawesome/free-solid-svg-icons";
 import Hour from "../../component/Hour/Hour";
 import Form from "../../component/Form";
-import packData from "../../data/packData"
+import useFetchData from "../../CustomHook/useFetchData";
+
 const cx = classNames.bind(styles);
 function OrderPackDetail() {
     const hoursData = [
         '8:00', '9:00', '10:00', '11:00', '13:00', '14:00', '13:00', '14:00', '15:00', '16:00', '17:00'
     ];
     const { id } = useParams(); // Lấy `id` từ URL
-    const pack = packData.find((doc) => doc.id === parseInt(id));
+    const apiUrl = `http://localhost:3000/pack/getById/${id}`; // URL API khác cho từng trang
+    const { data: pack, loading, error } = useFetchData(apiUrl);
+    // const pack = data || [];
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [order, setOrder] = useState(false);
@@ -34,6 +37,9 @@ function OrderPackDetail() {
         setSelectedTime(time);
         setOrder(true);
     };
+
+    if (loading) return <p style={{ color: 'black', fontSize: '1.8rem', fontWeight: '500' }} >Đang tải dữ liệu...</p>;
+    if (error) return <p style={{ color: 'red', fontSize: '1.8rem', fontWeight: '500' }}>Lỗi: {error}</p>;
     if (!pack) {
         return <div>Bác sĩ không tồn tại!</div>;
     }
@@ -44,9 +50,6 @@ function OrderPackDetail() {
                     <div className={cx('grid-container')}>
                         <div className={cx('image')}>
                             <img src={pack.image} height={170} width={250} alt="Logo" />
-                            {
-                                console.log(pack.image)
-                            }
                         </div>
                         <div className={cx('info')}>
                             <h2>{pack.name}</h2>

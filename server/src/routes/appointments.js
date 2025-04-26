@@ -10,4 +10,5 @@ router.get('/getAppoinmentByUserId/:id',AppointmentController.getAppointmentsByU
 router.get('/getAppoinmentByDoctorId/:id',AppointmentController.getAppointmentsByDoctorId);
 router.put('/confirmByAdmin/:id', AppointmentController.confirmAppointmentByAdmin);
 router.put('/confirmByDoctor/:id', AppointmentController.confirmAppointmentByDoctor);
+router.get('/getAppointmentsByPatientId/:patientId',AppointmentController.getAppointmentsByPatientId);
 module.exports = router;

@@ -1,6 +1,6 @@
 
 const User = require('../models/TestUser');
-
+const Doctor = require('../models/Doctor');
 class UserController {
     async getUser(req, res) {
         try {
@@ -10,14 +10,32 @@ class UserController {
             res.status(400).json({ error: 'error!' });
         }
     }
+
     //delete user
     async deleteUser(req, res) {
         try {
             //đang giả sử tìm, nếu muốn xóa thật thì dùng findByIdAndDelete
-           const user= await User.findById(req.params.id)
-            res.status(200).json("delete success")
+            const deletedUser = await User.findByIdAndDelete(req.params.id);
+            if (!deletedUser) {
+                return res.status(404).json({ message: 'Không tìm thấy người dùng' });
+            }
+            res.status(200).json({ message: 'Xóa người dùng thành công', user: deletedUser });
         } catch (err) {
-            res.status(400).json({ error: 'error!' });
+            console.error(err);
+            res.status(500).json({ error: 'Lỗi server khi xóa người dùng' });
+        }
+    }
+    async deleteDoctor(req, res) {
+        try {
+          
+            const deletedDoctor = await Doctor.findByIdAndDelete(req.params.id);
+            if (!deletedDoctor) {
+                return res.status(404).json({ message: 'Không tìm thấy bác sĩ' });
+            }
+            res.status(200).json({ message: 'Xóa bác sĩ thành công', user: deletedDoctor });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Lỗi server khi xóa bác sĩ' });
         }
     }
 }

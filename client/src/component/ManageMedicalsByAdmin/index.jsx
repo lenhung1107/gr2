@@ -1,24 +1,23 @@
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-import styles from "./ManageMedicals.module.scss";
+import styles from "./ManageMedicalsByAdmin.module.scss";
 import { useState, useEffect } from "react";
 import MedicalDetail from "../MedicalDetail";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const cx = classNames.bind(styles);
 
 
-function ManageMedicals() {
-    const { id } = useParams(); // destructuring để lấy id string
+function ManageMedicalsByAdmin() {
     const [users, setUsers] = useState([]);  // Danh sách tất cả người dùng
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/patient/getPatientByDoctorID/${id}`, {
+                const response = await axios.get("http://localhost:3000/patient/getAllPatient", {
                 });
+                
                 setUsers(response.data.patients);       // 👈 chỉ lấy mảng bệnh nhân
                 setFilteredUsers(response.data.patients);
 
@@ -60,6 +59,13 @@ function ManageMedicals() {
         setEditUser(user);
         setShowMedical(true);
     };
+    // const handleSaveEdit = () => {
+    //     setFilteredUsers(
+    //         filteredUsers.map((user) => (user === editUser ? editUser : user))
+    //     );
+    //     setShowEditForm(false);
+    //     setEditUser(null);
+    // };
     return (
     <div className={cx('wrapper')}>
         <h1>Quản lý Hồ sơ khám bệnh</h1>
@@ -114,4 +120,4 @@ function ManageMedicals() {
     </div>);
 }
 
-export default ManageMedicals;
+export default ManageMedicalsByAdmin;
