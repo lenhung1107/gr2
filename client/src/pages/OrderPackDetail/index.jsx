@@ -99,7 +99,7 @@ function OrderPackDetail() {
                                     <h3>Đặt khám </h3>
                                     <span>Tại cơ sở y tế</span>
                                 </div>
-                                {isPopupOpen && <Form onClose={closePopup} doctor={pack} date={selectedDate} time={selectedTime} />}
+                                {isPopupOpen && <Form onClose={closePopup} service={pack} date={selectedDate} time={selectedTime} appointmentType="pack" />}
 
                             </div>
                         )

@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-const Form = ({ onClose, doctor, date, time }) => {
+const Form = ({ onClose, service, date, time, appointmentType }) => {
   const [isForSelf, setIsForSelf] = useState(null);
   const [savedPatients, setSavedPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState('');
@@ -22,14 +22,14 @@ const Form = ({ onClose, doctor, date, time }) => {
           const res = await fetch(`http://localhost:3000/appointment/getAppoinmentByUserId/${user._id}`);
           const data = await res.json();
           // Lọc danh sách người từng đặt hộ và loại bỏ trùng lặp theo tên + SĐT
-          const filtered = data.filter(a => a.isForSomeone&&
+          const filtered = data.filter(a => a.isForSomeone &&
             a.name !== "Đã xoá" &&
             a.phone !== "Không có").map(a => ({
-            id: a._id,
-            name: a.name,
-            phone: a.phone,
-            age: a.age
-          }));
+              id: a._id,
+              name: a.name,
+              phone: a.phone,
+              age: a.age
+            }));
           const unique = Array.from(new Map(filtered.map(p => [p.phone, p])).values());
           setSavedPatients(unique);
         } catch (err) {
@@ -51,7 +51,8 @@ const Form = ({ onClose, doctor, date, time }) => {
 
     let appointmentData = {
       user_id: user._id,
-      doctor_id: doctor._id,
+      service_id: service._id,
+      appointment_type: appointmentType,
       appointment_date: date ? date.toISOString().split('T')[0] : null,
       appointment_time: time,
       symptoms: document.getElementById("reason")?.value || "",
@@ -97,106 +98,104 @@ const Form = ({ onClose, doctor, date, time }) => {
   return (
     <div className={cx('overlay')}>
       {/* <div className={cx('wrapper')}> */}
-        <button className={cx('closeButton')} onClick={onClose}>×</button>
-        {successMessage ? (
-          <div className={cx('successPopup')}>
-            {/* <span className={cx('successIcon')}>✅</span> */}
-             <FontAwesomeIcon icon={faCircleCheck} className={cx('successIcon')}/>
-            <p>{successMessage}</p>
-            <button onClick={() => window.location.href = '/'}>OK</button>
+      <button className={cx('closeButton')} onClick={onClose}>×</button>
+      {successMessage ? (
+        <div className={cx('successPopup')}>
+          {/* <span className={cx('successIcon')}>✅</span> */}
+          <FontAwesomeIcon icon={faCircleCheck} className={cx('successIcon')} />
+          <p>{successMessage}</p>
+          <button onClick={() => window.location.href = '/'}>OK</button>
+        </div>
+      ) : (
+        <div className={cx("wrapper")}>
+          <h2 className={cx('title')}>Thông tin đặt lịch khám bệnh</h2>
+          <div className={cx('infoSection')}>
+            <img
+              src={service.image || 'doctor.png'}
+              alt={service.name}
+              className={cx('doctorImage')}
+            />
+            <div className={cx('doctorInfo')}>
+              <h3>{service.name}</h3>
+              <p>Chuyên khoa: {service.specialty}</p>
+              <p>Ngày khám: {date ? date.toLocaleDateString('vi-VN') : 'Chưa chọn'}</p>
+              <p>Giờ khám: {time || 'Chưa chọn'}</p>
+              <p>Giá khám: {service.price}</p>
+            </div>
           </div>
-        ) : (
-          <div className={cx("wrapper")}>
-            <h2 className={cx('title')}>Thông tin đặt lịch khám bệnh</h2>
-            <div className={cx('infoSection')}>
-              <img
-                src={doctor.image || 'doctor.png'}
-                alt={doctor.name}
-                className={cx('doctorImage')}
-              />
-              <div className={cx('doctorInfo')}>
-                <h3>{doctor.name}</h3>
-                <p>Chuyên khoa: {doctor.specialty}</p>
-                <p>Ngày khám: {date ? date.toLocaleDateString('vi-VN') : 'Chưa chọn'}</p>
-                <p>Giờ khám: {time || 'Chưa chọn'}</p>
-                <p>Giá khám: {doctor.price}</p>
-              </div>
+
+          <form className={cx('form')} onSubmit={handleSubmit}>
+            <div className={cx('formGroup')}>
+              <label>Loại đặt lịch:</label>
+              <select onChange={(e) => {
+                const val = e.target.value;
+                setIsForSelf(val === 'self');
+                setAddingNew(false);
+                setSelectedPatientId('');
+              }}>
+                <option value="" hidden>Chọn loại đặt lịch</option>
+                <option value="self">Khám cho bản thân</option>
+                <option value="other">Đặt khám hộ</option>
+              </select>
             </div>
 
-            <form className={cx('form')} onSubmit={handleSubmit}>
+            {isForSelf === true && (
               <div className={cx('formGroup')}>
-                <label>Loại đặt lịch:</label>
-                <select onChange={(e) => {
-                  const val = e.target.value;
-                  setIsForSelf(val === 'self');
-                  setAddingNew(false);
-                  setSelectedPatientId('');
-                }}>
-                  <option value="" hidden>Chọn loại đặt lịch</option>
-                  <option value="self">Khám cho bản thân</option>
-                  <option value="other">Đặt khám hộ</option>
-                </select>
+                <label htmlFor="reason">Lý do khám:</label>
+                <input type="text" id="reason" name="reason" required />
               </div>
+            )}
 
-              {isForSelf === true && (
+            {isForSelf === false && (
+              <>
+                <div className={cx('formGroup')}>
+                  <label>Chọn hồ sơ bệnh nhân cũ:</label>
+                  <select value={selectedPatientId} onChange={e => {
+                    setSelectedPatientId(e.target.value);
+                    setAddingNew(false);
+                  }}>
+                    <option value="">-- Chọn bệnh nhân --</option>
+                    {savedPatients.map(p => (
+                      <option key={p.id} value={p.id}>{p.name} - {p.phone}</option>
+                    ))}
+                  </select>
+                  <button type="button" className={cx('addNewButton')} onClick={() => {
+                    setAddingNew(true);
+                    setSelectedPatientId('');
+                  }}>+ Thêm người mới</button>
+                </div>
+                {addingNew && (
+                  <div className={cx('formRow')}>
+                    <div className={cx('formGroup')}>
+                      <label htmlFor="name">Tên bệnh nhân:</label>
+                      <input type="text" id="name" name="name" required />
+                    </div>
+                    <div className={cx('formGroup')}>
+                      <label htmlFor="age">Tuổi:</label>
+                      <input type="number" id="age" name="age" required />
+                    </div>
+                    <div className={cx('formGroup')}>
+                      <label htmlFor="phone">Số điện thoại:</label>
+                      <input type="tel" id="phone" name="phone" required />
+                    </div>
+                  </div>
+                )}
                 <div className={cx('formGroup')}>
                   <label htmlFor="reason">Lý do khám:</label>
                   <input type="text" id="reason" name="reason" required />
                 </div>
-              )}
+              </>
+            )}
 
-              {isForSelf === false && (
-                <>
-                  <div className={cx('formGroup')}>
-                    <label>Chọn hồ sơ bệnh nhân cũ:</label>
-                    <select value={selectedPatientId} onChange={e => {
-                      setSelectedPatientId(e.target.value);
-                      setAddingNew(false);
-                    }}>
-                      <option value="">-- Chọn bệnh nhân --</option>
-                      {savedPatients.map(p => (
-                        <option key={p.id} value={p.id}>{p.name} - {p.phone} </option>
-                      ))}
-                    </select>
-                    <button type="button" className={cx('addNewButton')} onClick={() => {
-                      setAddingNew(true);
-                      setSelectedPatientId('');
-                    }}>+ Thêm người mới</button>
-                  </div>
-
-                  {(addingNew || savedPatients.length === 0) && (
-                    <div className={cx('formRow')}>
-                      <div className={cx('formGroup')}>
-                        <label htmlFor="name">Tên bệnh nhân:</label>
-                        <input type="text" id="name" name="name" required />
-                      </div>
-                      <div className={cx('formGroup')}>
-                        <label htmlFor="age">Tuổi:</label>
-                        <input type="number" id="age" name="age" required />
-                      </div>
-                      <div className={cx('formGroup')}>
-                        <label htmlFor="phone">Số điện thoại:</label>
-                        <input type="tel" id="phone" name="phone" required />
-                      </div>
-                    </div>
-                  )}
-
-                  <div className={cx('formGroup')}>
-                    <label htmlFor="reason">Lý do khám:</label>
-                    <input type="text" id="reason" name="reason" required />
-                  </div>
-                </>
-              )}
-
-              {isForSelf !== null && (
-                <div className={cx('actions')}>
-                  <button type="submit" className={cx('submitButton')}>Xác nhận</button>
-                  <button type="button" className={cx('cancelButton')} onClick={onClose}>Hủy</button>
-                </div>
-              )}
-            </form>
-          </div>
-        )}
+            {isForSelf !== null && (
+              <div className={cx('actions')}>
+                <button type="submit" className={cx('submitButton')}>Xác nhận</button>
+                <button type="button" className={cx('cancelButton')} onClick={onClose}>Hủy</button>
+              </div>
+            )}
+          </form>
+        </div>
+      )}
       {/* </div> */}
     </div>
   );
@@ -204,9 +203,10 @@ const Form = ({ onClose, doctor, date, time }) => {
 
 Form.propTypes = {
   onClose: PropTypes.func.isRequired,
-  doctor: PropTypes.object.isRequired,
+  service: PropTypes.object.isRequired,
   date: PropTypes.object,
   time: PropTypes.string,
+  appointmentType: PropTypes.string,
 };
 
 export default Form;

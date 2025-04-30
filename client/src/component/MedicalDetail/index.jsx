@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import styles from "./MedicalDetail.module.scss";
 import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
-
+ 
 function MedicalDetail({ user, onCancel }) {
   const apiUrl = `http://localhost:3000/appointment/getAppointmentsByPatientId/${user._id}`;
   const { data: historyData, loading, error } = useFetchData(apiUrl);
@@ -83,7 +83,7 @@ function MedicalDetail({ user, onCancel }) {
                   <thead>
                     <tr className={cx("tableHeader")}>
                       <th>Ngày khám</th>
-                      <th>Bác sĩ</th>
+                      <th>Bác sĩ/Gói khám</th>
                       <th>Triệu chứng</th>
                       <th>Xem chi tiết</th>
                     </tr>
@@ -92,7 +92,7 @@ function MedicalDetail({ user, onCancel }) {
                     {finalHistoryData.map((item) => (
                       <tr key={item.id} className={cx("tableRow")}>
                         <td>{new Date(item.date).toLocaleDateString('vi-VN')}</td>
-                        <td>{item.doctor}</td>
+                        <td>{item.service}</td>
                         <td>{item.symptoms}</td>
                         <td>
                           <button className={cx("viewButton")} onClick={() => setSelectedAppointment(item)}>
@@ -114,7 +114,7 @@ function MedicalDetail({ user, onCancel }) {
                       <h3 className={cx("detailTitle")}>Chi tiết lần khám</h3>
                       <p><strong>Ngày khám:</strong> {new Date(selectedAppointment.date).toLocaleDateString('vi-VN')}</p>
                       <p><strong>Giờ khám: </strong>{selectedAppointment.hour}</p>
-                      <p><strong>Bác sĩ:</strong> {selectedAppointment.doctor}</p>
+                      <p><strong>Bác sĩ:</strong> {selectedAppointment.service}</p>
                       <p><strong>Chẩn đoán:</strong> {selectedAppointment.diagnosis}</p>
                       <p><strong>Ghi chú:</strong> {selectedAppointment.note}</p>
                       {selectedAppointment.prescription.length > 0 && (

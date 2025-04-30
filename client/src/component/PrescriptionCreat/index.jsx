@@ -125,8 +125,8 @@ function PrescriptionCreate({ patient, medicines, onClose }) {
                         value={newMedicine.dosage}
                         onChange={handleInputChange}
                     />
-                    <button className={cx("btn-add")} onClick={handleAddMedicine}>
-                        Thêm thuốc
+                    <button className={cx("btn-add")} onClick={handleAddMedicine} >
+                        +
                     </button>
                 </div>
                 <div className={cx("note-section")}>

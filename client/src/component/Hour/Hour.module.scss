@@ -30,11 +30,16 @@
 }
 
 .hour.disabled {
-  background-color: #e0e0e0;
-  color: #9e9e9e;
-  pointer-events: none;
+  background-color: #e0e0e0; // nền xám mờ
+  color: #9e9e9e; // chữ mờ
+  pointer-events: none; // không cho click
+  opacity: 0.6;
 }
 .hour.inSchedule {
   background-color: rgb(254, 165, 0); // Màu xanh lam cho giờ đã trong lịch làm việc
   color: white;
 }
+// .disabled {
+//   opacity: 0.5;
+//   cursor: not-allowed;
+// }

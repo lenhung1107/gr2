@@ -1,5 +1,6 @@
 const Workdate = require('../models/workdate');
 const Doctor = require('../models/Doctor');
+const Appointment = require('../models/Appointment')
 const mongoose = require("mongoose");
 
 class WorkdateController {
@@ -73,19 +74,35 @@ class WorkdateController {
     async getSchedulebyDoctorID(req, res) {
         const { doctorId } = req.params;
         try {
-            const objecDoctorId = new mongoose.Types.ObjectId(doctorId ); // <-- BỔ SUNG DÒNG NÀY
+            const objecDoctorId = new mongoose.Types.ObjectId(doctorId);
             const schedules = await Workdate.find({ doctor_id: objecDoctorId });
+            const appointments = await Appointment.find({
+                doctor_id: objecDoctorId,
+                status: { $ne: 'Đã hủy' }
+            });
+    
             const formatted = {};
             schedules.forEach(item => {
                 formatted[item.dayWork] = item.hourWork;
             });
-            res.json(formatted);
+    
+            const bookedAppointments = {};
+            appointments.forEach(item => {
+                const day = item.appointment_date.toISOString().split('T')[0];
+                if (!bookedAppointments[day]) {
+                    bookedAppointments[day] = [];
+                }
+                bookedAppointments[day].push(item.appointment_time);
+            });
+    
+            res.json({ schedule: formatted, bookedAppointments });
         }
         catch (err) {
             console.error(err);
             res.status(500).json({ message: "Lỗi server" });
         }
     }
+    
 }
 
 module.exports = new WorkdateController();

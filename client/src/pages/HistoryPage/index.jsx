@@ -15,7 +15,6 @@ function HistoryPage() {
     const [showPopupCancel, setShowPopupCancel] = useState(false);
     const [showPopupView, setShowPopupView] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
-
     const handleCancelClick = (appointment) => {
         setSelectedAppointment(appointment);
         setShowPopupCancel(true);
@@ -90,7 +89,7 @@ function HistoryPage() {
                                 <td>{app.name}</td>
                                 <td>{new Date(app.date).toLocaleDateString('vi-VN')}</td>
                                 <td>{app.hour}</td>
-                                <td>{app.doctor}</td>
+                                <td>{app.service}</td>
                                 <td>{app.status}</td>
                                 <td>
                                     {app.status === "Đã khám" && (

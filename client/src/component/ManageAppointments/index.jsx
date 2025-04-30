@@ -106,7 +106,7 @@ function ManageAppointments() {
                                 <td>{app.age}</td>
                                 <td>{new Date(app.date).toLocaleDateString('vi-VN')}</td>
                                 <td>{app.hour}</td>
-                                <td>{app.doctor}</td>
+                                <td>{app.service}</td>
                                 <td>{app.symptoms}</td>
                                 <td>{app.status}</td>
                                 <td>

@@ -1,6 +1,7 @@
 const Appointment = require('../models/Appointment');
 const Patient = require('../models/Patient');
 const Doctor = require('../models/Doctor');
+const Pack= require("../models/Pack")
 const Prescription = require('../models/Prescription'); // Nhớ import model Prescription nếu chưa
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
@@ -8,7 +9,7 @@ const ObjectId = mongoose.Types.ObjectId;
 class AppointmentController {
     async bookAppointment(req, res) {
         try {
-            let { user_id, doctor_id, appointment_date, appointment_time, symptoms, isForSomeoneElse, patient_name, patient_age, patient_phone } = req.body;
+            let { user_id, service_id, appointment_type, appointment_date, appointment_time, symptoms, isForSomeoneElse, patient_name, patient_age, patient_phone } = req.body;
             user_id = new mongoose.Types.ObjectId(user_id);
 
             let patient;
@@ -23,9 +24,9 @@ class AppointmentController {
                 });
 
                 if (!patient) {
+
                     // Nếu chưa có, tạo mới
                     patient = new Patient({
-                        doctor_id,
                         user_id,
                         isForSomeone: true,
                         name: patient_name,
@@ -33,6 +34,9 @@ class AppointmentController {
                         phone: patient_phone,
                         patient_code: `PAT-${Date.now()}`
                     });
+                    if (appointment_type === 'doctor') {
+                        patient.doctor_id = service_id;
+                    }
                     await patient.save();
                 }
 
@@ -47,6 +51,9 @@ class AppointmentController {
                         isForSomeone: false,
                         patient_code: `PAT-${Date.now()}`
                     });
+                    if (appointment_type === 'doctor') {
+                        patient.doctor_id = service_id;
+                    }
                     await patient.save();
                 }
             }
@@ -55,13 +62,17 @@ class AppointmentController {
             const newAppointment = new Appointment({
                 user_id,
                 patient_id: patient._id,
-                doctor_id,
+                appointment_type,
                 appointment_date,
                 appointment_time,
                 symptoms,
                 status: 'Đang chờ xác nhận'
             });
-
+            if (appointment_type === 'doctor') {
+                newAppointment.doctor_id = service_id;
+            } else if (appointment_type === 'pack') {
+                newAppointment.pack_id = service_id;
+            }
             await newAppointment.save();
 
             res.status(201).json({ message: "Đặt lịch thành công!", appointment: newAppointment });
@@ -110,7 +121,12 @@ class AppointmentController {
                 .populate({
                     path: 'doctor_id',
                     select: 'name'
+                })
+                .populate({
+                    path: 'pack_id', //  Thêm populate pack_id vào đây
+                    select: 'name'
                 });
+
 
             // Xử lý dữ liệu
             const formattedAppointments = appointments.map((appt) => {
@@ -127,7 +143,12 @@ class AppointmentController {
                 const patientAge = isForSomeone
                     ? patient?.age || "Không rõ"
                     : patient?.user_id?.age || "Không rõ";
-
+                let serviceName = "";
+                if (appt.appointment_type === 'doctor') {
+                    serviceName = appt.doctor_id?.name || "Đã xoá bác sĩ";
+                } else if (appt.appointment_type === 'pack') {
+                    serviceName = appt.pack_id?.name || "Đã xoá gói khám";
+                }
                 return {
                     _id: appt._id,
                     name: patientName,
@@ -135,7 +156,7 @@ class AppointmentController {
                     age: patientAge,
                     date: appt.appointment_date,
                     hour: appt.appointment_time,
-                    doctor: appt.doctor_id?.name,
+                    service: serviceName,
                     symptoms: appt.symptoms,
                     status: appt.status
                 };
@@ -162,6 +183,10 @@ class AppointmentController {
                 .populate({
                     path: 'doctor_id',
                     select: 'name'
+                })
+                .populate({
+                    path: 'pack_id', //  Thêm populate pack_id vào đây
+                    select: 'name'
                 });
 
             // Xử lý dữ liệu
@@ -181,7 +206,12 @@ class AppointmentController {
                 const patientAge = isForSomeone
                     ? patient?.age || "Không rõ"
                     : patient?.user_id?.age || "Không rõ";
-
+                let serviceName = "";
+                if (appt.appointment_type === 'doctor') {
+                    serviceName = appt.doctor_id?.name || "Đã xoá bác sĩ";
+                } else if (appt.appointment_type === 'pack') {
+                    serviceName = appt.pack_id?.name || "Đã xoá gói khám";
+                }
                 return {
                     _id: appt._id,
                     isForSomeone: isForSomeone,
@@ -190,7 +220,7 @@ class AppointmentController {
                     age: patientAge,
                     date: appt.appointment_date,
                     hour: appt.appointment_time,
-                    doctor: appt.doctor_id?.name,
+                    service: serviceName,
                     symptoms: appt.symptoms,
                     status: appt.status
                 };
@@ -310,27 +340,41 @@ class AppointmentController {
     async getAppointmentsByPatientId(req, res) {
         const { patientId } = req.params;
         try {
-            const appointments = await Appointment.find({ patient_id: patientId,
+            const appointments = await Appointment.find({
+                patient_id: patientId,
                 status: "Đã khám"
-             })
+            })
                 .populate({
                     path: 'doctor_id',
-                    select: 'name specialty' // Chỉ lấy name và specialty của bác sĩ
+                    select: 'name specialty'
+                })
+                .populate({
+                    path: 'pack_id',
+                    select: 'name'
                 })
                 .populate({
                     path: 'patient_id',
-                    select: 'name' // nếu bạn cần tên bệnh nhân được khám hộ
+                    select: 'name'
                 });
+
             const result = await Promise.all(
                 appointments.map(async (appointment) => {
                     const prescription = await Prescription.findOne({
                         appointment_id: appointment._id
                     });
 
+                    // 💥 Xử lý lấy tên dịch vụ (bác sĩ hoặc gói khám)
+                    let serviceName = '';
+                    if (appointment.appointment_type === 'doctor') {
+                        serviceName = appointment.doctor_id?.name || 'Đã xoá bác sĩ';
+                    } else if (appointment.appointment_type === 'pack') {
+                        serviceName = appointment.pack_id?.name || 'Đã xoá gói khám';
+                    }
+ 
                     return {
                         date: appointment.appointment_date,
                         hour: appointment.appointment_time,
-                        doctor: appointment.doctor_id?.name || 'N/A',
+                        service: serviceName, // 👉 thay vì chỉ lấy doctor cố định
                         symptoms: appointment.symptoms,
                         diagnosis: prescription?.diagnosis || '',
                         note: prescription?.note || '',
@@ -343,9 +387,10 @@ class AppointmentController {
         }
         catch (err) {
             console.log("Lỗi lấy danh sách cuộc hẹn theo bệnh nhân:", err);
-            res.status(500).json({ message: "Lỗi server", err: err.message })
+            res.status(500).json({ message: "Lỗi server", err: err.message });
         }
     }
+
 
 }
 

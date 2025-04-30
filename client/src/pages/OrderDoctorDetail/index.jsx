@@ -22,7 +22,8 @@ function OrderDoctor() {
     const [selectedTime, setSelectedTime] = useState(null);
     const [order, setOrder] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [schedule, setSchedule] = useState({});
+    const [workSchedule, setWorkSchedule] = useState({});
+    const [bookedAppointments, setBookedAppointments] = useState({});
 
     const defaultHours = ['8:00', '9:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
 
@@ -31,7 +32,8 @@ function OrderDoctor() {
             try {
                 const res = await fetch(scheduleUrl);
                 const data = await res.json();
-                setSchedule(data);
+                setWorkSchedule(data.schedule || {});
+                setBookedAppointments(data.bookedAppointments || {});
             } catch (err) {
                 console.error("Lỗi khi lấy lịch làm việc:", err);
             }
@@ -65,13 +67,23 @@ function OrderDoctor() {
         return `${year}-${month}-${day}`;
     };
 
-    const hoursForSelectedDate = selectedDate
-        ? schedule[getFormattedDate(selectedDate)] || defaultHours
-        : defaultHours;
+    const getAvailableHours = (date) => {
+        if (!date) return [];
 
-    if (!doctor) return <div>Bác sĩ không tồn tại!</div>;
+        const formattedDate = getFormattedDate(date);
+
+        const doctorHours = workSchedule[formattedDate] || defaultHours; // nếu bác sĩ không có lịch => lấy default
+        const bookedHours = bookedAppointments[formattedDate] || [];
+
+        return doctorHours.map(hour => ({
+            hour,
+            isBooked: bookedHours.includes(hour)
+        }));
+    };
+
     if (loading) return <div>Đang tải thông tin bác sĩ...</div>;
     if (error) return <div>Có lỗi xảy ra: {error}</div>;
+    if (!doctor) return <div>Bác sĩ không tồn tại!</div>;
 
     return (
         <div className={cx('wrapper')}>
@@ -92,11 +104,13 @@ function OrderDoctor() {
                             <span><FontAwesomeIcon icon={faStar} className={cx('icon')} /> Đánh giá: {doctor.rating}</span>
                         </div>
                     </div>
+
                     <div className={cx('order')}>
                         <div className={cx('address')}>
                             <span className={cx('main')}><FontAwesomeIcon icon={faLocationDot} className={cx('icon')} /> Bệnh Viện Phổi Trung Ương</span>
                             <span className={cx('detail')}>435 đường Hoàng Hoa Thám, Ba Đình, Hà Nội</span>
                         </div>
+
                         <div className={cx('date')}>
                             <div className={cx('select')}>
                                 <h3>Lịch khám bệnh tại bệnh viện</h3>
@@ -104,7 +118,7 @@ function OrderDoctor() {
                                     selected={selectedDate}
                                     onChange={(date) => {
                                         setSelectedDate(date);
-                                        setSelectedTime(null); // reset giờ nếu đổi ngày
+                                        setSelectedTime(null);
                                         setOrder(false);
                                     }}
                                     dateFormat="dd/MM/yyyy"
@@ -112,17 +126,29 @@ function OrderDoctor() {
                                     className={cx('datePicker')}
                                 />
                             </div>
+
                             <div className={cx('hour')}>
-                                {(selectedDate ? hoursForSelectedDate : defaultHours).map((hour, index) => (
-                                    <Hour
-                                        key={index}
-                                        hourText={hour}
-                                        onClick={handleHourSelect}
-                                        isSelected={selectedTime === hour}
-                                    />
-                                ))}
+                                {selectedDate ? (
+                                    getAvailableHours(selectedDate).length > 0 ? (
+                                        getAvailableHours(selectedDate).map(({ hour, isBooked }, index) => (
+                                            <Hour
+                                                key={index}
+                                                hourText={hour}
+                                                onClick={!isBooked ? handleHourSelect : () => { }}
+                                                isSelected={selectedTime === hour}
+                                                isDisabled={isBooked}
+                                            />
+                                        ))
+                                    ) : (
+                                        <div>Không có lịch làm việc cho ngày này</div>
+                                    )
+                                ) : (
+                                    <div style={{ fontSize: '1.6rem' }}>Vui lòng chọn ngày khám</div>
+
+                                )}
                             </div>
                         </div>
+
                         {order && (
                             <div className={cx('order-btn')}>
                                 <div>
@@ -132,7 +158,7 @@ function OrderDoctor() {
                                     <h3>Đặt khám</h3>
                                     <span>Tại cơ sở y tế</span>
                                 </div>
-                                {isPopupOpen && <Form onClose={closePopup} doctor={doctor} date={selectedDate} time={selectedTime} />}
+                                {isPopupOpen && <Form onClose={closePopup} service={doctor} date={selectedDate} time={selectedTime} appointmentType="doctor" />}
                             </div>
                         )}
                     </div>
