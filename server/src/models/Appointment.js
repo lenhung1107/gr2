@@ -26,7 +26,8 @@ const Appointment = new Schema({
     status: { type: String,
         enum:[ 'Đang chờ xác nhận', // chưa được bác sĩ duyệt
             'Đang khám',          // bác sĩ đã xác nhận đang khám
-            'Chờ kết quả xét nghiệm', // đã gửi chỉ định xét nghiệm, đang chờ kết quả
+            'Chờ kết quả xét nghiệm',
+            'Có kết quả xét nghiệm', // đã gửi chỉ định xét nghiệm, đang chờ kết quả
             'Đã khám'  ],
          default: 'Đang chờ xác nhận' }, // Trạng thái cuộc hẹn
     symptoms: { type: String }, // Triệu chứng

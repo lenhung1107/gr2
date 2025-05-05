@@ -132,11 +132,16 @@ $spacing-xl: 32px;
     text-align: left;
     border-bottom: 1px solid $border-color;
   }
-  
+  td{
+    span{
+      color: $light-color;
+      font-weight: 300;
+    }
+  }
   th {
-    background-color: $light-color;
+    background-color: $primary-color;
     font-weight: 500;
-    color: $text-light;
+    color: $light-color;
     position: sticky;
     top: 0;
     z-index: 10;
@@ -167,7 +172,7 @@ $spacing-xl: 32px;
     border-radius: 20px;
     font-size: 1.2rem;
     font-weight: 500;
-    background-color: $light-color;
+    background-color: $secondary-color;
     
     &.waiting {
       background-color: rgba($warning-color, 0.1);
@@ -210,6 +215,7 @@ $spacing-xl: 32px;
       padding: $spacing-xl;
       color: $text-light;
       font-style: italic;
+     
     }
   }
 }

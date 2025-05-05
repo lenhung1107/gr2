@@ -13,7 +13,7 @@ function ManagePatients() {
   const apiUrl = `http://localhost:3000/appointment/getAppoinmentByDoctorId/${id}`;
   const { data: patientsDataRaw, loading, error } = useFetchData(apiUrl);
   const patientsData = useMemo(() => patientsDataRaw || [], [patientsDataRaw]);
-  
+
   const [selectedDate, setSelectedDate] = useState("");
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [showPopupAgree, setShowPopupAgree] = useState(false);
@@ -113,7 +113,7 @@ function ManagePatients() {
       if (response.ok) {
         const result = await response.json();
         alert(result.message);
-        window.location.reload(); 
+        window.location.reload();
       } else {
         const err = await response.json();
         alert("Thất bại: " + err.message);
@@ -127,9 +127,11 @@ function ManagePatients() {
   };
 
   const getStatusClass = (status) => {
-    switch(status) {
-      case "Đang chờ khám": return cx("status", "waiting");
+    switch (status) {
+      case "Đang chờ xác nhận": return cx("status", "waiting");
       case "Đang khám": return cx("status", "in-progress");
+      case "Chờ kết quả xét nghiệm": return cx("status", "pending-result");
+      case "Có kết quả xét nghiệm": return cx("status", "result-ready");
       case "Đã khám": return cx("status", "completed");
       default: return cx("status");
     }
@@ -187,8 +189,8 @@ function ManagePatients() {
                   </td>
                   <td className={cx("actions")}>
                     {patient.status === "Đang chờ khám" && (
-                      <button 
-                        className={cx("button", "primary")} 
+                      <button
+                        className={cx("button", "primary")}
                         onClick={() => handleAgreeClick(patient)}
                       >
                         Xác nhận
@@ -196,20 +198,39 @@ function ManagePatients() {
                     )}
                     {patient.status === "Đang khám" && (
                       <div className={cx("action-buttons")}>
-                        <button 
-                          className={cx("button", "secondary")} 
+                        <button
+                          className={cx("button", "secondary")}
                           onClick={() => handleSendPrescription(patient)}
                         >
                           Ghi chú
                         </button>
-                        <button 
-                          className={cx("button", "secondary")} 
+                        <button
+                          className={cx("button", "secondary")}
                           onClick={() => handleTestOrderClick(patient)}
                         >
                           Xét nghiệm
                         </button>
                       </div>
                     )}
+                    {patient.status === "Có kết quả xét nghiệm" && (
+                      <div className="flex gap-4 mt-4">
+                        <a
+                          href={patient.result_file}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        >
+                          Xem kết quả
+                        </a>
+                        <button
+                          className={cx("button", "secondary")}
+                          onClick={() => handleSendPrescription(patient)}
+                        >
+                          Ghi chú
+                        </button>
+                      </div>
+                    )}
+
                     {patient.status === "Đã khám" && patient.hasPrescription && (
                       <div className={cx("prescription-sent")}>
                         Đã gửi đơn thuốc
@@ -277,9 +298,9 @@ function ManagePatients() {
             </div>
             <div className={cx("modal-body")}>
               <div className={cx("form-group")}>
-                <select 
+                <select
                   className={cx("select")}
-                  value={selectedTestPack} 
+                  value={selectedTestPack}
                   onChange={(e) => setSelectedTestPack(e.target.value)}
                 >
                   <option value="">-- Chọn gói --</option>

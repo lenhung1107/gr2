@@ -14,7 +14,7 @@ class AppointmentController {
             if (!file) {
                 return res.status(400).json({ message: 'Không có tệp được tải lên.' });
             }
-            const fileUrl = file.path; 
+            const fileUrl = file.path;
             await Appointment.updateOne({ _id: appointmentId }, { result_file: fileUrl });
             // Xử lý file sau khi tải lên
             res.status(200).json({ message: 'File tải lên thành công!', fileUrl });
@@ -317,6 +317,7 @@ class AppointmentController {
                     name: patientName,
                     phone: patientPhone,
                     age: patientAge,
+                    result_file: appt.result_file,
                     date: appt.appointment_date,
                     hour: appt.appointment_time,
                     doctor: appt.doctor_id?.name,

@@ -23,7 +23,9 @@ class PrescriptionController {
             });
 
             await newPrescription.save();
-
+            await Appointment.findByIdAndUpdate(appointment_id, {
+                status: 'Đã khám'
+            });
             res.status(201).json({
                 message: 'Đơn thuốc đã được tạo thành công',
                 prescription: newPrescription

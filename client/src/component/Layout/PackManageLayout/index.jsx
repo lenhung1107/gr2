@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMd } from '@fortawesome/free-solid-svg-icons';
 import ManageMedicalsByAdmin from '../../ManageMedicalsByAdmin';
 import ManagePacks from '../../ManagePacks';
+import ManagePacksAssign from '../../ManagePacksAssign';
 const cx = classNames.bind(styles);
 
 const PackManageLayout = () => {
@@ -117,7 +118,7 @@ const PackManageLayout = () => {
         <div className={cx('content')}>
           <div className={cx('tab-content')}>
             {activeTab === 'packs' && <ManagePacks />}
-            {activeTab === 'assign' && <ManagePacks />}
+            {activeTab === 'assign' && <ManagePacksAssign />}
             {activeTab === 'medical' && <ManageMedicalsByAdmin />}
           </div>
         </div>

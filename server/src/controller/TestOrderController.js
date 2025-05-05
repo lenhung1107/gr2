@@ -65,16 +65,16 @@ class TestOrderController {
         const patientAge = isForSomeone
           ? patient?.age || "Không rõ"
           : patient?.user_id?.age || "Không rõ";
-
         return {
-          testOrderId: order._id,
-          appointmentDate: appointment?.appointment_date,
-          appointmentTime: appointment?.appointment_time,
+          _id: order._id,
+          date: appointment?.appointment_date,
+          hour: appointment?.appointment_time,
           patientName,
           patientPhone,
           patientAge,
           doctorName: order.doctor_id?.name || "Không rõ", // Tên từ TestUser          packName: order.pack_id?.name || appointment?.pack_id?.name || "Không rõ",
           status: order.status,
+          result_file: order.result_file,
           note: order.note
         };
       });
@@ -84,7 +84,69 @@ class TestOrderController {
       console.error('Lỗi khi lấy test orders:', err);
       res.status(500).json({ error: 'Lỗi server', message: err.message });
     }
+  }
+  async confirmTestOrder(req, res) {
+    try {
+      // Cập nhật trạng thái TestOrder
+      const updatedTestOrder = await TestOrder.findByIdAndUpdate(
+        req.params.id,
+        { status: 'Hoàn tất' },
+        { new: true }
+      );
 
+      if (!updatedTestOrder) {
+        return res.status(404).json({ message: 'Không tìm thấy TestOrder' });
+      }
+
+      // Cập nhật trạng thái Appointment liên quan
+      res.json({ message: 'Đã cập nhật trạng thái thành công', data: updatedTestOrder });
+    } catch (error) {
+      console.error('Lỗi cập nhật trạng thái:', error);
+      res.status(500).json({ message: 'Lỗi server' });
+    }
+  }
+  async uploadFile(req, res) {
+    try {
+      const testOrderId = req.params.id;
+      const file = req.file;
+      if (!file) {
+        return res.status(400).json({ message: 'Không có file được upload.' });
+      }
+      // File đã được upload lên Cloudinary và có link tại file.path
+      const fileUrl = file.path;
+
+      // Cập nhật TestOrder
+      const updatedTestOrder = await TestOrder.findByIdAndUpdate(
+        testOrderId,
+        {
+          result_file: fileUrl,
+          status: 'Đã xét nghiệm',
+        },
+        { new: true }
+      );
+      if (!updatedTestOrder) {
+        return res.status(404).json({ message: 'Không tìm thấy TestOrder.' });
+      }
+
+      // Lấy appointment_id từ testOrder vừa cập nhật
+      const appointmentId = updatedTestOrder.appointment_id;
+
+      // Cập nhật Appointment tương ứng
+      await Appointment.findByIdAndUpdate(
+        appointmentId,
+        {
+          result_file: fileUrl,
+          status: 'Có kết quả xét nghiệm',
+        }
+      );
+      return res.status(200).json({
+        message: 'Upload và cập nhật thành công!',
+        fileUrl,
+      });
+    } catch (error) {
+      console.error("Lỗi tải file:", error);
+      res.status(500).json({ message: "Lỗi tải file!", error: error.message });
+    }
   }
 }
 

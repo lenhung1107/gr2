@@ -1,13 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
-import styles from "./ManagePacks.module.scss";
+import styles from "./ManagePacksAssign.module.scss";
 import useFetchData from "../../CustomHook/useFetchData";
 import axios from "axios";
 
-function ManagePacks() {
-  const apiUrl = `http://localhost:3000/appointment/getAllPackAppointment`;
+function ManagePacksAssign() {
+  const apiUrl = `http://localhost:3000/testOrder/getAll`;
   const { data: patientsDataRaw, loading, error } = useFetchData(apiUrl);
   const patientsData = useMemo(() => patientsDataRaw || [], [patientsDataRaw]);
-  console.log(patientsData)
   const [selectedDate, setSelectedDate] = useState("");
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [showPopupAgree, setShowPopupAgree] = useState(false);
@@ -32,6 +31,7 @@ function ManagePacks() {
   };
 
   const handleAgreeClick = (appointment) => {
+    console.log("Appointment được chọn:", appointment);
     setSelectedAppointment(appointment);
     setShowPopupAgree(true);
   };
@@ -42,8 +42,13 @@ function ManagePacks() {
   }
 
   const handleConfirmAppointment = async () => {
+    if (!selectedAppointment || !selectedAppointment._id) {
+      alert("Không thể xác nhận: Dữ liệu không hợp lệ.");
+      return;
+    }
+  
     try {
-      await axios.patch(`http://localhost:3000/appointment/updateStatus/${selectedAppointment._id}`, {
+      await axios.patch(`http://localhost:3000/testOrder/updateStatus/${selectedAppointment._id}`, {
         status: "Đã khám"
       });
 
@@ -69,7 +74,7 @@ function ManagePacks() {
     formData.append("resultFile", uploadFile);
     try {
       const response = await axios.post(
-        `http://localhost:3000/appointment/uploadResult/${selectedAppointment._id}`,
+        `http://localhost:3000/testOrder/uploadResult/${selectedAppointment._id}`,
         formData,
         {
           headers: {
@@ -77,15 +82,24 @@ function ManagePacks() {
           },
         }
       );
-      alert("Upload thành công!");
-      const updatedFileUrl = response.data?.result_file;
+      console.log("Upload response:", response.data);
+
+      console.log(response.data);
+      const updatedFileUrl = response.data?.fileUrl;
       // Cập nhật lại trạng thái local
       const updatedPatients = filteredPatients.map((patient) =>
+        
         patient._id === selectedAppointment._id
-          ? { ...patient, result_file: updatedFileUrl }
+          ? {
+              ...patient,
+              result_file: updatedFileUrl,
+              status: "Đã xét nghiệm"
+            }
           : patient
-      );
+         
+      );      
       setFilteredPatients(updatedPatients);
+
       setShowPopupAgree(false);
       setUploadFile(null);
       setShowPopupSendResult(false);
@@ -101,11 +115,11 @@ function ManagePacks() {
     return <div className={styles.loadingContainer}><p>Đang tải dữ liệu...</p></div>;
   if (error)
     return <div className={styles.errorContainer}><p>Lỗi: {error}</p></div>;
-
+ console.log(filteredPatients)
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <h3>QUẢN LÝ CA KHÁM</h3>
+        <h3>QUẢN LÝ CA KHÁM ĐƯỢC CHỈ ĐỊNH</h3>
       </div>
       
       <div className={styles.contentContainer}>
@@ -126,52 +140,54 @@ function ManagePacks() {
                 <th>Tên bệnh nhân</th>
                 <th>Số điện thoại</th>
                 <th>Tuổi</th>
-                <th>Lý do khám</th>
+                <th>Tên bác sĩ chỉ định</th>
                 <th>Trạng thái</th>
                 <th>Thao tác</th>
               </tr>
             </thead>
             <tbody>
               {filteredPatients.length > 0 ? (
-                filteredPatients.map((patient, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{new Date(patient.date).toLocaleDateString("vi-VN")}</td>
-                    <td>{patient.hour}</td>
-                    <td>{patient.name}</td>
-                    <td>{patient.phone}</td>
-                    <td>{patient.age}</td>
-                    <td>{patient.symptoms}</td>
-                    <td>
-                      <span className={`${styles.status} ${styles[patient.status.replace(/\s+/g, '')]}`}>
-                        {patient.status}
-                      </span>
-                    </td>
-                    <td >
-                      {patient.status === "Đang chờ khám" && (
-                        <button className={styles.confirmBtn} onClick={() => handleAgreeClick(patient)}>
-                          Xác nhận
-                        </button>
-                      )}
-                      {patient.status === "Đã khám" && !patient.result_file && (
-                        <button className={styles.uploadBtn} onClick={() => handleSendResult(patient)}>
-                          Upload kết quả
-                        </button>
-                      )}
-
-                      {patient.status === "Đã khám" && patient.result_file && (
-                        <a
-                          href={patient.result_file}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={styles.resultLink}
-                        >
-                          Xem kết quả
-                        </a>
-                      )}
-                    </td>
-                  </tr>
-                ))
+                filteredPatients.map((patient, index) => {
+                  console.log("File URL:", patient.result_file); // 👉 Log URL để kiểm tra
+                  return (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{new Date(patient.date).toLocaleDateString("vi-VN")}</td>
+                      <td>{patient.hour}</td>
+                      <td>{patient.patientName}</td>
+                      <td>{patient.patientPhone}</td>
+                      <td>{patient.patientAge}</td>
+                      <td>{patient.doctorName}</td>
+                      <td>
+                        <span className={`${styles.status} ${styles[patient.status.replace(/\s+/g, '')]}`}>
+                          {patient.status}
+                        </span>
+                      </td>
+                      <td>
+                        {patient.status === "Chờ kết quả" && (
+                          <button className={styles.confirmBtn} onClick={() => handleAgreeClick(patient)}>
+                            Xác nhận
+                          </button>
+                        )}
+                        {patient.status === "Hoàn tất" && !patient.result_file && (
+                          <button className={styles.uploadBtn} onClick={() => handleSendResult(patient)}>
+                            Upload kết quả
+                          </button>
+                        )}
+                        {patient.status === "Đã xét nghiệm" && (
+                          <a
+                            href={patient.result_file}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.resultLink}
+                          >
+                            Xem kết quả
+                          </a>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })                
               ) : (
                 <tr>
                   <td colSpan="9" className={styles.noData}>
@@ -233,4 +249,4 @@ function ManagePacks() {
   );
 }
 
-export default ManagePacks;
+export default ManagePacksAssign;
