@@ -23,8 +23,14 @@ const Appointment = new Schema({
     },
     appointment_date: { type: Date, required: true }, // Ngày khám
     appointment_time: { type: String, required: true }, // Giờ khám
-    status: { type: String, default: 'Đang chờ xác nhận' }, // Trạng thái cuộc hẹn
+    status: { type: String,
+        enum:[ 'Đang chờ xác nhận', // chưa được bác sĩ duyệt
+            'Đang khám',          // bác sĩ đã xác nhận đang khám
+            'Chờ kết quả xét nghiệm', // đã gửi chỉ định xét nghiệm, đang chờ kết quả
+            'Đã khám'  ],
+         default: 'Đang chờ xác nhận' }, // Trạng thái cuộc hẹn
     symptoms: { type: String }, // Triệu chứng
+    result_file: { type: String }, // lưu đường dẫn ảnh/pdf kết quả
 
 });
 

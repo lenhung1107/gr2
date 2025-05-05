@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import styles from "./MedicalDetail.module.scss";
 import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
- 
+
 function MedicalDetail({ user, onCancel }) {
   const apiUrl = `http://localhost:3000/appointment/getAppointmentsByPatientId/${user._id}`;
   const { data: historyData, loading, error } = useFetchData(apiUrl);
@@ -12,35 +12,8 @@ function MedicalDetail({ user, onCancel }) {
   console.log(user._id);
   const [activeTab, setActiveTab] = useState("info");
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-  const dummyHistoryData = [
-    {
-      id: "65fd1a9e9c8b2b001c4f7a01",
-      date: "2025-03-01",
-      doctor: "Dr. Nguyễn Văn A",
-      symptoms: "Đau đầu, chóng mặt",
-      diagnosis: "Căng thẳng thần kinh",
-      note: "Bệnh nhân cần nghỉ ngơi nhiều hơn",
-      prescription: [
-        { medicine: "Paracetamol", dosage: "500mg", instructions: "Uống 1 viên sau ăn, ngày 2 lần", remind: "kiêng các loại thịt giàu đạm" },
-        { medicine: "Vitamin B1", dosage: "250mg", instructions: "Uống 1 viên mỗi sáng", remind: "kiêng các loại thịt giàu đạm" }
-      ],
-    },
-    {
-      id: "65fd1b3a9c8b2b001c4f7a02",
-      date: "2025-02-20",
-      doctor: "Dr. Trần Thị B",
-      symptoms: "Ho kéo dài, sốt nhẹ",
-      diagnosis: "Viêm họng cấp",
-      note: "Khuyến cáo súc miệng nước muối ấm",
-      prescription: [
-        { medicine: "Amoxicillin", dosage: "500mg", instructions: "Uống 1 viên mỗi 8 giờ", remind: "kiêng các loại thịt giàu đạm" },
-        { medicine: "Acemuc", dosage: "200mg", instructions: "Hòa tan với nước, uống sau ăn", remind: "kiêng các loại thịt giàu đạm" }
-      ]
-    }
-  ];
-
   // Nếu `historyData` rỗng, dùng dữ liệu giả định
-  const finalHistoryData = Array.isArray(historyData) && historyData.length > 0 ? historyData : dummyHistoryData;
+  const finalHistoryData = Array.isArray(historyData) && historyData.length > 0 ? historyData : [];
   if (loading) return <p style={{ fontSize: "1.6rem", color: "#000" }}>Đang tải đơn thuốc...</p>;
   if (error) return <p style={{ fontSize: "1.6rem", color: "red" }}>{error}</p>;
   return (
@@ -54,9 +27,6 @@ function MedicalDetail({ user, onCancel }) {
             <button className={cx("tab", { active: activeTab === "history" })} onClick={() => setActiveTab("history")}>
               Lịch sử Khám Bệnh
             </button>
-            {/* <button className={cx("tab", { active: activeTab === "treatment" })} onClick={() => setActiveTab("treatment")}>
-              Phiếu xét nghiệm
-            </button> */}
           </div>
           <div className={cx("content")}>
             {activeTab === "info" && (
@@ -89,18 +59,26 @@ function MedicalDetail({ user, onCancel }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {finalHistoryData.map((item) => (
-                      <tr key={item.id} className={cx("tableRow")}>
-                        <td>{new Date(item.date).toLocaleDateString('vi-VN')}</td>
-                        <td>{item.service}</td>
-                        <td>{item.symptoms}</td>
-                        <td>
-                          <button className={cx("viewButton")} onClick={() => setSelectedAppointment(item)}>
-                            Xem
-                          </button>
+                    {finalHistoryData.length === 0 ? (
+                      <tr>
+                        <td colSpan="4" style={{ textAlign: "center", fontSize: "1.6rem", padding: "1rem" }}>
+                          Chưa có lịch sử khám bệnh
                         </td>
                       </tr>
-                    ))}
+                    ) : (
+                      finalHistoryData.map((item) => (
+                        <tr key={item.id} className={cx("tableRow")}>
+                          <td>{new Date(item.date).toLocaleDateString('vi-VN')}</td>
+                          <td>{item.service}</td>
+                          <td>{item.symptoms}</td>
+                          <td>
+                            <button className={cx("viewButton")} onClick={() => setSelectedAppointment(item)}>
+                              Xem
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
 
@@ -123,10 +101,10 @@ function MedicalDetail({ user, onCancel }) {
                           <ul className={cx("prescriptionList")}>
                             {selectedAppointment.prescription.map((med, index) => (
                               <div key={index}>
-                                 💊 Thuốc: {med.name}<br/>
-                                 🧪 Liều lượng: {med.quantity} {med.unit} <br/>
-                                  📋 Hướng dẫn sử dụng:{med.dosage}
-                                <br/>
+                                💊 Thuốc: {med.name}<br />
+                                🧪 Liều lượng: {med.quantity} {med.unit} <br />
+                                📋 Hướng dẫn sử dụng:{med.dosage}
+                                <br />
                               </div>
                             ))}
                           </ul>

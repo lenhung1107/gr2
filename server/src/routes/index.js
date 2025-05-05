@@ -7,7 +7,8 @@ const specialtiesRouter = require('./specialties');
 const appointment=require('./appointments');
 const workdate= require('./workdate');
 const prescripttion=require('./prescription')
-const patient = require('./patient')
+const patient = require('./patient');
+const testOrder= require('./testOrder');
 function route(app){
     
     // app.use('/news',newsRouter)  
@@ -21,5 +22,8 @@ function route(app){
     app.use('/schedule',workdate);
     app.use('/prescription',prescripttion);
     app.use('/patient',patient);
+    app.use('/testOrder',testOrder);
+
+
 }
 module.exports = route;

@@ -44,7 +44,10 @@ export default function Login() {
         navigate("/adminpage");
       } else if (userData?.role === 2) {
         navigate(`/doctorpage/${userData._id}`);
-      } else {
+      } 
+      else if (userData?.role === 4) {
+        navigate(`/packManage/${userData._id}`);
+      }else {
         navigate("/");
       }
     });    

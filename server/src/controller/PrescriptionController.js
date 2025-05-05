@@ -1,14 +1,20 @@
 const Prescription = require('../models/Prescription');
 const Appointment = require('../models/Appointment');
+const TestOrder = require("../models/TestOrder");
 class PrescriptionController {
     async createPrescription(req, res) {
         try {
             const { appointment_id, medicines, note,diagnosis } = req.body;
-
+            const existingTestOrder = await TestOrder.findOne({
+                appointment_id,
+                status: 'Đang chờ'
+              });
             if (!appointment_id || !Array.isArray(medicines) || medicines.length === 0) {
                 return res.status(400).json({ message: 'Thiếu dữ liệu hoặc danh sách thuốc rỗng' });
             }
-
+            if (existingTestOrder) {
+                return res.status(400).json({ message: 'Bệnh nhân đang chờ kết quả xét nghiệm. Không thể nhập chuẩn đoán.' });
+              }
             const newPrescription = new Prescription({
                 appointment_id,
                 medicines,

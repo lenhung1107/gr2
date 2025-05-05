@@ -1,12 +1,28 @@
 const Appointment = require('../models/Appointment');
 const Patient = require('../models/Patient');
 const Doctor = require('../models/Doctor');
-const Pack= require("../models/Pack")
+const Pack = require("../models/Pack")
 const Prescription = require('../models/Prescription'); // Nhớ import model Prescription nếu chưa
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
 class AppointmentController {
+    async uploadFile(req, res) {
+        try {
+            const appointmentId = req.params.id;
+            const file = req.file;
+            if (!file) {
+                return res.status(400).json({ message: 'Không có tệp được tải lên.' });
+            }
+            const fileUrl = file.path; 
+            await Appointment.updateOne({ _id: appointmentId }, { result_file: fileUrl });
+            // Xử lý file sau khi tải lên
+            res.status(200).json({ message: 'File tải lên thành công!', fileUrl });
+        } catch (error) {
+            console.error("Lỗi tải file:", error);
+            res.status(500).json({ message: "Lỗi tải file!", error: error.message });
+        }
+    }
     async bookAppointment(req, res) {
         try {
             let { user_id, service_id, appointment_type, appointment_date, appointment_time, symptoms, isForSomeoneElse, patient_name, patient_age, patient_phone } = req.body;
@@ -321,16 +337,15 @@ class AppointmentController {
         try {
             const updatedAppointment = await Appointment.findByIdAndUpdate(
                 id,
-                { status: 'Đã khám' },
+                { status: 'Đang khám' },
                 { new: true }
             );
 
             if (!updatedAppointment) {
                 return res.status(404).json({ message: 'Không tìm thấy cuộc hẹn' });
             }
-
             res.json({
-                message: 'Đã xác nhận lịch hẹn thành công',
+                message: 'Xác nhận bệnh nhân đang khám',
                 appointment: updatedAppointment
             });
         } catch (error) {
@@ -370,7 +385,7 @@ class AppointmentController {
                     } else if (appointment.appointment_type === 'pack') {
                         serviceName = appointment.pack_id?.name || 'Đã xoá gói khám';
                     }
- 
+
                     return {
                         date: appointment.appointment_date,
                         hour: appointment.appointment_time,
@@ -390,7 +405,82 @@ class AppointmentController {
             res.status(500).json({ message: "Lỗi server", err: err.message });
         }
     }
+    // controllers/appointmentController.js
 
+    async getAllPackAppointments(req, res) {
+        try {
+            const appointments = await Appointment.find({ appointment_type: 'pack' })
+                .populate({
+                    path: 'patient_id',
+                    populate: {
+                        path: 'user_id',
+                        model: 'TestUser',
+                        select: 'name age phone'
+                    }
+                })
+                .populate({
+                    path: 'pack_id',
+                    select: 'name'
+                });
+
+            // Xử lý dữ liệu tương tự
+            const formattedAppointments = appointments.map((appt) => {
+                const patient = appt.patient_id;
+                const isForSomeone = patient?.isForSomeone ?? true;
+                const patientName = isForSomeone
+                    ? patient?.name || "Đã xoá"
+                    : patient?.user_id?.name || "Đã xoá";
+
+                const patientPhone = isForSomeone
+                    ? patient?.phone || "Không có"
+                    : patient?.user_id?.phone || "Không có";
+
+                const patientAge = isForSomeone
+                    ? patient?.age || "Không rõ"
+                    : patient?.user_id?.age || "Không rõ";
+
+                const serviceName = appt.pack_id?.name || "Đã xoá gói khám";
+
+                return {
+                    _id: appt._id,
+                    name: patientName,
+                    phone: patientPhone,
+                    age: patientAge,
+                    date: appt.appointment_date,
+                    hour: appt.appointment_time,
+                    service: serviceName,
+                    symptoms: appt.symptoms,
+                    status: appt.status,
+                    result_file: appt.result_file
+                };
+            });
+
+            res.status(200).json(formattedAppointments);
+
+        } catch (err) {
+            console.error("Lỗi lấy danh sách cuộc hẹn bằng gói khám:", err);
+            res.status(500).json({ message: "Lỗi server", err: err.message });
+        }
+    }
+    async confirmAppointmentByManagePack(req, res) {
+        try {
+            const appointmentId = req.params.id;
+            const updatedAppointment = await Appointment.findByIdAndUpdate(
+                appointmentId,
+                { status: "Đã khám" },
+                { new: true }
+            );
+            if (!updatedAppointment) {
+                return res.status(404).json({ message: 'Không tìm thấy cuộc hẹn' });
+            }
+
+            res.json({ message: 'Cập nhật thành công', appointment: updatedAppointment });
+        }
+        catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Lỗi server' });
+        }
+    }
 
 }
 

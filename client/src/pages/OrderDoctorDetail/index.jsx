@@ -66,7 +66,7 @@ function OrderDoctor() {
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     };
-
+    console.log(bookedAppointments)
     const getAvailableHours = (date) => {
         if (!date) return [];
 

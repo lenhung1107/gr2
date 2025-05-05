@@ -28,10 +28,7 @@ function ManageAppointments() {
         setSelectedAppointment(appointment);
         setShowPopupAgree(true);
     };
-    // const confirmAgree = () => {
-    //     alert(`Bạn đã hủy lịch hẹn với ${selectedAppointment.doctor} vào ngày ${selectedAppointment.date}`);
-    //     setShowPopupCancel(false);
-    // };
+
     const statusLabels = ["Tất cả", "Đang chờ xác nhận", "Đang chờ khám", "Đã hủy", "Đã khám"];
     console.log("Selected appointment:", selectedAppointment);
     const handleConfirmAppointment = async (appointment) => {
