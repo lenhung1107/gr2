@@ -3,7 +3,10 @@ const TestOrder = require('../models/TestOrder');
 class TestOrderController {
   async createTestOrder(req, res) {
     try {
-      const { appointment_id, doctor_id, pack_id, note } = req.body;
+      const { appointment_id, doctor_id, pack_ids, note } = req.body;
+      if (!Array.isArray(pack_ids) || pack_ids.length === 0) {
+        return res.status(400).json({ message: 'Phải chọn ít nhất một gói xét nghiệm' });
+      }
       const existing = await TestOrder.findOne({ appointment_id });
       if (existing) {
         return res.status(400).json({ message: 'Đã tồn tại chỉ định xét nghiệm cho cuộc hẹn này' });
@@ -11,7 +14,7 @@ class TestOrderController {
       const newOrder = new TestOrder({
         appointment_id,
         doctor_id,
-        pack_id,
+        pack_ids,
         status: 'Chờ kết quả',
         note
       });
@@ -38,7 +41,6 @@ class TestOrderController {
                 select: 'name phone age'
               }
             },
-            { path: 'pack_id', select: 'name' }
           ]
         })
         .populate({
@@ -47,10 +49,12 @@ class TestOrderController {
           select: 'name'
         })
         .populate({
-          path: 'pack_id',
+          path: 'pack_ids',
           select: 'name'
         });
+        
       const formatted = testOrders.map(order => {
+        // console.log(order.pack_ids)
         const appointment = order.appointment_id;
         const patient = appointment?.patient_id;
         const isForSomeone = patient?.isForSomeone ?? true;
@@ -65,6 +69,7 @@ class TestOrderController {
         const patientAge = isForSomeone
           ? patient?.age || "Không rõ"
           : patient?.user_id?.age || "Không rõ";
+
         return {
           _id: order._id,
           date: appointment?.appointment_date,
@@ -72,8 +77,9 @@ class TestOrderController {
           patientName,
           patientPhone,
           patientAge,
-          doctorName: order.doctor_id?.name || "Không rõ", // Tên từ TestUser          packName: order.pack_id?.name || appointment?.pack_id?.name || "Không rõ",
-          status: order.status,
+          doctorName: order.doctor_id?.name || "Không rõ", // Tên từ TestUser    
+          packNames:order.pack_ids.map(pack => pack.name).join(', ') || "Không rõ",
+          status: order.status, 
           result_file: order.result_file,
           note: order.note
         };

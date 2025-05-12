@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const TestOrder = new Schema({
+const TestOrderSchema = new Schema({
   appointment_id: {
     type: Schema.Types.ObjectId,
     ref: 'Appointment',
@@ -12,18 +12,20 @@ const TestOrder = new Schema({
     ref: 'Doctor',
     required: true
   },
-  pack_id: {
-    type: Schema.Types.ObjectId,
-    ref: 'Pack',
-    required: true
-  },
+  pack_ids: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Test',
+      required: true
+    }
+  ],
   note: { type: String },
   status: {
     type: String,
-    enum: ['Chờ kết quả','Hoàn tất', 'Đã xét nghiệm'],
+    enum: ['Chờ kết quả', 'Hoàn tất', 'Đã xét nghiệm'],
     default: 'Chờ kết quả'
   },
-  result_file: { type: String } // Thêm dòng này
+  result_file: { type: String }
 });
 
-module.exports = mongoose.model('TestOrder', TestOrder);
+module.exports = mongoose.model('TestOrder', TestOrderSchema);

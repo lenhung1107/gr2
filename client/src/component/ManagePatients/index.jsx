@@ -19,7 +19,7 @@ function ManagePatients() {
   const [showPopupAgree, setShowPopupAgree] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [showTestOrderPopup, setShowTestOrderPopup] = useState(false);
-  const [selectedTestPack, setSelectedTestPack] = useState("");
+  const [selectedTestPack, setSelectedTestPack] = useState([]);
   const [prescripCreat, setPrescripCreat] = useState(false);
   const [testPacks, setTestPacks] = useState([]);
 
@@ -32,11 +32,11 @@ function ManagePatients() {
   useEffect(() => {
     const fetchTestPacks = async () => {
       try {
-        const res = await fetch("http://localhost:3000/pack/getAll");
+        const res = await fetch("http://localhost:3000/test/getAll");
         const data = await res.json();
         setTestPacks(data);
       } catch (error) {
-        console.error("Lỗi khi lấy danh sách gói xét nghiệm:", error);
+        console.error("Lỗi khi lấy danh sách gói xét nghiệm: ", error);
       }
     };
     fetchTestPacks();
@@ -68,7 +68,14 @@ function ManagePatients() {
     setSelectedPatient(patient);
     setShowTestOrderPopup(true);
   };
-
+  const handleCheckboxChange = (packId) => {
+    setSelectedTestPack(prev =>
+      prev.includes(packId)
+        ? prev.filter(id => id !== packId)
+        : [...prev, packId]
+    );
+  };
+  
   const handleConfirmAppointment = async (patient) => {
     try {
       const response = await fetch(`http://localhost:3000/appointment/confirmByDoctor/${patient._id}`, {
@@ -106,7 +113,7 @@ function ManagePatients() {
         body: JSON.stringify({
           appointment_id: selectedPatient._id,
           doctor_id: id,
-          pack_id: selectedTestPack,
+          pack_ids: selectedTestPack,
           note: "Chỉ định từ bác sĩ",
         }),
       });
@@ -298,19 +305,21 @@ function ManagePatients() {
             </div>
             <div className={cx("modal-body")}>
               <div className={cx("form-group")}>
-                <select
-                  className={cx("select")}
-                  value={selectedTestPack}
-                  onChange={(e) => setSelectedTestPack(e.target.value)}
-                >
-                  <option value="">-- Chọn gói --</option>
-                  {testPacks.map((pack) => (
-                    <option key={pack._id} value={pack._id}>
-                      {pack.name} - {pack.price}
-                    </option>
-                  ))}
-                </select>
+                {testPacks.map((pack) => (
+                  <div key={pack._id} className={cx("checkbox-item")}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value={pack._id}
+                        checked={selectedTestPack.includes(pack._id)}
+                        onChange={() => handleCheckboxChange(pack._id)}
+                      />
+                      {pack.name} - {pack.room}
+                    </label>
+                  </div>
+                ))}
               </div>
+
             </div>
             <div className={cx("modal-footer")}>
               <button

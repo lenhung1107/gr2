@@ -13,7 +13,7 @@ function ManagePacksAssign() {
   const [showPopupSendResult, setShowPopupSendResult] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [uploadFile, setUploadFile] = useState(null);
-  
+
   useEffect(() => {
     if (patientsData.length > 0 && selectedDate) {
       const filtered = patientsData.filter((patient) => patient.date === selectedDate);
@@ -35,7 +35,7 @@ function ManagePacksAssign() {
     setSelectedAppointment(appointment);
     setShowPopupAgree(true);
   };
-  
+
   const handleSendResult = (appointment) => {
     setSelectedAppointment(appointment);
     setShowPopupSendResult(true);
@@ -46,7 +46,7 @@ function ManagePacksAssign() {
       alert("Không thể xác nhận: Dữ liệu không hợp lệ.");
       return;
     }
-  
+
     try {
       await axios.patch(`http://localhost:3000/testOrder/updateStatus/${selectedAppointment._id}`, {
         status: "Đã khám"
@@ -88,16 +88,16 @@ function ManagePacksAssign() {
       const updatedFileUrl = response.data?.fileUrl;
       // Cập nhật lại trạng thái local
       const updatedPatients = filteredPatients.map((patient) =>
-        
+
         patient._id === selectedAppointment._id
           ? {
-              ...patient,
-              result_file: updatedFileUrl,
-              status: "Đã xét nghiệm"
-            }
+            ...patient,
+            result_file: updatedFileUrl,
+            status: "Đã xét nghiệm"
+          }
           : patient
-         
-      );      
+
+      );
       setFilteredPatients(updatedPatients);
 
       setShowPopupAgree(false);
@@ -115,13 +115,13 @@ function ManagePacksAssign() {
     return <div className={styles.loadingContainer}><p>Đang tải dữ liệu...</p></div>;
   if (error)
     return <div className={styles.errorContainer}><p>Lỗi: {error}</p></div>;
- console.log(filteredPatients)
+  console.log(filteredPatients)
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <h3>QUẢN LÝ CA KHÁM ĐƯỢC CHỈ ĐỊNH</h3>
       </div>
-      
+
       <div className={styles.contentContainer}>
         <form className={styles.filterForm}>
           <div className={styles.dateSelector}>
@@ -142,6 +142,7 @@ function ManagePacksAssign() {
                 <th>Tuổi</th>
                 <th>Tên bác sĩ chỉ định</th>
                 <th>Trạng thái</th>
+                <th>Tên xét nghiệm</th>
                 <th>Thao tác</th>
               </tr>
             </thead>
@@ -163,6 +164,12 @@ function ManagePacksAssign() {
                           {patient.status}
                         </span>
                       </td>
+                      <td>
+                        {patient.packNames?.split(",").map((pack, idx) => (
+                          <div key={idx}>{pack.trim()}</div>
+                        ))}
+                      </td>
+
                       <td>
                         {patient.status === "Chờ kết quả" && (
                           <button className={styles.confirmBtn} onClick={() => handleAgreeClick(patient)}>
@@ -187,7 +194,7 @@ function ManagePacksAssign() {
                       </td>
                     </tr>
                   );
-                })                
+                })
               ) : (
                 <tr>
                   <td colSpan="9" className={styles.noData}>
@@ -216,7 +223,7 @@ function ManagePacksAssign() {
           </div>
         </div>
       )}
-      
+
       {showPopupSendResult && selectedAppointment && (
         <div className={styles.popupOverlay}>
           <div className={styles.popup}>
