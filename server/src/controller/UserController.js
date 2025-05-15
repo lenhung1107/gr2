@@ -27,7 +27,7 @@ class UserController {
     }
     async deleteDoctor(req, res) {
         try {
-          
+
             const deletedDoctor = await Doctor.findByIdAndDelete(req.params.id);
             if (!deletedDoctor) {
                 return res.status(404).json({ message: 'Không tìm thấy bác sĩ' });

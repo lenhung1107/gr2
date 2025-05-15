@@ -1,7 +1,6 @@
 import classNames from "classnames/bind";
 import { useParams } from "react-router-dom";
 import useFetchData from "../../CustomHook/useFetchData";
-
 import styles from "./FacilitiesDetail.module.scss";
 import Doctor from "../../component/Doctor";
 const cx = classNames.bind(styles)

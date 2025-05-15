@@ -1,10 +1,10 @@
 import classNames from "classnames/bind";
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ManageUsers.module.scss";
 import { useState, useEffect } from "react";
+
 import EditForm from "../EditForm";
 import axios from "axios";
 
@@ -34,11 +34,10 @@ function ManageUsers() {
         };
         fetchUsers();
     }, []);
-
     // Tìm kiếm người dùng
     const handleSearch = () => {
         const searchText = searchName.toLowerCase();
-        const filtered = users.filter((user) => 
+        const filtered = users.filter((user) =>
             user.name.toLowerCase().includes(searchText) ||
             user.age.toString().includes(searchText) ||
             user.gender.toLowerCase().includes(searchText) ||
@@ -51,7 +50,7 @@ function ManageUsers() {
 
     // Reset danh sách về ban đầu
     const handleReset = () => {
-        setSearchName(""); 
+        setSearchName("");
         setFilteredUsers(users);
     };
 
@@ -63,16 +62,14 @@ function ManageUsers() {
     const confirmDelete = async () => {
         try {
             await axios.delete(`http://localhost:3000/adminpage/deleteUser/${userToDelete._id}`);
-    
+
             // Cập nhật lại danh sách
             const updatedUsers = users.filter((u) => u._id !== userToDelete._id);
             setUsers(updatedUsers);
             setFilteredUsers(updatedUsers);
-    
             // Reset lại popup
             setUserToDelete(null);
             setshowConfirmDelete(false);
-    
             // Thông báo
             toast.success("Xóa người dùng thành công!");
 
@@ -81,7 +78,7 @@ function ManageUsers() {
             alert("Không thể xóa người dùng!");
         }
     };
-    
+
 
     const handleEditClick = (user) => {
         setEditUser(user);
@@ -92,11 +89,31 @@ function ManageUsers() {
         setEditUser({ ...editUser, [e.target.name]: e.target.value });
     };
 
-    const handleSaveEdit = () => {
-        setFilteredUsers(filteredUsers.map((user) => (user.id === editUser.id ? editUser : user)));
-        setShowEditForm(false);
-        setEditUser(null);
+    const handleSaveEdit = async () => {
+        try {
+            const response = await axios.put(
+                `http://localhost:3000/user/editUser/${editUser._id}`,
+                editUser
+            );
+
+            const updatedUser = response.data;
+
+            // Cập nhật lại danh sách
+            const updatedUsers = users.map(user =>
+                user._id === updatedUser._id ? updatedUser : user
+            );
+
+            setUsers(updatedUsers);
+            setFilteredUsers(updatedUsers);
+            setShowEditForm(false);
+            setEditUser(null);
+            toast.success("Cập nhật người dùng thành công!");
+        } catch (error) {
+            console.error("Lỗi khi cập nhật người dùng:", error);
+            toast.error("Cập nhật thất bại!");
+        }
     };
+
 
     return (
         <div className={cx('wrapper')}>
@@ -104,8 +121,8 @@ function ManageUsers() {
             <h3>Bộ lọc</h3>
             <div className={cx('filter')}>
                 <div className={cx('input')}>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         placeholder="Nhập vào tìm kiếm"
                         value={searchName}
                         onChange={(e) => setSearchName(e.target.value)}
@@ -169,7 +186,6 @@ function ManageUsers() {
                     onCancel={() => setShowEditForm(false)}
                 />
             )}
-            <ToastContainer />
         </div>
     );
 }

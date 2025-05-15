@@ -1,45 +1,62 @@
-import { useState, useEffect } from "react";
-import { useCalendarApp, ScheduleXCalendar } from '@schedule-x/react'
-import {
-  createViewDay,
-  createViewMonthAgenda,
-  createViewMonthGrid,
-  createViewWeek,
-} from '@schedule-x/calendar'
-import { createEventsServicePlugin } from '@schedule-x/events-service'
-import "./scheduleOverride.css";
+// DoctorScheduleCalendar.jsx
+import { useEffect, useState } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import viLocale from '@fullcalendar/core/locales/vi';
+import './calendar.css';
 
-import '@schedule-x/theme-default/dist/index.css'
-
-
-function ManageSchedules() {
-  const eventsService = useState(() => createEventsServicePlugin())[0]
- 
-  const calendar = useCalendarApp({
-    views: [createViewDay(), createViewWeek(), createViewMonthGrid(), createViewMonthAgenda()],
-    events: [
-      {
-        id: '1',
-        title: 'Event 1',
-        start: '2025-03-28 08:00',
-        end: '2025-03-28 09:00',
-        description: 'Kỳ thi Fundamental IT Engineer Examination tại Hà Nội.',
-      },
-    ],
-    plugins: [eventsService]
-  })
+const ManageSchedules = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?._id;
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    // get all events
-    eventsService.getAll()
-  }, [])
-  
+    fetch(`http://localhost:3000/schedule/getworkHourofDoctor/${userId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const formattedEvents = data.map((item) => ({
+          title: `${item.time} - ${item.status}`,
+          date: item.date,
+          allDay: true
+        }));
+        setEvents(formattedEvents);
+      })
+      .catch((err) => console.error('Lỗi lấy lịch làm việc:', err));
+  }, [userId]);
 
   return (
-    <div>
-      <ScheduleXCalendar calendarApp={calendar} />
+    <div className="content">
+      <h2 className="">Lịch làm việc của bác sĩ</h2>
+      <FullCalendar
+        plugins={[dayGridPlugin]}
+        initialView="dayGridMonth"
+        events={events}
+        height="auto"
+        locale={{
+          ...viLocale,
+          buttonText: {
+            today: 'Hôm nay',
+            month: 'Tháng',
+            week: 'Tuần',
+            day: 'Ngày',
+            list: 'Lịch'
+          }
+        }}
+        headerToolbar={{
+          left: 'title',
+          center: '',
+          right: 'prev,next today',
+        }}
+        titleFormat={(date) => {
+          const month = date.date.marker.toLocaleString('vi-VN', { month: 'long' });
+          const year = date.date.marker.getFullYear();
+          const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1);
+          return `${capitalizedMonth} năm ${year}`;
+        }}
+        dayMaxEventRows={3}
+      />
     </div>
   );
-}
+};
 
 export default ManageSchedules;

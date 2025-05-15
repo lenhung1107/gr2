@@ -21,3 +21,8 @@ html, body {
     padding: 0;
     overflow-x: hidden; /* Ngăn cuộn ngang */
 }
+.custom-toast {
+  font-size: 1.6rem;        /* 👈 Cỡ chữ to hơn */
+  font-weight: bold;      /* 👈 Tuỳ chọn: in đậm */
+  padding: 12px 16px;
+}

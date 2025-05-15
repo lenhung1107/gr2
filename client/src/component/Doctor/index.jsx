@@ -19,7 +19,7 @@ function Doctor({ doctors }) {
                         <div className={cx('infor')}>
                             <h3 className={cx('name')}>{doctor.name}</h3>
                             <div className={cx('detail')}>
-                                <span>Chuyên khoa: {doctor.specialty}</span>
+                                <span className={cx('specialty')} style={{ fontSize: '1.8rem' }}> {doctor.specialty}</span>
                                 <span><FontAwesomeIcon icon={faStar} className={cx('icon')} /> Đánh giá: {doctor.rating}</span>
                                 <span><FontAwesomeIcon icon={faCalendarCheck} className={cx('icon')} /> Số lượt đặt khám: {doctor.appointments}</span>
                             </div>

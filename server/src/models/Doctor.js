@@ -8,14 +8,17 @@ const Doctor = new Schema(
             ref: 'TestUser', // Tham chiếu đến bảng User
             required: true
         },
-        name:{type:String, required:true},
-        specialty: { type: String },
+        name: { type: String, required: true },
+        specialty: {
+            type: Schema.Types.ObjectId,
+            ref: 'Specialty',
+        },
         bio: { type: String },
         rating: { type: Number, min: 0, max: 5 },
         appointments: { type: Number },
         image: { type: String },
         price: { type: String }
-       
+
     }
 );
 

@@ -1,6 +1,6 @@
 const Workdate = require('../models/workdate');
 const Doctor = require('../models/Doctor');
-const Appointment = require('../models/Appointment')
+const Appointment = require('../models/Appointment');
 const mongoose = require("mongoose");
 
 class WorkdateController {
@@ -80,12 +80,12 @@ class WorkdateController {
                 doctor_id: objecDoctorId,
                 status: { $ne: 'Đã hủy' }
             });
-    
+
             const formatted = {};
             schedules.forEach(item => {
                 formatted[item.dayWork] = item.hourWork;
             });
-    
+
             const bookedAppointments = {};
             appointments.forEach(item => {
                 const day = item.appointment_date.toISOString().split('T')[0];
@@ -94,7 +94,7 @@ class WorkdateController {
                 }
                 bookedAppointments[day].push(item.appointment_time);
             });
-    
+
             res.json({ schedule: formatted, bookedAppointments });
         }
         catch (err) {
@@ -102,7 +102,28 @@ class WorkdateController {
             res.status(500).json({ message: "Lỗi server" });
         }
     }
-    
+    async getworkHourofDoctor(req, res) {
+        try {
+            const userId = req.params.userId;
+            const doctor = await Doctor.findOne({ user_id: userId });
+            if (!doctor) {
+                return res.status(404).json({ message: 'Không tìm thấy bác sĩ cho user_id này' });
+            }
+            const appointments = await Appointment.find({
+                doctor_id: doctor._id
+            }).select('appointment_date appointment_time status');
+            const result = appointments.map(app => ({
+                date: app.appointment_date,
+                time: app.appointment_time,
+                status: app.status
+            }));
+            return res.status(200).json(result);
+
+        } catch (error) {
+            res.status(500).json({ message: 'Lỗi khi lấy lịch hẹn của bác sĩ', error });
+        }
+
+    }
 }
 
 module.exports = new WorkdateController();

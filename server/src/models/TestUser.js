@@ -24,7 +24,8 @@ const TestUser = new Schema(
             type: Boolean,
             default: false
         }, 
-        role:{type: Number, default:1}
+        role:{type: Number, default:1},
+        img:{type: String}
     }
 );
 module.exports = mongoose.model('TestUser', TestUser);

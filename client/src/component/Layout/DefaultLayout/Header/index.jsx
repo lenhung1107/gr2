@@ -86,7 +86,7 @@ function Header() {
                                         onMouseLeave={hideMenu} // Ẩn menu khi chuột rời khỏi
                                     >
                                         <Link
-                                            to="/profile"
+                                            to={`/profile/${currentUser._id}`}
                                             className={cx('menu-item')}
                                             onClick={hideMenu}
                                         >

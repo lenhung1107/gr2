@@ -10,6 +10,7 @@ const prescripttion=require('./prescription')
 const patient = require('./patient');
 const testOrder= require('./testOrder');
 const test= require('./test');
+const userUseRoute= require('./userUse');
 function route(app){
     
     // app.use('/news',newsRouter)  
@@ -17,6 +18,7 @@ function route(app){
     app.use('/pack', packRoute);
     app.use('/orderDoctor',doctorDetailRoute);
     app.use('/adminpage',userRoute);
+    app.use('/user',userUseRoute);
     app.use('/auth',authentication);
     app.use('/specialties', specialtiesRouter);
     app.use('/appointment', appointment);

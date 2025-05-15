@@ -19,7 +19,6 @@ const EditForm = ({ user, onChange, onSave, onCancel }) => {
           value={user.name || ""}
           onChange={onChange}
         />
-
         <label>Tuổi:</label>
         <input
           type="number"
@@ -57,7 +56,6 @@ const EditForm = ({ user, onChange, onSave, onCancel }) => {
           value={user.email || ""}
           onChange={onChange}
         />
-
         <div className={cx("popupButtons")}>
           <button onClick={onSave}>Lưu</button>
           <button onClick={onCancel}>Hủy</button>

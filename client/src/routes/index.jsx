@@ -21,7 +21,7 @@ const publicRouters=[
     {path:'/orderDoctor/:id', component :OrderDoctorDetail},
     {path:'/orderPack/:id', component :OrderPackDetail},
     {path:'/facilitiesDetail', component :FacilitiesDetail},
-    {path:'/profile', component :Profile},
+    {path:'/profile/:id', component :Profile},
     {path:'/historypage', component :HistoryPage},
     {path:'/doctorpage/:id', component :DoctorPage, layout:null},
     {path:'/adminpage', component :AdminPage, layout:null},
