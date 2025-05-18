@@ -1,0 +1,314 @@
+@use "sass:color";
+
+// Define primary color variables based on requested colors
+$primary-color: rgb(58, 181, 138);
+$primary-light: rgb(39, 214, 131);
+$primary-medium: rgb(75, 192, 140);
+$white: #ffffff;
+$light-gray: #f8f9fa;
+$gray: #e9ecef;
+$dark-gray: #343a40;
+$border-radius: 8px;
+$box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+$transition: all 0.3s ease;
+
+// Mixins for reusable styles
+@mixin button {
+  padding: 8px 16px;
+  border-radius: $border-radius;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: $transition;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: $white;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $box-shadow;
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Main component styles
+.wrapper {
+  width: 100%;
+  // padding: 24px;
+  background-color: $white;
+  border-radius: $border-radius;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  // margin-bottom: 32px;
+  padding-bottom: 16px;
+  h3 {
+    font-size: 2rem;
+    color: black;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+.contentContainer {
+  flex: 1;
+}
+
+.filterForm {
+  width: 500px;
+  background-color: $white;
+  padding: 20px;
+  border-radius: $border-radius;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba($primary-color, 0.1);
+}
+
+.dateSelector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  
+  label {
+    font-weight: 500;
+    color: $dark-gray;
+    min-width: 120px;
+    font-size: 1.8rem;
+  }
+  
+  input {
+    padding: 10px 16px;
+    border: 1px solid $primary-medium;
+    border-radius: $border-radius;
+    flex: 1;
+    font-size: 1.6rem;
+    transition: $transition;
+    outline: none;
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+  }
+}
+
+.tableContainer {
+  overflow-x: auto;
+  background-color: $white;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 8px rgba($primary-color, 0.1);
+}
+
+.patientTable {
+  width: 100%;
+  border-collapse: collapse;
+  
+  th, td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid $gray;
+  }
+  
+  th {
+    background-color: $primary-color;
+    color: $white;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    white-space: nowrap;
+    
+    &:first-child {
+      border-top-left-radius: $border-radius;
+    }
+    
+    &:last-child {
+      border-top-right-radius: $border-radius;
+    }
+  }
+  td{
+    font-size: 1.6rem;
+  }
+  
+  tr {
+    transition: $transition;
+    
+    &:nth-child(even) {
+      background-color: rgba($primary-light, 0.05);
+    }
+    
+    &:hover {
+      background-color: rgba($primary-medium, 0.1);
+    }
+  }
+}
+
+.noData {
+  text-align: center;
+  color: $dark-gray;
+  padding: 32px !important;
+  font-style: italic;
+}
+
+// Status styles
+.status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.Đangchờkhám {
+  background-color: rgba($primary-light, 0.15);
+  color: color.adjust($primary-light, $lightness: -20%);
+  border: 1px solid rgba($primary-light, 0.3);
+  font-size: 1.2rem;
+}
+
+.Đãkhám {
+  background-color: rgba($primary-color, 0.15);
+  color: color.adjust($primary-color, $lightness: -10%);
+  border: 1px solid rgba($primary-color, 0.3);
+  font-size: 1.2rem;
+}
+// Button styles
+.confirmBtn {
+  font-size: 1.2rem;
+  @include button;
+  background-color: $primary-color;
+  
+  &:hover {
+    background-color: color.adjust($primary-color, $lightness: -5%);
+  }
+}
+
+.uploadBtn {
+  font-size: 1.2rem;
+  @include button;
+  background-color: $primary-light;
+  
+  &:hover {
+    background-color: color.adjust($primary-light, $lightness: -5%);
+  }
+
+  &:disabled {
+    background-color: $gray;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.cancelBtn {
+  @include button;
+  background-color: $gray;
+  color: $dark-gray;
+  
+  &:hover {
+    background-color: color.adjust($gray, $lightness: -5%);
+  }
+}
+
+.resultLink {
+  display: inline-block;
+  color: $primary-color;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 3px 5px;
+  border: 1px solid $primary-color;
+  border-radius: $border-radius;
+  transition: $transition;
+  text-align: center;
+  font-size: 1.2rem;
+  &:hover {
+    background-color: $primary-color;
+    color: $white;
+  }
+}
+
+// Popup styles
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup {
+  background-color: $white;
+  padding: 32px;
+  border-radius: $border-radius;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  
+  h4 {
+    color: $primary-color;
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 1.6rem;
+    border-bottom: 2px solid $primary-light;
+    padding-bottom: 10px;
+  }
+  
+  p {
+    margin-bottom: 24px;
+    color: $dark-gray;
+  }
+}
+
+.popupButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.uploadSection {
+  input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed $primary-medium;
+    border-radius: $border-radius;
+    background-color: rgba($primary-medium, 0.05);
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: $transition;
+    
+    &:hover {
+      border-color: $primary-color;
+      background-color: rgba($primary-color, 0.1);
+    }
+  }
+}
+
+// Loading and error states
+.loadingContainer, .errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  
+  p {
+    font-size: 1.6rem;
+    color: $primary-color;
+    font-weight: 500;
+  }
+}
+
+.errorContainer p {
+  color: #dc3545;
+}

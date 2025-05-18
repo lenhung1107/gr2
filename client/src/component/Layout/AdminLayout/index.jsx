@@ -10,6 +10,8 @@ import ManageUsers from '../../ManageUsers'; // Quản lý bệnh nhân
 import ManageDoctors from '../../ManageDoctors'; // Quản lý bác sĩ
 import ManageMedicalsByAdmin from '../../ManageMedicalsByAdmin';
 import ManageAppointments from '../../ManageAppointments';
+import ManagePacks from '../../ManagePacks';
+import ManageTest from '../../ManageTest';
 const cx = classNames.bind(styles);
 
 const AdminLayout = () => {
@@ -124,6 +126,17 @@ const AdminLayout = () => {
               onClick={() => handleTabChange('medical')}
             >
               Quản lý hồ sơ khám bệnh
+            </button><button
+              className={cx('menu-itemList', { active: activeTab === 'pack' })}
+              onClick={() => handleTabChange('pack')}
+            >
+              Quản lý gói khám
+            </button>
+            <button
+              className={cx('menu-itemList', { active: activeTab === 'testOrder' })}
+              onClick={() => handleTabChange('testOrder')}
+            >
+              Quản lý các loại xét nghiệm
             </button>
           </div>
         </div>
@@ -133,6 +146,8 @@ const AdminLayout = () => {
             {activeTab === 'doctors' && <ManageDoctors />}
             {activeTab === 'medical' && <ManageMedicalsByAdmin />}
             {activeTab === 'appointments' && <ManageAppointments />}
+            {activeTab === 'pack' && <ManagePacks />}
+            {activeTab === 'testOrder' && <ManageTest/>}
           </div>
         </div>
       </div>

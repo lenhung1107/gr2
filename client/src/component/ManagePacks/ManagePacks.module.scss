@@ -1,240 +1,216 @@
-@use "sass:color";
-
-// Define primary color variables based on requested colors
-$primary-color: rgb(58, 181, 138);
-$primary-light: rgb(39, 214, 131);
-$primary-medium: rgb(75, 192, 140);
-$white: #ffffff;
-$light-gray: #f8f9fa;
-$gray: #e9ecef;
-$dark-gray: #343a40;
-$border-radius: 8px;
-$box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-$transition: all 0.3s ease;
-
-// Mixins for reusable styles
-@mixin button {
-  padding: 8px 16px;
-  border-radius: $border-radius;
-  border: none;
-  font-weight: 500;
-  cursor: pointer;
-  transition: $transition;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: $white;
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: $box-shadow;
-  }
-  
-  &:active {
-    transform: translateY(0);
-  }
-}
-
-// Main component styles
-.wrapper {
-  width: 100%;
-  // padding: 24px;
-  background-color: $white;
-  border-radius: $border-radius;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .header {
-  // margin-bottom: 32px;
-  padding-bottom: 16px;
-  h3 {
-    font-size: 2rem;
-    color: black;
-    font-weight: 600;
-    text-align: center;
-    margin: 0;
-  }
-}
-
-.contentContainer {
-  flex: 1;
-}
-
-.filterForm {
-  width: 500px;
-  background-color: $white;
-  padding: 20px;
-  border-radius: $border-radius;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 6px rgba($primary-color, 0.1);
-}
-
-.dateSelector {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
   
-  label {
-    font-weight: 500;
-    color: $dark-gray;
-    min-width: 120px;
-    font-size: 1.8rem;
+  h1 {
+    color: rgb(58, 181, 138);
+    margin: 0;
+    font-size: 24px;
   }
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.search-bar {
+  display: flex;
+  position: relative;
   
   input {
-    padding: 10px 16px;
-    border: 1px solid $primary-medium;
-    border-radius: $border-radius;
-    flex: 1;
-    font-size: 1.6rem;
-    transition: $transition;
-    outline: none;
+    padding: 10px 15px;
+    border: 1px solid rgb(75, 192, 140);
+    border-radius: 4px;
+    width: 250px;
+    font-size: 14px;
+    
     &:focus {
-      border-color: $primary-color;
-      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+      outline: none;
+      border-color: rgb(39, 214, 131);
+      box-shadow: 0 0 0 2px rgba(39, 214, 131, 0.2);
     }
-  }
-}
-
-.tableContainer {
-  overflow-x: auto;
-  background-color: $white;
-  border-radius: $border-radius;
-  box-shadow: 0 2px 8px rgba($primary-color, 0.1);
-}
-
-.patientTable {
-  width: 100%;
-  border-collapse: collapse;
-  
-  th, td {
-    padding: 14px 16px;
-    text-align: left;
-    border-bottom: 1px solid $gray;
   }
   
-  th {
-    background-color: $primary-color;
-    color: $white;
-    font-weight: 500;
-    text-transform: uppercase;
-    font-size: 1.3rem;
-    white-space: nowrap;
-    
-    &:first-child {
-      border-top-left-radius: $border-radius;
-    }
-    
-    &:last-child {
-      border-top-right-radius: $border-radius;
-    }
-  }
-  td{
-    font-size: 1.6rem;
-  }
-  
-  tr {
-    transition: $transition;
-    
-    &:nth-child(even) {
-      background-color: rgba($primary-light, 0.05);
-    }
+  .search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgb(75, 192, 140);
+    cursor: pointer;
     
     &:hover {
-      background-color: rgba($primary-medium, 0.1);
+      color: rgb(39, 214, 131);
     }
   }
 }
 
-.noData {
-  text-align: center;
-  color: $dark-gray;
-  padding: 32px !important;
-  font-style: italic;
-}
-
-// Status styles
-.status {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 1.6rem;
+.add-btn {
+  background-color: rgb(39, 214, 131);
+  // color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 500;
+  transition: all 0.3s ease;
+  span{
+    font-size: 1.6rem;
+    color: white;
+  }
+  &:hover {
+    background-color: (rgb(39, 214, 131), 10%);
+    transform: translateY(-2px);
+  }
 }
 
-.Đangchờkhám {
-  background-color: rgba($primary-light, 0.15);
-  color: color.adjust($primary-light, $lightness: -20%);
-  border: 1px solid rgba($primary-light, 0.3);
-  font-size: 1.2rem;
+.pack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
 }
 
-.Đãkhám {
-  background-color: rgba($primary-color, 0.15);
-  color: color.adjust($primary-color, $lightness: -10%);
-  border: 1px solid rgba($primary-color, 0.3);
-  font-size: 1.2rem;
-}
-// Button styles
-.confirmBtn {
-  font-size: 1.2rem;
-  @include button;
-  background-color: $primary-color;
+.pack-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: white;
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
   
   &:hover {
-    background-color: color.adjust($primary-color, $lightness: -5%);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-color: rgb(75, 192, 140);
   }
 }
 
-.uploadBtn {
-  font-size: 1.2rem;
-  @include button;
-  background-color: $primary-light;
+.pack-image {
+  height: 180px;
+  overflow: hidden;
   
-  &:hover {
-    background-color: color.adjust($primary-light, $lightness: -5%);
-  }
-
-  &:disabled {
-    background-color: $gray;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 }
 
-.cancelBtn {
-  @include button;
-  background-color: $gray;
-  color: $dark-gray;
+.pack-info {
+  padding: 15px;
   
-  &:hover {
-    background-color: color.adjust($gray, $lightness: -5%);
+  h3 {
+    margin: 0 0 10px;
+    color: rgb(58, 181, 138);
+    font-size: 18px;
+    line-height: 1.3;
+    height: 46px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  
+  .pack-room {
+    color: #666;
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  
+  .pack-price {
+    font-weight: bold;
+    font-size: 16px;
+    color: rgb(39, 214, 131);
+    margin: 5px 0;
   }
 }
 
-.resultLink {
-  display: inline-block;
-  color: $primary-color;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 3px 5px;
-  border: 1px solid $primary-color;
-  border-radius: $border-radius;
-  transition: $transition;
+.pack-actions {
+  display: flex;
+  padding: 0 15px 15px;
+  gap: 10px;
+  
+  button {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .view-btn {
+    background-color: rgb(58, 181, 138);
+    color: white;
+    flex-grow: 1;
+    
+    &:hover {
+      background-color: (rgb(58, 181, 138), 10%);
+    }
+  }
+  
+  .edit-btn {
+    background-color: #f8f9fa;
+    color: rgb(75, 192, 140);
+    
+    &:hover {
+      background-color: rgb(75, 192, 140);
+      color: white;
+    }
+  }
+  
+  .delete-btn {
+    background-color: #f8f9fa;
+    color: #ff6b6b;
+    
+    &:hover {
+      background-color: #ff6b6b;
+      color: white;
+    }
+  }
+}
+
+.loading {
   text-align: center;
-  font-size: 1.2rem;
-  &:hover {
-    background-color: $primary-color;
-    color: $white;
-  }
+  padding: 50px;
+  font-size: 18px;
+  color: rgb(75, 192, 140);
 }
 
-// Popup styles
-.popupOverlay {
+.no-results {
+  text-align: center;
+  padding: 50px;
+  grid-column: 1 / -1;
+  color: #666;
+  font-size: 16px;
+}
+
+// Modal styles
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -242,73 +218,219 @@ $transition: all 0.3s ease;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   z-index: 1000;
 }
 
-.popup {
-  background-color: $white;
-  padding: 32px;
-  border-radius: $border-radius;
-  width: 100%;
-  max-width: 500px;
+.modal {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow: auto;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  
-  h4 {
-    color: $primary-color;
-    margin-top: 0;
-    margin-bottom: 16px;
-    font-size: 1.6rem;
-    border-bottom: 2px solid $primary-light;
-    padding-bottom: 10px;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  p {
-    margin-bottom: 24px;
-    color: $dark-gray;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.popupButtons {
+.modal-header {
   display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 24px;
-}
-
-.uploadSection {
-  input[type="file"] {
-    width: 100%;
-    padding: 12px;
-    border: 2px dashed $primary-medium;
-    border-radius: $border-radius;
-    background-color: rgba($primary-medium, 0.05);
-    margin-bottom: 16px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  
+  h2 {
+    margin: 0;
+    color: rgb(58, 181, 138);
+    font-size: 20px;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 18px;
     cursor: pointer;
-    transition: $transition;
     
     &:hover {
-      border-color: $primary-color;
-      background-color: rgba($primary-color, 0.1);
+      color: #888;
     }
   }
 }
 
-// Loading and error states
-.loadingContainer, .errorContainer {
+.modal-body {
+  padding: 20px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 300px;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-image {
+  text-align: center;
   
-  p {
-    font-size: 1.6rem;
-    color: $primary-color;
-    font-weight: 500;
+  img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 4px;
   }
 }
 
-.errorContainer p {
-  color: #dc3545;
+.modal-details {
+  p {
+    margin: 10px 0;
+    color: #333;
+    font-size: 15px;
+    
+    strong {
+      color: rgb(58, 181, 138);
+      display: inline-block;
+      width: 100px;
+    }
+  }
+}
+
+.modal-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  
+  button {
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .edit-btn {
+    background-color: rgb(75, 192, 140);
+    color: white;
+    
+    &:hover {
+      background-color: (rgb(75, 192, 140), 10%);
+      color: white;
+    }
+  }
+  
+  .delete-btn {
+    background-color: #f8f9fa;
+    color: #ff6b6b;
+    
+    &:hover {
+      background-color: #ff6b6b;
+      color: white;
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    
+    h1 {
+      margin-bottom: 10px;
+    }
+  }
+  
+  .actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-bar {
+    width: 100%;
+    
+    input {
+      width: 100%;
+    }
+  }
+  
+  .add-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .pack-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .modal-body {
+    flex-direction: column;
+  }
+}
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  z-index: 1000;
+}
+
+.popupContent {
+  background: white;
+  width: 380px;
+  height: 180px;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popupButtons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.popupButtons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.popupButtons button:first-child {
+  background: red;
+  color: white;
+  &:hover{
+    background:rgb(157, 12, 12);
+  }
+}
+
+.popupButtons button:last-child {
+  background: rgb(146, 146, 146);
+  color: white;
+  &:hover{
+    background:rgb(108, 108, 108);
+}
 }

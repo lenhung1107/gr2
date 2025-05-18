@@ -1,0 +1,61 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    input {
+        font-size: 1.6rem;
+    }
+
+    textarea {
+        font-size: 1.6rem;
+    }
+}
+
+.buttons {
+    font-size: 1.6rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    button {
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-weight: 500;
+        border-radius: 5px;
+    }
+}
+
+.add-btn {
+    &:hover {
+        color: white;
+        background-color: rgb(58, 181, 138);
+    }
+}
+.cancel-btn{
+    &:hover{
+        color: white;
+         background-color: rgb(244, 67, 54);
+    }
+}

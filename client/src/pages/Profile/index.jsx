@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import ProfileForm from '../../component/ProfileEdit';
+import ProfileForm from '../../component/Edit/ProfileEdit';
 import styles from './Profile.module.scss';
 import useFetchData from "../../CustomHook/useFetchData";
 import { useParams } from "react-router-dom";

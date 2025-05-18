@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ManageDoctors.module.scss";
-import EditForm from "../EditForm";
+import EditForm from "../Edit/EditForm";
 import { useState, useEffect} from "react";
 import axios from "axios";
 const cx = classNames.bind(styles);

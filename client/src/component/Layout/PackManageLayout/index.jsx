@@ -5,7 +5,7 @@ import styles from './PackManageLayout.module.scss'; // Import styles riêng cho
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMd } from '@fortawesome/free-solid-svg-icons';
 import ManageMedicalsByAdmin from '../../ManageMedicalsByAdmin';
-import ManagePacks from '../../ManagePacks';
+import ManageOrderPacks from '../../ManageOrderPacks';
 import ManagePacksAssign from '../../ManagePacksAssign';
 const cx = classNames.bind(styles);
 
@@ -117,7 +117,7 @@ const PackManageLayout = () => {
         </div>
         <div className={cx('content')}>
           <div className={cx('tab-content')}>
-            {activeTab === 'packs' && <ManagePacks />}
+            {activeTab === 'packs' && <ManageOrderPacks />}
             {activeTab === 'assign' && <ManagePacksAssign />}
             {activeTab === 'medical' && <ManageMedicalsByAdmin />}
           </div>

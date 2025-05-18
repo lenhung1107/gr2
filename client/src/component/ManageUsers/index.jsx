@@ -5,7 +5,7 @@ import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ManageUsers.module.scss";
 import { useState, useEffect } from "react";
 
-import EditForm from "../EditForm";
+import EditForm from "../Edit/EditForm";
 import axios from "axios";
 
 const cx = classNames.bind(styles);
