@@ -65,7 +65,6 @@ const EditForm = ({ user, onChange, onSave, onCancel }) => {
   );
 };
 
-// 🛠️ Thêm PropTypes để xác định kiểu dữ liệu
 EditForm.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,

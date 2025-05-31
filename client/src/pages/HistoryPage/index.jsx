@@ -27,8 +27,6 @@ function HistoryPage() {
             if (response.ok) {
                 alert("Đã hủy lịch hẹn thành công!");
                 setShowPopupCancel(false);
-
-                // Xoá khỏi danh sách hiện tại trên FE (tùy chọn reload hoặc filter lại)
                 window.location.reload(); // hoặc cập nhật lại state nếu muốn mượt hơn
             } else {
                 const err = await response.json();
@@ -67,49 +65,80 @@ function HistoryPage() {
                         </button>
                     ))}
                 </div>
-                <table className={cx("table")}>
-                    <thead>
-                        <tr>
-                            <th>Số Thứ Tự</th>
-                            <th>Tên Bệnh Nhân</th>
-                            <th>Ngày Khám</th>
-                            <th>Giờ Khám</th>
-                            <th>Bác Sĩ / Gói Khám</th>
-                            <th>Trạng Thái</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredAppointments.map((app, index) => (
-                            <tr key={app.id}>
-                                <td>
-                                    {index + 1}
-                                    {app.isForSomeone && <span className={cx("tag")}>Đặt hộ</span>}
-                                </td>
-                                <td>{app.name}</td>
-                                <td>{new Date(app.date).toLocaleDateString('vi-VN')}</td>
-                                <td>{app.hour}</td>
-                                <td>{app.service}</td>
-                                <td>{app.status}</td>
-                                <td>
-                                    {app.status === "Đã khám" && (
-                                        <div className={cx('icon', 'view-info')} data-tooltip="Xem chi tiết"
-                                            onClick={() => handleViewClick(app)}>
-                                            <FontAwesomeIcon icon={faInfoCircle} />
-                                        </div>
-                                    )}
-                                    {app.status === "Đang chờ xác nhận" && (
-                                        <div className={cx('icon', 'cancel-icon')} data-tooltip="Hủy lịch hẹn"
-                                            onClick={() => handleCancelClick(app)}>
-                                            <FontAwesomeIcon icon={faCalendarXmark} />
-                                        </div>
-                                    )}
-                                </td>
+                <div className={cx("desktop-table")}>
+                    <table className={cx("table")}>
+                        <thead>
+                            <tr>
+                                <th>Số Thứ Tự</th>
+                                <th>Tên Bệnh Nhân</th>
+                                <th>Ngày Khám</th>
+                                <th>Giờ Khám</th>
+                                <th>Bác Sĩ / Gói Khám</th>
+                                <th>Trạng Thái</th>
+                                <th></th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {filteredAppointments.map((app, index) => (
+                                <tr key={app.id}>
+                                    <td>
+                                        {index + 1}
+                                        {app.isForSomeone && <span className={cx("tag")}>Đặt hộ</span>}
+                                    </td>
+                                    <td>{app.name}</td>
+                                    <td>{new Date(app.date).toLocaleDateString('vi-VN')}</td>
+                                    <td>{app.hour}</td>
+                                    <td>{app.service}</td>
+                                    <td>{app.status}</td>
+                                    <td>
+                                        {app.status === "Đã khám" && (
+                                            <div className={cx('icon', 'view-info')} data-tooltip="Xem chi tiết"
+                                                onClick={() => handleViewClick(app)}>
+                                                <FontAwesomeIcon icon={faInfoCircle} />
+                                            </div>
+                                        )}
+                                        {app.status === "Đang chờ xác nhận" && (
+                                            <div className={cx('icon', 'cancel-icon')} data-tooltip="Hủy lịch hẹn"
+                                                onClick={() => handleCancelClick(app)}>
+                                                <FontAwesomeIcon icon={faCalendarXmark} />
+                                            </div>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                {/* Hiển thị dạng thẻ nếu là thiết bị nhỏ */}
+                <div className={cx("mobile-list")}>
+                    {filteredAppointments.map((app, index) => (
+                        <div key={app.id} className={cx("appointment-card")}>
+                            <div className={cx("row")}><strong>Số thứ tự:</strong> {index + 1} {app.isForSomeone && <span className={cx("tag")}>Đặt hộ</span>}</div>
+                            <div className={cx("row")}><strong>Bệnh nhân:</strong> {app.name}</div>
+                            <div className={cx("row")}><strong>Ngày khám:</strong> {new Date(app.date).toLocaleDateString('vi-VN')}</div>
+                            <div className={cx("row")}><strong>Giờ khám:</strong> {app.hour}</div>
+                            <div className={cx("row")}><strong>Bác sĩ / Gói:</strong> {app.service}</div>
+                            <div className={cx("row")}><strong>Trạng thái:</strong> {app.status}</div>
+                            <div className={cx("card-actions")}>
+                                {app.status === "Đã khám" && (
+                                    <div className={cx("icon", "view-info")} data-tooltip="Xem chi tiết"
+                                        onClick={() => handleViewClick(app)}>
+                                        <FontAwesomeIcon icon={faInfoCircle} />
+                                    </div>
+                                )}
+                                {app.status === "Đang chờ xác nhận" && (
+                                    <div className={cx("icon", "cancel-icon")} data-tooltip="Hủy lịch hẹn"
+                                        onClick={() => handleCancelClick(app)}>
+                                        <FontAwesomeIcon icon={faCalendarXmark} />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
             </div>
+
             {showPopupCancel && (
                 <div className={cx("popup-overlay")}>
                     <div className={cx("popup")}>

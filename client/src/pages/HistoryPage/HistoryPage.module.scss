@@ -1,15 +1,17 @@
-.wrapper{
+.wrapper {
     // margin-top: 30px;
     display: flex;
     width: 100%;
     flex-direction: column;
 }
+
 .wrapper h2 {
     text-align: center;
     color: #333;
     font-size: 26px;
     font-weight: 600;
 }
+
 .container {
     // max-width: 800px;
     width: 80%;
@@ -19,12 +21,14 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 .filters {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-bottom: 15px;
     font-size: 1.6rem;
+
     button {
         padding: 8px 15px;
         border: none;
@@ -32,6 +36,7 @@
         border-radius: 5px;
         cursor: pointer;
         transition: background 0.3s;
+
         &.active {
             background: rgb(39, 214, 131);
             color: white;
@@ -48,7 +53,9 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 1.6rem;
-    th, td {
+
+    th,
+    td {
         border: 1px solid #ddd;
         padding: 10px;
         text-align: left;
@@ -59,6 +66,7 @@
         color: white;
     }
 }
+
 .icon {
     cursor: pointer;
     display: flex;
@@ -66,8 +74,9 @@
     align-items: center;
     margin: auto;
     position: relative;
-   
+
 }
+
 .icon::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -84,19 +93,24 @@
     visibility: hidden;
     transition: opacity 0.3s ease-in-out;
 }
+
 /* Hiện tooltip khi hover */
 .icon:hover::after {
     opacity: 1;
     visibility: visible;
 }
+
 .view-info {
-    color: rgb(39, 214, 131); /* Màu xanh */
+    color: rgb(39, 214, 131);
+    /* Màu xanh */
 }
 
 /* Loại bỏ màu đỏ của icon hủy (nếu có) */
 .cancel-icon {
-    color: rgb(244, 67, 54); /* Hoặc có thể đặt màu đen/màu gốc tùy ý */
+    color: rgb(244, 67, 54);
+    /* Hoặc có thể đặt màu đen/màu gốc tùy ý */
 }
+
 /* Popup Overlay */
 .popup-overlay {
     position: fixed;
@@ -156,6 +170,7 @@
 .cancel-btn:hover {
     background: #bbb;
 }
+
 .popup-content {
     background: white;
     padding: 20px;
@@ -174,6 +189,7 @@
     font-size: 20px;
     cursor: pointer;
 }
+
 .tag {
     display: inline-block;
     margin-left: 8px;
@@ -184,5 +200,76 @@
     color: #000;
     border-radius: 6px;
     text-transform: uppercase;
+}
+.mobile-list {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
   }
-  
+}
+.desktop-table {
+  display: block;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .filters {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+
+        button {
+            font-size: 1.4rem;
+            padding: 6px 12px;
+        }
+    }
+
+    .table {
+        display: none;
+    }
+
+    // Hiển thị danh sách dạng thẻ ở mobile
+    .mobile-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .appointment-card {
+        background: #f9f9f9;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 1.4rem;
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+
+            strong {
+                color: #444;
+            }
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 8px;
+
+            .icon {
+                font-size: 1.5rem;
+            }
+        }
+    }
+}

@@ -2,12 +2,9 @@ import classNames from 'classnames/bind'
 import styles from "./Home.module.scss"
 
 import { Link } from "react-router-dom"
-// import { useDispatch, useSelector } from "react-redux"
-// import axios from "axios"
 import Menu from '../../component/Menu'
 import Button from '../../component/Button'
 
-// import Search from '../../component/Layout/DefaultLayout/Search';
 const cx = classNames.bind(styles);
 function Home() {
     return (

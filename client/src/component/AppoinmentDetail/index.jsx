@@ -5,14 +5,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const cx = classNames.bind(styles);
-
 function AppoinmentDetail({ historyData }) {
   const [prescription, setPrescription] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const appointmentId = historyData?._id;
-  console.log( historyData)
+  console.log(historyData)
   useEffect(() => {
     const fetchPrescription = async () => {
       try {
@@ -33,9 +32,9 @@ function AppoinmentDetail({ historyData }) {
   if (loading) return <p style={{ fontSize: "1.6rem", color: "#000" }}>Đang tải đơn thuốc...</p>;
   if (error) return <p style={{ fontSize: "1.6rem", color: "red" }}>{error}</p>;
   if (!prescription) return null;
- console.log(prescription);
+  console.log(prescription);
   return (
-    
+
     <table className={cx("table")}>
       <thead>
         <tr>
@@ -44,25 +43,37 @@ function AppoinmentDetail({ historyData }) {
           <th>Bác sĩ</th>
           <th>Lý do</th>
           <th>Chuẩn đoán của bác sĩ</th>
+          <th>Kết quả xét nghiệm(nếu có)</th>
           <th>Đơn thuốc</th>
           <th>Lời dặn của bác sĩ</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>1</td>
-          <td>{new Date(prescription.date).toLocaleDateString('vi-VN')}</td>
-          <td>{prescription.doctor}</td>
-          <td>{prescription.reason}</td>
-          <td>{prescription.diagnosis}</td>
-          <td>
+          <td data-label="#">1</td>
+          <td data-label="Ngày khám">{new Date(prescription.date).toLocaleDateString('vi-VN')}</td>
+          <td data-label="Bác sĩ">{prescription.doctor}</td>
+          <td data-label="Lý do">{prescription.reason}</td>
+          <td data-label="Chuẩn đoán">{prescription.diagnosis}</td>
+          <td data-label="Kết quả xét nghiệm">
+            <a
+              href={prescription.result}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.resultLink}
+            >
+              Xem kết quả
+            </a>
+          </td>
+          <td data-label="Đơn thuốc">
             {prescription.medicine.map((med, idx) => (
               <div key={idx}>{med}</div>
             ))}
           </td>
-          <td>{prescription.notes || "Không có"}</td>
+          <td data-label="Lời dặn">{prescription.notes || "Không có"}</td>
         </tr>
       </tbody>
+
     </table>
   );
 }

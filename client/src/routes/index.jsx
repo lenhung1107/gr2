@@ -1,4 +1,4 @@
-import {HomeLayout} from "../component/Layout"
+import {HomeLayout} from "../Layout"
 import Home from "../pages/Home"
 import ListDoctor from "../pages/ListDoctor"
 import ListOrderPack from "../pages/ListOrderPack"

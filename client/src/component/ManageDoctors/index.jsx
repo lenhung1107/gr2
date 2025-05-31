@@ -38,34 +38,28 @@ function ManageDoctors() {
             const matchesBio = selectBio === "" || doctor.bio === selectBio;
             return matchesName && matchesBio;
         })
-        setFilteredDoctors(filtered); // Cập nhật danh sách đã lọc
+        setFilteredDoctors(filtered); 
 
     }
     const handleReset = () => {
-        setSearchName(""); // Xóa giá trị tìm kiếm theo tên
-        setSelectBio(""); // Xóa giá trị chọn chức vụ
-        setFilteredDoctors(doctorData); // Hiển thị lại toàn bộ dữ liệu
+        setSearchName(""); 
+        setSelectBio(""); 
+        setFilteredDoctors(doctorData); 
     }
     const handleDeleteClick = (user) => {
         setUserToDelete(user);
-        setshowConfirmDelete(true); // Hiện popup xác nhận
+        setshowConfirmDelete(true); 
     };
-    // const confirmDelete = () => {
-    //     setshowConfirmDelete(false);
-    //     setUserToDelete(null);
-    // };
     const confirmDelete = async () => {
         try {
             await axios.delete(`http://localhost:3000/adminpage/deleteDoctor/${userToDelete._id}`);
-    
-            // Cập nhật lại danh sách
             const updatedUsers = doctorData.filter((u) => u._id !== userToDelete._id);
             setDoctorData(updatedUsers);
             setFilteredDoctors(updatedUsers);
-            // Reset lại popup
+         
             setUserToDelete(null);
             setshowConfirmDelete(false);
-            // Thông báo
+  
             toast.success("Xóa bác sĩ thành công!");
 
         } catch (error) {

@@ -28,7 +28,8 @@ const Appointment = new Schema({
             'Đang khám',          // bác sĩ đã xác nhận đang khám
             'Chờ kết quả xét nghiệm',
             'Có kết quả xét nghiệm', // đã gửi chỉ định xét nghiệm, đang chờ kết quả
-            'Đã khám'  ],
+            'Đã khám' ,
+            'Đã hủy' ],
          default: 'Đang chờ xác nhận' }, // Trạng thái cuộc hẹn
     symptoms: { type: String }, // Triệu chứng
     result_file: { type: String }, // lưu đường dẫn ảnh/pdf kết quả

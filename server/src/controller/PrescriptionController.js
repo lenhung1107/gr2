@@ -56,7 +56,9 @@ class PrescriptionController {
                 doctor: prescription.appointment_id.doctor_id?.name || 'Không rõ',
                 medicine: prescription.medicines.map(med => `${med.name} - ${med.quantity} ${med.unit} - ${med.dosage}`),
                 notes: prescription.note || '',
-                diagnosis: prescription.diagnosis ||''
+                diagnosis: prescription.diagnosis ||'',
+                result: prescription.appointment_id.result_file || '',
+
             });
         }
         catch (error) {

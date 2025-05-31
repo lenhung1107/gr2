@@ -11,8 +11,8 @@ const cx = classNames.bind(styles);
 
 
 function ManageMedicals() {
-    const { id } = useParams(); // destructuring để lấy id string
-    const [users, setUsers] = useState([]);  // Danh sách tất cả người dùng
+    const { id } = useParams(); 
+    const [users, setUsers] = useState([]);  
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -36,8 +36,6 @@ function ManageMedicals() {
         const filtered = users.filter((user) => {
             // Chuyển chuỗi tìm kiếm về chữ thường
             const searchText = searchName.toLowerCase();
-
-            // Kiểm tra nếu chuỗi tìm kiếm xuất hiện ở bất kỳ trường nào
             const matchesName = user.name.toLowerCase().includes(searchText);
             const matchesAge = user.age.toString().includes(searchText);
             const matchesGender = user.gender.toLowerCase().includes(searchText);
@@ -45,7 +43,7 @@ function ManageMedicals() {
             const matchesPhone = user.phone.includes(searchText);
             const matchesEmail = user.email.toLowerCase().includes(searchText);
 
-            // Trả về true nếu tìm thấy ở bất kỳ trường nào
+           
             return matchesName || matchesAge || matchesGender || matchesAddress || matchesPhone || matchesEmail;
         });
 
@@ -53,8 +51,8 @@ function ManageMedicals() {
     };
 
     const handleReset = () => {
-        setSearchName(""); // Xóa giá trị tìm kiếm theo tên
-        setFilteredUsers(users); // Hiển thị lại toàn bộ dữ liệu
+        setSearchName(""); 
+        setFilteredUsers(users); 
     }
     const handleShowMedical = (user) => {
         setEditUser(user);

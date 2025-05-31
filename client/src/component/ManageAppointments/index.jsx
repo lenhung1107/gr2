@@ -10,7 +10,6 @@ function ManageAppointments() {
     const { data, loading, error } = useFetchData(apiUrl);
     const appointments = data || [];
 
-    // console.log(appointments);
     const [filter, setFilter] = useState("Tất cả");
     const [showPopupCancel, setShowPopupCancel] = useState(false);
     const [showPopupAgree, setShowPopupAgree] = useState(false);
@@ -44,8 +43,7 @@ function ManageAppointments() {
                 const updated = await response.json();
                 alert(updated.message);
 
-                // Cập nhật lại danh sách nếu cần (có thể gọi lại API hoặc cập nhật state)
-                window.location.reload(); // Hoặc gọi lại fetchData nếu bạn muốn tối ưu hơn
+                window.location.reload();
             } else {
                 alert('Xác nhận thất bại');
             }

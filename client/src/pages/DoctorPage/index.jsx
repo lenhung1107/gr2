@@ -1,4 +1,4 @@
-import DoctorLayout from '../../component/Layout/DoctorLayout';
+import DoctorLayout from '../../Layout/DoctorLayout';
 
 const DoctorPage = () => {
   return (

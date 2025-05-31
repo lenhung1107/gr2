@@ -194,7 +194,6 @@ function ManageTest() {
                 </table>
             </div>
 
-            {/* Modal thêm/sửa/xem xét nghiệm */}
             {isModalOpen && (
                 <div className={cx("modal-overlay")}>
                     <div className={cx("modal")}>

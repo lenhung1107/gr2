@@ -11,6 +11,6 @@ function Wrapper({children}) {
      );
 }
 Wrapper.propTypes = {
-    children: PropTypes.node.isRequired, // Xác định `children` là bắt buộc và có thể là bất kỳ nội dung React nào
+    children: PropTypes.node.isRequired, 
 };
 export default Wrapper;

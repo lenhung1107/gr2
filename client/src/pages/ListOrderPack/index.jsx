@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 
 import styles from "./ListOrderPack.module.scss";
 
-import Search from "../../component/Layout/DefaultLayout/Search"
+import Search from "../../Layout/DefaultLayout/Search"
 import OrderByPack from "../../component/Pack"
 import useFetchData from "../../CustomHook/useFetchData";
 

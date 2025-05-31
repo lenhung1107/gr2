@@ -1,156 +1,518 @@
-.prescription-modal {
+// Colors
+$primary-green: rgb(58, 181, 138);
+$secondary-green: rgb(39, 214, 131);
+$accent-green: rgb(75, 192, 140);
+$light-green: #e8f5e8;
+$very-light-green: #f0fdf4;
+$dark-green: #16a34a;
+$white: #ffffff;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-500: #6b7280;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$red-500: #ef4444;
+$blue-500: #3b82f6;
+$yellow-500: #eab308;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin card-shadow {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+@mixin input-focus {
+  outline: none;
+  border-color: $primary-green;
+  box-shadow: 0 0 0 3px rgba(58, 181, 138, 0.1);
+}
+
+@mixin button-hover-effect {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+// Modal Overlay
+.modal-overlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 800px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  @include flex-center;
   z-index: 1000;
-  .diagnosis{
-    display: flex;
-    .diagnosis-section{
-      display: flex;
-      flex-direction: column;
-      width: 90%;
-      font-size: 1.6rem;
-      
-    }
-  }
-  h3 {
-      margin-bottom: 20px;
-      font-size: 2.5rem;
-      color: #333;
-  }
-  .closeButton {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    background: none;
-    font-size: 1.6rem;
-    cursor: pointer;
-    font-weight: 600;
-  }
+  padding: 2rem;
+  backdrop-filter: blur(4px);
+}
 
+// Main Modal
+.prescription-modal {
+  background: $white;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  @include card-shadow;
+  animation: modalSlideIn 0.3s ease-out;
   
-  .patient-info {
-      display: flex;
-      gap: 100px;
-    //   justify-content: space-between;
-      margin-bottom: 20px;
-
-      label {
-          font-size: 1.8rem;
-          margin-bottom: 5px;
-          display: block;
-          font-weight: 500;
-      }
-
-      input {
-          width: 250px;
-          padding: 8px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 1.6rem;
-      }
+  // Hide scrollbar
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none; /* Safari and Chrome */
   }
 
-  .medicine-list {
-    font-size: 1.6rem;
-    font-weight: 500;
-      .medicine-item {
-          display: flex;
-          align-items: center;
-          margin-bottom: 10px;
-          gap: 10px;
-
-          input {
-              padding: 8px;
-              font-size: 1.6rem;
-              border: 1px solid #ccc;
-              border-radius: 4px;
-          }
-
-          input[type="number"] {
-              width: 60px;
-          }
-      }
-  }
-
-  button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: #4caf50;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1.6rem;
-  }
-
-  button:hover {
-      background-color: #45a049;
+  @keyframes modalSlideIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 }
-.add-medicine-form {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    // margin-top: 20px;
-    input {
-      padding: 8px;
-      font-size: 1.6rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-  
-    .btn-add {
-      padding: 6px 12px;
-      background-color: #4caf50;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1.6rem;
-      width: 40px;
-      height: 30px;
-      margin: auto;
-      margin-top: 10px;
-    }
-  
-    .btn-add:hover {
-      background-color: #45a049;
-    }
-  }
-  
-  .medicine-list table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-  
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: center;
-    }
-  
-    th {
-      background-color: #f4f4f4;
-    }
-  }
-  .note-section{
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    font-size: 1.6rem;
-  }
-.btn-submit{
+
+// Header
+.modal-header {
+  background: linear-gradient(135deg, $primary-green, $secondary-green);
+  color: $white;
+  padding: 2rem;
+  border-radius: 20px 20px 0 0;
   display: flex;
-  margin-top: 20px;
-  button{
-    margin: auto;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .header-icon {
+      font-size: 2.5rem;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+
+    .modal-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .close-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: $white;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Modal Body
+.modal-body {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  
+  // Hide scrollbar if needed
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none; /* Safari and Chrome */
+  }
+}
+
+// Section Styling
+.section {
+  background: $white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+
+  &.patient-section {
+    background: linear-gradient(135deg, $very-light-green, $light-green);
+    border-left: 4px solid $primary-green;
+  }
+
+  &.diagnosis-section {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-left: 4px solid $blue-500;
+  }
+
+  &.medicine-section {
+    background: linear-gradient(135deg, $very-light-green, rgba(75, 192, 140, 0.1));
+    border-left: 4px solid $accent-green;
+  }
+
+  &.note-section {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border-left: 4px solid $yellow-500;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+
+    .section-icon {
+      font-size: 1.5rem;
+      padding: 0.5rem;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: $gray-800;
+      margin: 0;
+    }
+  }
+}
+
+// Patient Info
+.patient-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+
+  .info-field {
+    label {
+      display: block;
+      font-size:1.6rem;
+      font-weight: 500;
+      color: $gray-700;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid $gray-300;
+      border-radius: 8px;
+      background: $white;
+      font-size: 1.6rem;
+      color: $gray-800;
+      transition: all 0.2s ease;
+
+      &:focus {
+        @include input-focus;
+      }
+    }
+
+    .symptoms-display {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid $gray-300;
+      border-radius: 8px;
+      background: $white;
+      font-size: 1.6rem;
+      color: $gray-800;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+// Diagnosis Input
+.diagnosis-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid $gray-300;
+  border-radius: 8px;
+  font-size: 1.6rem;
+  resize: vertical;
+  transition: all 0.2s ease;
+  
+  // Hide scrollbar for textarea
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none; /* Safari and Chrome */
+  }
+
+  &:focus {
+    @include input-focus;
+  }
+
+  &::placeholder {
+    color: $gray-500;
+  }
+}
+
+// Medicine List
+.medicine-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  .medicine-item {
+    background: $white;
+    border: 1px solid $gray-200;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .medicine-info {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 1rem;
+      flex: 1;
+
+      .medicine-field {
+        label {
+          display: block;
+          font-size: 1.6rem;
+          font-weight: 500;
+          color: $gray-500;
+          margin-bottom: 0.25rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        input {
+          width: 100%;
+          padding: 0.5rem;
+          border: 1px solid $gray-200;
+          border-radius: 6px;
+          background: $gray-50;
+          font-size: 1.6rem;
+
+          &:focus {
+            @include input-focus;
+          }
+        }
+      }
+    }
+
+    .delete-button {
+      background: linear-gradient(135deg, #fee2e2, #fecaca);
+      border: 1px solid #fca5a5;
+      color: $red-500;
+      padding: 0.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: linear-gradient(135deg, #fecaca, #fca5a5);
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+// Add Medicine Form
+.add-medicine-form {
+  background: $white;
+  border: 2px dashed $accent-green;
+  border-radius: 12px;
+  padding: 1.5rem;
+
+  .form-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: $gray-700;
+    margin: 0 0 1rem 0;
+  }
+
+  .form-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    input {
+      padding: 0.75rem;
+      border: 1px solid $gray-300;
+      border-radius: 8px;
+      font-size: 1.6rem;
+      transition: all 0.2s ease;
+
+      &:focus {
+        @include input-focus;
+      }
+
+      &::placeholder {
+        color: $gray-500;
+      }
+    }
+  }
+
+  .add-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, $accent-green, $primary-green);
+    color: $white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.6rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 0 auto;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(75, 192, 140, 0.2);
+
+    .add-icon {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    &:hover {
+      @include button-hover-effect;
+      background: linear-gradient(135deg, $primary-green, $dark-green);
+    }
+  }
+}
+
+// Note Input
+.note-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid $gray-300;
+  border-radius: 8px;
+  font-size: 1.6rem;
+  resize: vertical;
+  transition: all 0.2s ease;
+  
+  // Hide scrollbar for textarea
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none; /* Safari and Chrome */
+  }
+
+  &:focus {
+    @include input-focus;
+  }
+
+  &::placeholder {
+    color: $gray-500;
+  }
+}
+
+// Modal Footer
+.modal-footer {
+  padding: 1.5rem 2rem 2rem;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid $gray-200;
+
+  .submit-button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, $secondary-green, $primary-green);
+    color: $white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(39, 214, 131, 0.3);
+
+    .submit-icon {
+      font-size: 1.6rem;
+    }
+
+    &:hover {
+      @include button-hover-effect;
+      background: linear-gradient(135deg, $primary-green, $dark-green);
+      box-shadow: 0 6px 20px rgba(39, 214, 131, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 1rem;
+  }
+
+  .modal-header {
+    padding: 1.5rem;
+
+    .header-content .modal-title {
+      font-size: 2rem;
+    }
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .patient-info {
+    grid-template-columns: 1fr;
+  }
+
+  .medicine-item .medicine-info {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .add-medicine-form .form-fields {
+    grid-template-columns: 1fr;
   }
 }

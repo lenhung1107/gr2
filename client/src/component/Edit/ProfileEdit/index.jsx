@@ -97,7 +97,7 @@ const ProfileForm = ({ user, toggleEdit, onSave }) => {
 
 ProfileForm.propTypes = {
   user: PropTypes.shape({
-    _id: PropTypes.string.isRequired, // bắt buộc để gọi API
+    _id: PropTypes.string.isRequired, 
     name: PropTypes.string.isRequired,
     age: PropTypes.number.isRequired,
     address: PropTypes.string.isRequired,

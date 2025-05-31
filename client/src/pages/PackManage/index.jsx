@@ -1,4 +1,4 @@
-import PackManageLayout from "../../component/Layout/PackManageLayout";
+import PackManageLayout from "../../Layout/PackManageLayout";
 const PackManage = () => {
   return (
     <>

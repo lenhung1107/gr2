@@ -44,28 +44,21 @@ function ManageMedicalsByAdmin() {
             const matchesPhone = user.phone.includes(searchText);
             const matchesEmail = user.email.toLowerCase().includes(searchText);
 
-            // Trả về true nếu tìm thấy ở bất kỳ trường nào
             return matchesName || matchesAge || matchesGender || matchesAddress || matchesPhone || matchesEmail;
         });
 
-        setFilteredUsers(filtered); // Cập nhật danh sách đã lọc
+        setFilteredUsers(filtered); 
     };
 
     const handleReset = () => {
-        setSearchName(""); // Xóa giá trị tìm kiếm theo tên
-        setFilteredUsers(users); // Hiển thị lại toàn bộ dữ liệu
+        setSearchName(""); 
+        setFilteredUsers(users); 
     }
     const handleShowMedical = (user) => {
         setEditUser(user);
         setShowMedical(true);
     };
-    // const handleSaveEdit = () => {
-    //     setFilteredUsers(
-    //         filteredUsers.map((user) => (user === editUser ? editUser : user))
-    //     );
-    //     setShowEditForm(false);
-    //     setEditUser(null);
-    // };
+
     return (
     <div className={cx('wrapper')}>
         <h1>Quản lý Hồ sơ khám bệnh</h1>

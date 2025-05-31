@@ -48,12 +48,15 @@ const Form = ({ onClose, service, date, time, appointmentType }) => {
       alert('Bạn cần đăng nhập');
       return;
     }
-
+    const formatDateToLocalString = (date) => {
+      const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+      return offsetDate.toISOString().split('T')[0];
+    };
     let appointmentData = {
       user_id: user._id,
       service_id: service._id,
       appointment_type: appointmentType,
-      appointment_date: date ? date.toISOString().split('T')[0] : null,
+      appointment_date: date ? formatDateToLocalString(date) : null,
       appointment_time: time,
       symptoms: document.getElementById("reason")?.value || "",
       isForSomeoneElse: isForSelf === false,
@@ -78,6 +81,7 @@ const Form = ({ onClose, service, date, time, appointmentType }) => {
         };
       }
     }
+    console.log(appointmentData);
     try {
       const response = await fetch("http://localhost:3000/appointment/bookAppointment", {
         method: "POST",
@@ -98,7 +102,7 @@ const Form = ({ onClose, service, date, time, appointmentType }) => {
   return (
     <div className={cx('overlay')}>
       {/* <div className={cx('wrapper')}> */}
-      <button className={cx('closeButton')} onClick={onClose}>×</button>
+    
       {successMessage ? (
         <div className={cx('successPopup')}>
           {/* <span className={cx('successIcon')}>✅</span> */}
@@ -108,6 +112,7 @@ const Form = ({ onClose, service, date, time, appointmentType }) => {
         </div>
       ) : (
         <div className={cx("wrapper")}>
+         <button className={cx('closeButton')} onClick={onClose}>×</button>
           <h2 className={cx('title')}>Thông tin đặt lịch khám bệnh</h2>
           <div className={cx('infoSection')}>
             <img
@@ -196,7 +201,6 @@ const Form = ({ onClose, service, date, time, appointmentType }) => {
           </form>
         </div>
       )}
-      {/* </div> */}
     </div>
   );
 };

@@ -11,6 +11,7 @@ const patient = require('./patient');
 const testOrder= require('./testOrder');
 const test= require('./test');
 const userUseRoute= require('./userUse');
+const statistics = require ('./statistics');
 function route(app){
     
     // app.use('/news',newsRouter)  
@@ -27,6 +28,7 @@ function route(app){
     app.use('/patient',patient);
     app.use('/testOrder',testOrder);
     app.use('/test',test);
+    app.use('/statistics', statistics);
 
 }
 module.exports = route;

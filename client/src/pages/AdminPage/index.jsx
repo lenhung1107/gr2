@@ -1,4 +1,4 @@
-import AdminLayout from "../../component/Layout/AdminLayout";
+import AdminLayout from "../../Layout/AdminLayout";
 const AdminPage = () => {
   return (
     <>

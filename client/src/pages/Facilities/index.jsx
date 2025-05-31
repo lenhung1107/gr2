@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 
 import styles from "./Facilities.module.scss";
-import Search from "../../component/Layout/DefaultLayout/Search";
+import Search from "../../Layout/DefaultLayout/Search";
 import FacilitiesItem from "../../component/FacilitiesItem";
 import useFetchData from "../../CustomHook/useFetchData";
 import Button from "../../component/Button";

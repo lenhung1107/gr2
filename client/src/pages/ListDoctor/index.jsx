@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./ListDoctor.module.scss";
-import Search from "../../component/Layout/DefaultLayout/Search";
+import Search from "../../Layout/DefaultLayout/Search";
 import Doctor from "../../component/Doctor";
 import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);

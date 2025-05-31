@@ -1,18 +1,23 @@
 .doctor-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px; // khoảng cách giữa các cột
-    
+    gap: 30px;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 
 .doctor-item {
-    
     border: 1px solid #ddd;
     padding: 16px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    // margin-bottom: 34px; // khoảng cách dưới của mỗi doctor-item
 }
 
 .imgDoctor {
@@ -21,12 +26,20 @@
 
 .img {
     border-radius: 50%;
+    width: 150px;
+    height: 150px;
+
+    @media (max-width: 480px) {
+        width: 120px;
+        height: 120px;
+    }
 }
 
 .infor {
     margin-top: 16px;
 }
-.infor h3{
+
+.infor h3 {
     font-size: 2rem;
 }
 
@@ -41,33 +54,43 @@
     text-align: center;
 }
 
-.detail span{
-   display: block;
+.detail span {
+    display: block;
     font-size: 1.6rem;
+
+    @media (max-width: 480px) {
+        font-size: 1.4rem;
+    }
 }
-.specialty{
+
+.specialty {
     font-weight: 450;
     font-style: italic;
 }
-.icon{
+
+.icon {
     color: rgb(75, 192, 140);
 }
 
 .order {
- 
     width: 100%;
     margin-top: 16px;
     text-align: center;
     cursor: pointer;
     padding: 8px 16px;
-    background: linear-gradient(to left, rgb(68, 164, 150), rgb(76, 196, 139)); 
+    background: linear-gradient(to left, rgb(68, 164, 150), rgb(76, 196, 139));
     border-radius: 4px;
     transition: background-color 0.3s;
 }
+
 a {
     text-decoration: none !important;
 }
+
 .order span {
-    text-decoration: none !important;
     font-size: 1.6rem;
+
+    @media (max-width: 480px) {
+        font-size: 1.4rem;
+    }
 }

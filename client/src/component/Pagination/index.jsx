@@ -52,7 +52,7 @@ const Paginations = ({ data, renderItems, itemsPerPage }) => {
 
   return (
     <div className={cx('App')}>
-      {/* Render các mục theo kiểu người dùng truyền vào */}
+
       <div className={cx('content')}>
         {renderItems(currentItems)}
 
@@ -64,9 +64,9 @@ const Paginations = ({ data, renderItems, itemsPerPage }) => {
 };
 
 Paginations.propTypes = {
-  data: PropTypes.array.isRequired,         // Dữ liệu cần phân trang
-  renderItems: PropTypes.func.isRequired,   // Hàm để render từng mục dữ liệu
-  itemsPerPage: PropTypes.number            // Số mục mỗi trang (mặc định 5)
+  data: PropTypes.array.isRequired,        
+  renderItems: PropTypes.func.isRequired,   
+  itemsPerPage: PropTypes.number           
 };
 
 export default Paginations;

@@ -75,7 +75,12 @@ function OrderDoctor() {
         const doctorHours = workSchedule[formattedDate] || defaultHours; // nếu bác sĩ không có lịch => lấy default
         const bookedHours = bookedAppointments[formattedDate] || [];
 
-        return doctorHours.map(hour => ({
+        const sortedHours = doctorHours.slice().sort((a, b) => {
+            const [aHour, aMin] = a.split(':').map(Number);
+            const [bHour, bMin] = b.split(':').map(Number);
+            return aHour !== bHour ? aHour - bHour : aMin - bMin;
+        });
+        return sortedHours.map(hour => ({
             hour,
             isBooked: bookedHours.includes(hour)
         }));

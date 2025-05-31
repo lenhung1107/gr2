@@ -12,7 +12,6 @@ function MedicalDetail({ user, onCancel }) {
   console.log(user._id);
   const [activeTab, setActiveTab] = useState("info");
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-  // Nếu `historyData` rỗng, dùng dữ liệu giả định
   const finalHistoryData = Array.isArray(historyData) && historyData.length > 0 ? historyData : [];
   if (loading) return <p style={{ fontSize: "1.6rem", color: "#000" }}>Đang tải đơn thuốc...</p>;
   if (error) return <p style={{ fontSize: "1.6rem", color: "red" }}>{error}</p>;
@@ -120,15 +119,6 @@ function MedicalDetail({ user, onCancel }) {
                 )}
               </div>
             )}
-            {/* {activeTab === "treatment" && (
-              <div className={cx("treatmentContent")}>
-                <h2>Thông tin các phiếu xét nghiệm của bệnh nhân</h2>
-                <div className={cx("")}>
-                  <p>Phiếu xét nghiệm đang được thiết kế, bạn có thể xem tại đây.</p>
-
-                </div>
-              </div>
-            )} */}
           </div>
           <button className={cx('buttonClose')} onClick={onCancel}>
             Đóng

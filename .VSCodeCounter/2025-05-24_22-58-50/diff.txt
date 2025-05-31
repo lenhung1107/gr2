@@ -1,0 +1,69 @@
+Date : 2025-05-24 22:58:50
+Directory : d:\bookingHealthCare\client\src\redux
+Total : 27 files,  -1615 codes, -39 comments, -223 blanks, all -1877 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript     |          4 |        203 |          1 |          6 |        210 |
+| JavaScript JSX |         13 |       -812 |         -4 |        -89 |       -905 |
+| SCSS           |         10 |     -1,006 |        -36 |       -140 |     -1,182 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                  | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                     |         27 |     -1,615 |        -39 |       -223 |     -1,877 |
+| . (Files)                                                                             |          4 |        203 |          1 |          6 |        210 |
+| ..                                                                                    |         23 |     -1,818 |        -40 |       -229 |     -2,087 |
+| ..\pages                                                                              |         23 |     -1,818 |        -40 |       -229 |     -2,087 |
+| ..\pages\AdminPage                                                                    |          1 |         -9 |          0 |         -2 |        -11 |
+| ..\pages\DoctorPage                                                                   |          1 |         -7 |          0 |         -3 |        -10 |
+| ..\pages\Facilities                                                                   |          2 |        -62 |          0 |         -7 |        -69 |
+| ..\pages\FacilitiesDetail                                                             |          2 |        -92 |         -4 |         -9 |       -105 |
+| ..\pages\HistoryPage                                                                  |          2 |       -298 |         -8 |        -19 |       -325 |
+| ..\pages\Home                                                                         |          2 |        -56 |          0 |         -4 |        -60 |
+| ..\pages\ListDoctor                                                                   |          2 |        -52 |         -2 |         -7 |        -61 |
+| ..\pages\ListOrderPack                                                                |          2 |        -79 |         -4 |        -15 |        -98 |
+| ..\pages\Login                                                                        |          2 |       -214 |         -1 |        -27 |       -242 |
+| ..\pages\OrderDoctorDetail                                                            |          2 |       -366 |        -20 |        -66 |       -452 |
+| ..\pages\OrderPackDetail                                                              |          2 |       -411 |         -1 |        -58 |       -470 |
+| ..\pages\PackManage                                                                   |          1 |         -9 |          0 |         -2 |        -11 |
+| ..\pages\Profile                                                                      |          2 |       -163 |          0 |        -10 |       -173 |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                              | language       | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| d:\bookingHealthCare\client\src\pages\AdminPage\index.jsx                             | JavaScript JSX |         -9 |          0 |         -2 |        -11 |
+| d:\bookingHealthCare\client\src\pages\DoctorPage\index.jsx                            | JavaScript JSX |         -7 |          0 |         -3 |        -10 |
+| d:\bookingHealthCare\client\src\pages\FacilitiesDetail\FacilitiesDetail.module.scss   | SCSS           |        -55 |         -2 |         -3 |        -60 |
+| d:\bookingHealthCare\client\src\pages\FacilitiesDetail\index.jsx                      | JavaScript JSX |        -37 |         -2 |         -6 |        -45 |
+| d:\bookingHealthCare\client\src\pages\Facilities\Facilities.module.scss               | SCSS           |        -27 |          0 |         -1 |        -28 |
+| d:\bookingHealthCare\client\src\pages\Facilities\index.jsx                            | JavaScript JSX |        -35 |          0 |         -6 |        -41 |
+| d:\bookingHealthCare\client\src\pages\HistoryPage\HistoryPage.module.scss             | SCSS           |       -167 |         -7 |        -14 |       -188 |
+| d:\bookingHealthCare\client\src\pages\HistoryPage\index.jsx                           | JavaScript JSX |       -131 |         -1 |         -5 |       -137 |
+| d:\bookingHealthCare\client\src\pages\Home\Home.module.scss                           | SCSS           |        -14 |          0 |         -1 |        -15 |
+| d:\bookingHealthCare\client\src\pages\Home\index.jsx                                  | JavaScript JSX |        -42 |          0 |         -3 |        -45 |
+| d:\bookingHealthCare\client\src\pages\ListDoctor\ListDoctor.module.scss               | SCSS           |        -22 |         -2 |         -2 |        -26 |
+| d:\bookingHealthCare\client\src\pages\ListDoctor\index.jsx                            | JavaScript JSX |        -30 |          0 |         -5 |        -35 |
+| d:\bookingHealthCare\client\src\pages\ListOrderPack\ListOrderPack.module.scss         | SCSS           |        -47 |         -4 |         -8 |        -59 |
+| d:\bookingHealthCare\client\src\pages\ListOrderPack\index.jsx                         | JavaScript JSX |        -32 |          0 |         -7 |        -39 |
+| d:\bookingHealthCare\client\src\pages\Login\Login.module.scss                         | SCSS           |       -105 |         -1 |        -17 |       -123 |
+| d:\bookingHealthCare\client\src\pages\Login\index.jsx                                 | JavaScript JSX |       -109 |          0 |        -10 |       -119 |
+| d:\bookingHealthCare\client\src\pages\OrderDoctorDetail\OrderDoctorDetail.module.scss | SCSS           |       -216 |        -20 |        -44 |       -280 |
+| d:\bookingHealthCare\client\src\pages\OrderDoctorDetail\index.jsx                     | JavaScript JSX |       -150 |          0 |        -22 |       -172 |
+| d:\bookingHealthCare\client\src\pages\OrderPackDetail\OrderPackDetail.module.scss     | SCSS           |       -276 |          0 |        -47 |       -323 |
+| d:\bookingHealthCare\client\src\pages\OrderPackDetail\index.jsx                       | JavaScript JSX |       -135 |         -1 |        -11 |       -147 |
+| d:\bookingHealthCare\client\src\pages\PackManage\index.jsx                            | JavaScript JSX |         -9 |          0 |         -2 |        -11 |
+| d:\bookingHealthCare\client\src\pages\Profile\Profile.module.scss                     | SCSS           |        -77 |          0 |         -3 |        -80 |
+| d:\bookingHealthCare\client\src\pages\Profile\index.jsx                               | JavaScript JSX |        -86 |          0 |         -7 |        -93 |
+| d:\bookingHealthCare\client\src\redux\apiRequest.js                                   | JavaScript     |         63 |          1 |          1 |         65 |
+| d:\bookingHealthCare\client\src\redux\authSlice.js                                    | JavaScript     |         76 |          0 |          3 |         79 |
+| d:\bookingHealthCare\client\src\redux\store.js                                        | JavaScript     |         33 |          0 |          1 |         34 |
+| d:\bookingHealthCare\client\src\redux\userSlice.js                                    | JavaScript     |         31 |          0 |          1 |         32 |
+| Total                                                                                 |                |     -1,615 |        -39 |       -223 |     -1,877 |
++---------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

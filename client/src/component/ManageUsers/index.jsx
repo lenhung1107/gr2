@@ -20,7 +20,6 @@ function ManageUsers() {
     const [showEditForm, setShowEditForm] = useState(false);
     const [editUser, setEditUser] = useState(null);
 
-    // Gọi API khi component mount
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -34,7 +33,7 @@ function ManageUsers() {
         };
         fetchUsers();
     }, []);
-    // Tìm kiếm người dùng
+
     const handleSearch = () => {
         const searchText = searchName.toLowerCase();
         const filtered = users.filter((user) =>
@@ -63,14 +62,11 @@ function ManageUsers() {
         try {
             await axios.delete(`http://localhost:3000/adminpage/deleteUser/${userToDelete._id}`);
 
-            // Cập nhật lại danh sách
             const updatedUsers = users.filter((u) => u._id !== userToDelete._id);
             setUsers(updatedUsers);
             setFilteredUsers(updatedUsers);
-            // Reset lại popup
             setUserToDelete(null);
             setshowConfirmDelete(false);
-            // Thông báo
             toast.success("Xóa người dùng thành công!");
 
         } catch (error) {
@@ -98,7 +94,6 @@ function ManageUsers() {
 
             const updatedUser = response.data;
 
-            // Cập nhật lại danh sách
             const updatedUsers = users.map(user =>
                 user._id === updatedUser._id ? updatedUser : user
             );

@@ -27,7 +27,7 @@ function HistoryFilter({ onFilter }) {
 }
 
 HistoryFilter.propTypes = {
-  onFilter: PropTypes.func.isRequired, // Bắt buộc phải truyền hàm xử lý filter
+  onFilter: PropTypes.func.isRequired, 
 };
 
 export default HistoryFilter;
