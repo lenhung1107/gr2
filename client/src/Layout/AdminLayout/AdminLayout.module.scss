@@ -1,144 +1,324 @@
 .layout {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header */
+.header {
+  height: 60px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  @media (max-width: 768px) {
+    padding: 0 15px;
+    height: 55px;
   }
-  
-  /* Header mới */
-  .header {
-    height: 60px;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    color: white;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+
+  @media (max-width: 480px) {
+    padding: 0 12px;
   }
-  
-  .header .logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .header .logo img {
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  img {
     height: 40px;
     margin-right: 10px;
-  }
-  
-  .header .avatar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  
-    p {
-      color: black;
-      font-size: 1.6rem;
+
+    @media (max-width: 480px) {
+      height: 32px;
+      margin-right: 5px;
     }
   }
-  
-  .header .avatar img {
+}
+
+// Hamburger menu button
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 18px;
+    padding: 6px;
+  }
+}
+
+.header .avatar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+
+  .username {
+    color: black;
+    font-size: 1.6rem;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+    }
+
+    @media (max-width: 480px) {
+      display: none; // Ẩn username trên mobile nhỏ
+    }
+  }
+
+  img {
     height: 40px;
     width: 40px;
     border-radius: 50%;
     border: 2px solid white;
+    cursor: pointer;
+
+    @media (max-width: 480px) {
+      height: 35px;
+      width: 35px;
+    }
   }
-  
-  .main {
-    display: flex;
-    flex-direction: row;
-    margin-top: 60px; /* Tránh bị header che mất */
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  margin-top: 60px;
+
+  @media (max-width: 768px) {
+    margin-top: 55px;
   }
-  
-  .sidebar {
-    width: 300px;
-    background-color: #f4f6f9;
-    padding: 50px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-right: 1px solid #ddd;
-    height: 100%;
+}
+
+// Overlay cho mobile
+.sidebar-overlay {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
     position: fixed;
+    top: 0;
     left: 0;
-    top: 60px; /* Đặt ngay dưới header */
-    overflow-y: auto;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
   }
-  
-  .doctor-info {
-    display: flex;
-    font-size: 1.6rem;
-    gap:15px;
-    // text-align: center;
-    // align-items: center;
+}
+
+.sidebar {
+  width: 300px;
+  background-color: #f4f6f9;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #ddd;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 60px;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+
+  @media (max-width: 768px) {
+    top: 55px;
+    width: 280px;
+    padding: 30px 15px;
+    transform: translateX(-100%); // Ẩn sidebar mặc định
+    z-index: 999;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+
+    &.sidebar-open {
+      transform: translateX(0); // Hiện sidebar khi có class open
+    }
   }
-  .doctor-info .info{
+
+  @media (max-width: 480px) {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px 15px;
+  }
+}
+
+.doctor-info {
+  display: flex;
+  font-size: 1.6rem;
+  gap: 15px;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    gap: 12px;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
+
+  .info {
     display: flex;
     flex-direction: column;
-    p{
+
+    p {
       margin: 0;
       line-height: 1.5;
     }
-    .doctor-name{
+
+    .doctor-name {
       font-size: 2rem;
       font-weight: 500;
+
+      @media (max-width: 768px) {
+        font-size: 1.8rem;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 1.6rem;
+      }
+    }
+
+    .doctor-role {
+      @media (max-width: 768px) {
+        font-size: 1.3rem;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 1.2rem;
+      }
     }
   }
-  .icon {
-    font-size: 40px;
-    color: rgb(0, 151, 123);
+}
+
+.icon {
+  font-size: 40px;
+  color: rgb(0, 151, 123);
+
+  @media (max-width: 768px) {
+    font-size: 35px;
   }
-  .menu {
-    margin-top: 30px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+
+  @media (max-width: 480px) {
+    font-size: 32px;
   }
-  
-  .menu-itemList {
-    width: 100%;
-    padding: 12px;
-    background: none;
-    border: none;
-    text-align: left;
-    font-size: 16px;
-    cursor: pointer;
-    color: #333;
-    transition: background 0.3s;
+}
+
+.menu {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  @media (max-width: 768px) {
+    margin-top: 20px;
+    gap: 8px;
   }
-  
-  .menu-itemList:hover,
-  .active {
+}
+
+.menu-itemList {
+  width: 100%;
+  padding: 12px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  transition: background 0.3s;
+  border-radius: 5px;
+
+  @media (max-width: 768px) {
+    padding: 15px 12px; // Tăng padding cho touch-friendly
+    font-size: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px 12px;
+    font-size: 14px;
+  }
+
+  &:hover,
+  &.active {
     background-color: rgb(58, 181, 138);
     color: white;
-    border-radius: 5px;
   }
-  
-  .content {
-    flex: 1;
-    padding: 20px;
-    margin-left: 300px; /* Đẩy nội dung sang phải để không bị sidebar che mất */
-    overflow-y: auto;
-    height: calc(100vh - 60px);
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 300px;
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+
+  @media (max-width: 768px) {
+    margin-left: 0; // Bỏ margin để content full width
+    padding: 15px;
+    height: calc(100vh - 55px);
   }
-  
-  .tab-content {
-    margin-top: 20px;
+
+  @media (max-width: 480px) {
+    padding: 10px;
   }
-  .user-section{
+}
+
+.tab-content {
+  margin-top: 20px;
+
+  @media (max-width: 768px) {
+    margin-top: 15px;
+  }
+
+  @media (max-width: 480px) {
     margin-top: 10px;
-    display: flex;
-    gap: 5px;
-    // flex-direction: row;
   }
-  .menu-dropdown {
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+
+  @media (max-width: 480px) {
+    gap: 5px;
+  }
+}
+
+.menu-dropdown {
   position: absolute;
   top: 100%;
   right: 0;
@@ -150,6 +330,12 @@
   padding: 8px 0;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-right: 10px;
+
+  @media (max-width: 480px) {
+    min-width: 140px;
+    margin-right: 5px;
+    right: -5px;
+  }
 }
 
 .menu-item {
@@ -163,8 +349,20 @@
   background: white;
   border: none;
   width: 100%;
+  transition: background-color 0.2s;
+
   &:hover {
     background: #d8d8d8;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    padding: 12px 16px; // Tăng padding cho touch-friendly
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
+    padding: 10px 14px;
   }
 }
 
@@ -176,9 +374,25 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s;
 
   &:hover {
     color: white;
     background-color: rgb(20, 204, 118);
   }
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    padding: 10px 15px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
+    padding: 8px 12px;
+  }
+}
+
+// Utility classes
+.no-scroll {
+  overflow: hidden;
 }
