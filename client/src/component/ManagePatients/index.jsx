@@ -243,6 +243,8 @@ function ManagePatients() {
                         Đã gửi đơn thuốc
                       </div>
                     )}
+
+                    
                   </td>
                 </tr>
               ))

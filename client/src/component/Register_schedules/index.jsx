@@ -2,7 +2,9 @@ import classNames from "classnames/bind";
 import { useState, useEffect } from "react";
 import styles from "./Register_schedules.module.scss";
 import Hour from "../Hour/Hour";
+
 const cx = classNames.bind(styles);
+
 // Danh sách giờ cố định
 const hoursData = [
     { hour: "8:00" },
@@ -23,25 +25,31 @@ function Register_schedules() {
     const [selectedDate, setSelectedDate] = useState(""); 
     const [selectedHours, setSelectedHours] = useState([]); 
     const [workSchedules, setWorkSchedules] = useState({}); 
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchSchedules = async () => {
             if (!userId) return;
     
             try {
+                setIsLoading(true);
                 const res = await fetch(`http://localhost:3000/schedule/schedulesGetByUserID/${userId}`);
                 const data = await res.json();
                 setWorkSchedules(data);
             } catch (err) {
                 console.error("Lỗi khi tải lịch làm việc:", err);
+                alert("Không thể tải lịch làm việc. Vui lòng thử lại!");
+            } finally {
+                setIsLoading(false);
             }
         };
     
         fetchSchedules();
     }, [userId]);
+
     useEffect(() => {
         if (selectedDate && workSchedules[selectedDate]) {
-            setSelectedHours(workSchedules[selectedDate]); // Lấy giờ từ database
+            setSelectedHours(workSchedules[selectedDate]);
         } else {
             setSelectedHours([]); 
         }
@@ -60,6 +68,11 @@ function Register_schedules() {
             return;
         }
 
+        if (selectedHours.length === 0) {
+            alert("Vui lòng chọn ít nhất một ca làm việc!");
+            return;
+        }
+
         const newWorkSchedules = {
             ...workSchedules,
             [selectedDate]: selectedHours,
@@ -67,6 +80,7 @@ function Register_schedules() {
         setWorkSchedules(newWorkSchedules);
 
         try {
+            setIsLoading(true);
             const response = await fetch("http://localhost:3000/schedule/registerSchedule", {
                 method: "POST",
                 headers: {
@@ -90,17 +104,52 @@ function Register_schedules() {
             }
         } catch (err) {
             console.error("Lỗi gửi request:", err);
-            alert("Không thể gửi dữ liệu!");
+            alert("Không thể gửi dữ liệu! Vui lòng kiểm tra kết nối mạng.");
+        } finally {
+            setIsLoading(false);
         }
     };
+
+    // Hàm format ngày cho hiển thị đẹp hơn
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('vi-VN', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+
+    // Hàm sắp xếp lịch làm việc theo ngày
+    const sortedSchedules = Object.entries(workSchedules).sort(([dateA], [dateB]) => {
+        return new Date(dateA) - new Date(dateB);
+    });
+
     return (
         <div className={cx("wrapper")}>
             <h3>Quản Lý Ca Khám Bệnh</h3>
+            
+            {isLoading && (
+                <div style={{ textAlign: 'center', padding: '20px' }}>
+                    <p>Đang tải dữ liệu...</p>
+                </div>
+            )}
+
             <form className={cx("filter")} onSubmit={handleSubmit}>
                 <div className={cx("select-date")}>
-                    <label>Chọn ngày làm việc</label>
-                    <input type="date" name="workDate" required onChange={(e) => setSelectedDate(e.target.value)} />
+                    <label htmlFor="workDate">Chọn ngày làm việc</label>
+                    <input 
+                        type="date" 
+                        id="workDate"
+                        name="workDate" 
+                        required 
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        min={new Date().toISOString().split('T')[0]} // Không cho chọn ngày quá khứ
+                    />
                 </div>
+
                 <div className={cx("select-hour")}>
                     {hoursData.map(({ hour }) => (
                         <Hour
@@ -111,18 +160,36 @@ function Register_schedules() {
                         />
                     ))}
                 </div>
-                <button type="submit">Lưu thông tin</button>
+
+                <button 
+                    type="submit" 
+                    disabled={isLoading || !selectedDate}
+                    style={{ 
+                        opacity: isLoading || !selectedDate ? 0.6 : 1,
+                        cursor: isLoading || !selectedDate ? 'not-allowed' : 'pointer'
+                    }}
+                >
+                    {isLoading ? 'Đang lưu...' : 'Lưu thông tin'}
+                </button>
             </form>
 
             <div className={cx("schedule-list")}>
                 <h4>Lịch làm việc của bác sĩ</h4>
-                <ul>
-                    {Object.entries(workSchedules).map(([date, hours]) => (
-                        <li key={date}>
-                            <strong>Ngày: {date}</strong> - Giờ: {hours.join(", ") || "Không có ca làm việc"}
-                        </li>
-                    ))}
-                </ul>
+                {sortedSchedules.length > 0 ? (
+                    <ul>
+                        {sortedSchedules.map(([date, hours]) => (
+                            <li key={date}>
+                                <strong>{formatDate(date)}</strong>
+                                <br />
+                                <span>Ca làm việc: {hours.length > 0 ? hours.join(", ") : "Không có ca làm việc"}</span>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p style={{ textAlign: 'center', fontStyle: 'italic', color: '#666' }}>
+                        Chưa có lịch làm việc nào được đăng ký
+                    </p>
+                )}
             </div>
         </div>
     );

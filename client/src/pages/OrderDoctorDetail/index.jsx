@@ -112,13 +112,13 @@ function OrderDoctor() {
 
                     <div className={cx('order')}>
                         <div className={cx('address')}>
-                            <span className={cx('main')}><FontAwesomeIcon icon={faLocationDot} className={cx('icon')} /> Bệnh Viện Phổi Trung Ương</span>
+                            <span className={cx('main')}><FontAwesomeIcon icon={faLocationDot} className={cx('icon')} /> Phòng khám tư nhân ABC</span>
                             <span className={cx('detail')}>435 đường Hoàng Hoa Thám, Ba Đình, Hà Nội</span>
                         </div>
 
                         <div className={cx('date')}>
                             <div className={cx('select')}>
-                                <h3>Lịch khám bệnh tại bệnh viện</h3>
+                                <h3>Chọn lịch đặt khám :</h3>
                                 <DatePicker
                                     selected={selectedDate}
                                     onChange={(date) => {

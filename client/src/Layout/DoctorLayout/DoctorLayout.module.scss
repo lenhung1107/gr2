@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow: hidden; // Ngăn cuộn toàn bộ trang
+  overflow: hidden;
 }
 
 /* Header mới */
@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 15px;
   color: white;
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -21,16 +21,26 @@
   top: 0;
   left: 0;
   z-index: 1000;
+
+  @media (max-width: 768px) {
+    padding: 0 10px;
+    height: 50px;
+  }
 }
 
 .header .logo {
   display: flex;
   align-items: center;
-}
 
-.header .logo img {
-  height: 40px;
-  margin-right: 10px;
+  img {
+    height: 40px;
+    margin-right: 10px;
+
+    @media (max-width: 768px) {
+      height: 32px;
+      margin-right: 5px;
+    }
+  }
 }
 
 .header .avatar {
@@ -41,26 +51,40 @@
   p {
     color: black;
     font-size: 1.6rem;
-  }
-}
 
-.header .avatar img {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  border: 2px solid white;
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+      display: none; // Ẩn tên user trên mobile để tiết kiệm không gian
+    }
+  }
+
+  img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+
+    @media (max-width: 768px) {
+      height: 35px;
+      width: 35px;
+    }
+  }
 }
 
 .main {
   display: flex;
   flex-direction: row;
-  margin-top: 60px; // Để không bị che bởi header
+  margin-top: 60px;
   height: calc(100vh - 60px);
+
+  @media (max-width: 768px) {
+    margin-top: 50px;
+    height: calc(100vh - 50px);
+  }
 }
 
 .sidebar {
   width: 300px;
-  /* Điều chỉnh chiều rộng sidebar */
   background-color: #f4f6f9;
   padding: 50px 20px;
   display: flex;
@@ -68,45 +92,82 @@
   align-items: center;
   border-right: 1px solid #ddd;
   height: calc(100vh - 60px);
-  /* Chiều cao trừ đi header */
   position: fixed;
   left: 0;
   top: 60px;
   overflow-y: auto;
+  transition: transform 0.3s ease;
+
+  @media (max-width: 768px) {
+    width: 280px;
+    padding: 20px 15px;
+    top: 50px;
+    height: calc(100vh - 50px);
+    transform: translateX(-100%); // Ẩn sidebar mặc định trên mobile
+    z-index: 999;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    
+    &.mobile-visible {
+      transform: translateX(0); // Hiện sidebar khi có class mobile-visible
+    }
+  }
 }
 
 .doctor-info {
   display: flex;
   font-size: 1.6rem;
-  gap:15px;
-  // text-align: center;
-  // align-items: center;
-}
-.doctor-info .info{
-  display: flex;
-  flex-direction: column;
-  p{
-    margin: 0;
-    line-height: 1.5;
+  gap: 15px;
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  .doctor-name{
-    font-size: 2rem;
-    font-weight: 500;
+
+  .info {
+    display: flex;
+    flex-direction: column;
+
+    p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .doctor-name {
+      font-size: 2rem;
+      font-weight: 500;
+
+      @media (max-width: 768px) {
+        font-size: 1.8rem;
+      }
+    }
   }
 }
+
 .icon {
   font-size: 40px;
   color: rgb(0, 151, 123);
+
+  @media (max-width: 768px) {
+    font-size: 35px;
+  }
 }
+
 .menu {
   margin-top: 30px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 5px;
+
+  @media (max-width: 768px) {
+    margin-top: 20px;
+  }
 }
 
-.menu-itemList{
+.menu-itemList {
   width: 100%;
   padding: 12px;
   background: none;
@@ -116,74 +177,143 @@
   cursor: pointer;
   color: #333;
   transition: background 0.3s;
-}
 
-.menu-item:hover,
-.active {
-  background-color: rgb(58, 181, 138);
-  color: white;
-  border-radius: 5px;
+  @media (max-width: 768px) {
+    padding: 15px 12px;
+    font-size: 15px;
+    text-align: center;
+  }
+
+  &:hover,
+  &.active {
+    background-color: rgb(58, 181, 138);
+    color: white;
+    border-radius: 5px;
+  }
 }
 
 .content {
   flex: 1;
   padding: 20px;
-  margin-left: 300px; // Để tránh bị sidebar che mất
+  margin-left: 300px;
   height: calc(100vh - 60px);
   overflow-y: auto;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    padding: 15px;
+    height: calc(100vh - 50px);
+  }
 }
 
 .tab-content {
   margin-top: 20px;
 
+  @media (max-width: 768px) {
+    margin-top: 10px;
+  }
 }
-.user-section{
+
+.user-section {
   margin-top: 10px;
   display: flex;
   gap: 5px;
-  // flex-direction: row;
+  position: relative;
+
+  @media (max-width: 768px) {
+    margin-top: 0;
+  }
 }
+
 .menu-dropdown {
-position: absolute;
-top: 100%;
-right: 0;
-background: white;
-border: 1px solid #ddd;
-border-radius: 8px;
-z-index: 10;
-min-width: 160px;
-padding: 8px 0;
-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-margin-right: 10px;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  z-index: 10;
+  min-width: 160px;
+  padding: 8px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-right: 10px;
+
+  @media (max-width: 768px) {
+    right: -5px;
+    min-width: 140px;
+    margin-right: 0;
+  }
 }
 
 .menu-item {
-font-size: 1.6rem;
-padding: 8px 16px;
-cursor: pointer;
-display: block;
-color: #333;
-text-align: left;
-text-decoration: none;
-background: white;
-border: none;
-width: 100%;
-&:hover {
-  background: #d8d8d8;
-}
+  font-size: 1.6rem;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: block;
+  color: #333;
+  text-align: left;
+  text-decoration: none;
+  background: white;
+  border: none;
+  width: 100%;
+
+  &:hover {
+    background: #d8d8d8;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    padding: 10px 12px;
+  }
 }
 
 .login-button {
-font-size: 1.6rem;
-background-color: rgb(39, 214, 131);
-color: white;
-padding: 8px 12px;
-border: none;
-border-radius: 6px;
-cursor: pointer;
-
-&:hover {
+  font-size: 1.6rem;
+  background-color: rgb(39, 214, 131);
   color: white;
-  background-color: rgb(20, 204, 118);
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    background-color: rgb(20, 204, 118);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    padding: 6px 10px;
+  }
 }
+
+// Mobile menu toggle button
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  padding: 5px;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+// Overlay cho mobile khi sidebar mở
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
 }

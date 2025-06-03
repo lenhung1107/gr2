@@ -1,160 +1,344 @@
 .layout {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header */
+.header {
+  height: 60px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  @media (max-width: 768px) {
+    height: 50px;
+    padding: 0 10px;
   }
-  
-  /* Header mới */
-  .header {
-    height: 60px;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    color: white;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  @media (max-width: 768px) {
+    gap: 10px;
   }
-  
-  .header .logo {
-    display: flex;
-    align-items: center;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+
+  @media (max-width: 768px) {
+    display: block;
   }
-  
-  .header .logo img {
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+.hamburger-icon {
+  font-size: 20px;
+  color: #333;
+
+  @media (max-width: 480px) {
+    font-size: 18px;
+  }
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+
+  img {
     height: 40px;
     margin-right: 10px;
-  }
-  
-  .header .avatar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  
-    p {
-      color: black;
-      font-size: 1.6rem;
+
+    @media (max-width: 768px) {
+      height: 30px;
+      margin-right: 5px;
     }
   }
-  
-  .header .avatar img {
+}
+
+.header .avatar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+
+  .username {
+    color: black;
+    font-size: 1.6rem;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+      display: none; // Ẩn username trên mobile
+    }
+  }
+
+  .avatar-img {
     height: 40px;
     width: 40px;
     border-radius: 50%;
     border: 2px solid white;
+    cursor: pointer;
+
+    @media (max-width: 768px) {
+      height: 35px;
+      width: 35px;
+    }
   }
-  
-  .main {
+}
+
+/* Overlay cho mobile */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  margin-top: 60px;
+
+  @media (max-width: 768px) {
+    margin-top: 50px;
+  }
+}
+
+.sidebar {
+  width: 300px;
+  background-color: #f4f6f9;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+  height: calc(100vh - 60px);
+  position: fixed;
+  left: 0;
+  top: 60px;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+
+  @media (max-width: 768px) {
+    transform: translateX(-100%);
+    z-index: 1001;
+    top: 0;
+    height: 100vh;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+
+    &.sidebar-visible {
+      transform: translateX(0);
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 280px;
+  }
+}
+
+/* Header của sidebar trên mobile */
+.sidebar-header {
+  display: none;
+  justify-content: flex-end;
+  padding: 10px 0 20px 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
     display: flex;
-    flex-direction: row;
-    margin-top: 60px; /* Tránh bị header che mất */
   }
-  
-  .sidebar {
-    width: 300px;
-    background-color: #f4f6f9;
-    padding: 50px 20px;
+}
+
+.close-sidebar {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px;
+  color: #666;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+}
+
+.doctor-info {
+  display: flex;
+  font-size: 1.6rem;
+  gap: 15px;
+  margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    gap: 12px;
+    justify-content: flex-start;
+    margin-bottom: 25px;
+  }
+
+  .info {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border-right: 1px solid #ddd;
-    height: 100%;
-    position: fixed;
-    left: 0;
-    top: 60px; /* Đặt ngay dưới header */
-    overflow-y: auto;
-  }
-  
-  .doctor-info {
-    display: flex;
-    font-size: 1.6rem;
-    gap:15px;
-    // text-align: center;
-    // align-items: center;
-  }
-  .doctor-info .info{
-    display: flex;
-    flex-direction: column;
-    p{
+
+    p {
       margin: 0;
       line-height: 1.5;
     }
-    .doctor-name{
+
+    .doctor-name {
       font-size: 2rem;
       font-weight: 500;
+
+      @media (max-width: 768px) {
+        font-size: 1.8rem;
+      }
+    }
+
+    .doctor-role {
+      color: #666;
+      font-size: 1.4rem;
+
+      @media (max-width: 768px) {
+        font-size: 1.2rem;
+      }
     }
   }
-  .icon {
-    font-size: 40px;
-    color: rgb(0, 151, 123);
+}
+
+.icon {
+  font-size: 40px;
+  color: rgb(0, 151, 123);
+
+  @media (max-width: 768px) {
+    font-size: 35px;
   }
-  .menu {
-    margin-top: 30px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.menu-itemList {
+  width: 100%;
+  padding: 12px 15px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+    padding: 12px 15px;
   }
-  
-  .menu-itemList {
-    width: 100%;
-    padding: 12px;
-    background: none;
-    border: none;
-    text-align: left;
-    font-size: 16px;
-    cursor: pointer;
-    color: #333;
-    transition: background 0.3s;
-  }
-  
-  .menu-itemList:hover,
-  .active {
+
+  &:hover,
+  &.active {
     background-color: rgb(58, 181, 138);
     color: white;
-    border-radius: 5px;
+    transform: translateX(5px);
+
+    @media (max-width: 768px) {
+      transform: none;
+    }
   }
-  
-  .content {
-    flex: 1;
-    padding: 20px;
-    margin-left: 300px; /* Đẩy nội dung sang phải để không bị sidebar che mất */
-    overflow-y: auto;
-    height: calc(100vh - 60px);
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 300px;
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    padding: 15px;
+    height: calc(100vh - 50px);
   }
-  
-  .tab-content {
-    margin-top: 20px;
+
+  @media (max-width: 480px) {
+    padding: 10px;
   }
-  .user-section{
-    margin-top: 10px;
-    display: flex;
-    gap: 5px;
-    // flex-direction: row;
+}
+
+.tab-content {
+  margin-top: 20px;
+
+  @media (max-width: 768px) {
+    margin-top: 15px;
   }
-  .menu-dropdown {
+}
+
+.menu-dropdown {
   position: absolute;
   top: 100%;
   right: 0;
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
-  z-index: 10;
+  z-index: 1002;
   min-width: 160px;
   padding: 8px 0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-right: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+  @media (max-width: 768px) {
+    right: -10px;
+    min-width: 140px;
+  }
 }
 
 .menu-item {
   font-size: 1.6rem;
-  padding: 8px 16px;
+  padding: 10px 16px;
   cursor: pointer;
   display: block;
   color: #333;
@@ -163,8 +347,15 @@
   background: white;
   border: none;
   width: 100%;
+  transition: background-color 0.3s ease;
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    padding: 8px 12px;
+  }
+
   &:hover {
-    background: #d8d8d8;
+    background: #f0f0f0;
   }
 }
 
@@ -172,13 +363,58 @@
   font-size: 1.6rem;
   background-color: rgb(39, 214, 131);
   color: white;
-  padding: 8px 12px;
+  padding: 8px 16px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    padding: 6px 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+    padding: 5px 10px;
+  }
 
   &:hover {
-    color: white;
     background-color: rgb(20, 204, 118);
+  }
+}
+
+// Tablet responsive
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 250px;
+  }
+
+  .content {
+    margin-left: 250px;
+  }
+
+  .doctor-info {
+    font-size: 1.4rem;
+    gap: 12px;
+
+    .info .doctor-name {
+      font-size: 1.8rem;
+    }
+  }
+
+  .icon {
+    font-size: 35px;
+  }
+}
+
+// Animation cho smooth transitions
+@media (max-width: 768px) {
+  .sidebar {
+    will-change: transform;
+  }
+  
+  body.sidebar-open {
+    overflow: hidden;
   }
 }

@@ -156,12 +156,7 @@ function Header() {
                         <Link to="/historypage" style={{ textDecoration: 'none' }}>
                             <span>Lịch sử đặt khám</span>
                         </Link>
-
-                        <span>Hỏi bác sĩ </span>
-
-
                     </div>
-
 
                 </div>
             </div>

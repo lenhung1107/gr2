@@ -1,8 +1,12 @@
 .wrapper {
-    // margin-top: 30px;
     display: flex;
     width: 100%;
     flex-direction: column;
+    padding: 0 10px;
+
+    @media (max-width: 768px) {
+        padding: 0 5px;
+    }
 }
 
 .wrapper h2 {
@@ -10,16 +14,44 @@
     color: #333;
     font-size: 26px;
     font-weight: 600;
+    margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
 }
 
 .container {
-    // max-width: 800px;
     width: 80%;
     margin: auto;
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 1024px) {
+        width: 90%;
+        padding: 15px;
+    }
+
+    @media (max-width: 768px) {
+        width: 95%;
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    @media (max-width: 480px) {
+        width: 98%;
+        padding: 10px;
+        border-radius: 6px;
+        margin: 5px auto;
+    }
 }
 
 .filters {
@@ -28,6 +60,7 @@
     gap: 10px;
     margin-bottom: 15px;
     font-size: 1.6rem;
+    flex-wrap: wrap;
 
     button {
         padding: 8px 15px;
@@ -35,17 +68,50 @@
         background: #ddd;
         border-radius: 5px;
         cursor: pointer;
-        transition: background 0.3s;
+        transition: all 0.3s ease;
+        min-width: 80px;
+        font-size: 1.6rem;
 
         &.active {
             background: rgb(39, 214, 131);
             color: white;
+            transform: scale(1.05);
         }
 
         &:hover {
             background: rgb(75, 192, 140);
             color: white;
         }
+
+        &:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 768px) {
+            padding: 10px 12px;
+            font-size: 1.4rem;
+            min-width: 70px;
+            flex: 1;
+            max-width: 120px;
+        }
+
+        @media (max-width: 480px) {
+            padding: 8px 10px;
+            font-size: 1.3rem;
+            min-width: 60px;
+            flex: 1;
+            max-width: 100px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    @media (max-width: 480px) {
+        gap: 6px;
+        margin-bottom: 10px;
     }
 }
 
@@ -53,17 +119,80 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 1.6rem;
+    overflow-x: auto;
+    display: block;
+
+    thead, tbody {
+        display: table;
+        width: 100%;
+    }
 
     th,
     td {
         border: 1px solid #ddd;
         padding: 10px;
         text-align: left;
+        min-width: 80px;
     }
 
     th {
         background-color: rgb(39, 214, 131);
         color: white;
+        font-weight: bold;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    // Responsive table styles
+    @media (max-width: 768px) {
+        font-size: 1.4rem;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        
+        // Custom scrollbar for mobile
+        &::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+            
+            &:hover {
+                background: #a8a8a8;
+            }
+        }
+
+        th,
+        td {
+            padding: 8px 6px;
+            min-width: 70px;
+        }
+
+        th {
+            font-size: 1.3rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        font-size: 1.2rem;
+        
+        th,
+        td {
+            padding: 6px 4px;
+            min-width: 60px;
+        }
+
+        th {
+            font-size: 1.2rem;
+        }
     }
 }
 
@@ -76,17 +205,71 @@
     margin: auto;
     position: relative;
 
+    @media (max-width: 768px) {
+        gap: 15px;
+    }
+
+    @media (max-width: 480px) {
+        gap: 10px;
+        flex-direction: row;
+        justify-content: space-around;
+    }
 }
-/* Loại bỏ màu đỏ của icon hủy (nếu có) */
+
 .cancel-icon {
     color: rgb(244, 67, 54);
-    /* Hoặc có thể đặt màu đen/màu gốc tùy ý */
+    font-size: 1.8rem;
+    transition: all 0.3s ease;
+    padding: 5px;
+    border-radius: 3px;
+
+    &:hover {
+        background: rgba(244, 67, 54, 0.1);
+        transform: scale(1.1);
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+
+    @media (max-width: 768px) {
+        font-size: 2rem;
+        padding: 8px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 1.8rem;
+        padding: 6px;
+    }
 }
 
 .check-icon {
     color: rgb(38, 202, 126);
-    /* Hoặc có thể đặt màu đen/màu gốc tùy ý */
+    font-size: 1.8rem;
+    transition: all 0.3s ease;
+    padding: 5px;
+    border-radius: 3px;
+
+    &:hover {
+        background: rgba(38, 202, 126, 0.1);
+        transform: scale(1.1);
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+
+    @media (max-width: 768px) {
+        font-size: 2rem;
+        padding: 8px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 1.8rem;
+        padding: 6px;
+    }
 }
+
 .tooltip {
     position: relative;
     display: inline-block;
@@ -101,13 +284,26 @@
     border-radius: 6px;
     padding: 5px 8px;
     position: absolute;
-    z-index: 1;
-    bottom: 150%; /* phía trên icon */
+    z-index: 1000;
+    bottom: 150%;
     left: 50%;
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity 0.3s;
     white-space: nowrap;
+    font-size: 1.2rem;
+
+    @media (max-width: 768px) {
+        font-size: 1.1rem;
+        padding: 4px 6px;
+        bottom: 120%;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 1rem;
+        padding: 3px 5px;
+        bottom: 110%;
+    }
 }
 
 .tooltip:hover .tooltip-text {
@@ -115,7 +311,14 @@
     opacity: 1;
 }
 
-/* Popup Overlay */
+// Mobile: Show tooltip on touch/tap
+@media (max-width: 768px) {
+    .tooltip:active .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -127,10 +330,17 @@
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    padding: 10px;
 
+    @media (max-width: 768px) {
+        padding: 15px;
+    }
+
+    @media (max-width: 480px) {
+        padding: 10px;
+    }
 }
 
-/* Popup Container */
 .popup {
     background: white;
     padding: 20px;
@@ -138,30 +348,117 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
     width: 500px;
+    max-width: 90%;
     font-size: 1.6rem;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: popupSlideIn 0.3s ease-out;
+
+    @media (max-width: 768px) {
+        width: 90%;
+        max-width: 400px;
+        padding: 18px;
+        font-size: 1.5rem;
+        max-height: 70vh;
+    }
+
+    @media (max-width: 480px) {
+        width: 95%;
+        max-width: 350px;
+        padding: 15px;
+        font-size: 1.4rem;
+        max-height: 60vh;
+        border-radius: 6px;
+    }
 }
 
 .reason {
     display: flex;
     flex-direction: column;
+    margin: 15px 0;
+
+    label {
+        margin-bottom: 8px;
+        font-weight: 500;
+        text-align: left;
+
+        @media (max-width: 480px) {
+            font-size: 1.3rem;
+        }
+    }
+
+    textarea {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1.4rem;
+        resize: vertical;
+        min-height: 80px;
+
+        @media (max-width: 768px) {
+            font-size: 1.3rem;
+            padding: 8px;
+        }
+
+        @media (max-width: 480px) {
+            font-size: 1.2rem;
+            padding: 6px;
+            min-height: 60px;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: rgb(39, 214, 131);
+            box-shadow: 0 0 0 2px rgba(39, 214, 131, 0.2);
+        }
+    }
 }
 
-/* Popup Buttons */
 .popup-buttons {
     margin-top: 15px;
     display: flex;
     justify-content: center;
     gap: 10px;
+    flex-wrap: wrap;
+
+    @media (max-width: 480px) {
+        flex-direction: column;
+        gap: 8px;
+    }
 }
 
 .confirm-btn {
     background: rgb(38, 202, 126);
-    // #ff4d4d
     color: white;
     padding: 8px 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1.4rem;
+    min-width: 100px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgb(33, 175, 109);
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+        padding: 10px 15px;
+        font-size: 1.3rem;
+        min-width: 120px;
+    }
+
+    @media (max-width: 480px) {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.4rem;
+        min-width: unset;
+    }
 }
 
 .cancel-btn {
@@ -171,13 +468,96 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1.4rem;
+    min-width: 100px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: #f94040;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+        padding: 10px 15px;
+        font-size: 1.3rem;
+        min-width: 120px;
+    }
+
+    @media (max-width: 480px) {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.4rem;
+        min-width: unset;
+    }
 }
 
-.confirm-btn:hover {
-    background: rgb(33, 175, 109);
+// Popup animation
+@keyframes popupSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
-.cancel-btn:hover {
-    background: #f94040;
-    color: white;
+// Additional mobile optimizations
+@media (max-width: 768px) {
+    // Improve touch targets
+    button, .icon > * {
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    // Better spacing for mobile
+    .container {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+// Landscape mobile orientation
+@media (max-width: 768px) and (orientation: landscape) {
+    .popup {
+        max-height: 90vh;
+        width: 80%;
+        max-width: 500px;
+    }
+    
+    .wrapper h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+}
+
+// Very small screens (iPhone SE, etc.)
+@media (max-width: 375px) {
+    .filters button {
+        font-size: 1.2rem;
+        padding: 6px 8px;
+    }
+    
+    .table {
+        font-size: 1.1rem;
+        
+        th, td {
+            padding: 4px 2px;
+            min-width: 50px;
+        }
+    }
+    
+    .popup {
+        padding: 12px;
+        font-size: 1.3rem;
+    }
 }

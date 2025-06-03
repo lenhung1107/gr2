@@ -1,26 +1,31 @@
-import { useState, useEffect } from 'react'; // Thêm useEffect
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import styles from './DoctorLayout.module.scss'; // Import styles riêng cho layout
+import styles from './DoctorLayout.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserMd } from '@fortawesome/free-solid-svg-icons';
+import { faUserMd, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 // Các component quản lý
-import ManagePatients from '../../component/ManagePatients';  // Quản lý bệnh nhân
-import ManageSchedules from '../../component/ManageSchedules'; // Quản lý ca khám
+import ManagePatients from '../../component/ManagePatients';
+import ManageSchedules from '../../component/ManageSchedules';
 import ManageMedicals from '../../component/ManageMedicals';
 import Register_schedules from '../../component/Register_schedules';
+
 const cx = classNames.bind(styles);
 
 const DoctorLayout = () => {
-  const navigate = useNavigate(); // Khai báo hook useNavigate
-  const [activeTab, setActiveTab] = useState('patients'); // Quản lý bệnh nhân là mặc định
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('patients');
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [isMobileSidebarVisible, setIsMobileSidebarVisible] = useState(false);
   const [userName, setUserName] = useState('');
+  const [doctorName, setDoctorName] = useState('');
+
   const handleTabChange = (tab) => {
     setActiveTab(tab);
+    // Đóng sidebar trên mobile sau khi chọn tab
+    setIsMobileSidebarVisible(false);
   };
-  const [doctorName, setDoctorName] = useState("");
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -36,23 +41,42 @@ const DoctorLayout = () => {
       }
     }
   }, []);
+
   const toggleMenu = () => {
     setIsMenuVisible((prev) => !prev);
-  }
+  };
+
   const hideMenu = () => {
     setIsMenuVisible(false);
-  }
+  };
+
+  const toggleMobileSidebar = () => {
+    setIsMobileSidebarVisible((prev) => !prev);
+  };
+
+  const closeMobileSidebar = () => {
+    setIsMobileSidebarVisible(false);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('user');
     setDoctorName('');
     setUserName('');
-    navigate('/login'); // chuyển hướng về trang login
+    navigate('/login');
   };
+
   return (
     <div className={cx('layout')}>
-      {/* Header mới */}
+      {/* Header */}
       <div className={cx('header')}>
         <div className={cx('logo')}>
+          <button 
+            className={cx('mobile-menu-toggle')} 
+            onClick={toggleMobileSidebar}
+            aria-label="Toggle menu"
+          >
+            <FontAwesomeIcon icon={isMobileSidebarVisible ? faTimes : faBars} />
+          </button>
           <img src="/ava_v2.png" alt="Logo ứng dụng" />
         </div>
         <div className={cx('avatar')}>
@@ -83,8 +107,18 @@ const DoctorLayout = () => {
           )}
         </div>
       </div>
+
       <div className={cx('main')}>
-        <div className={cx('sidebar')}>
+        {/* Overlay cho mobile */}
+        {isMobileSidebarVisible && (
+          <div 
+            className={cx('mobile-overlay')} 
+            onClick={closeMobileSidebar}
+          />
+        )}
+
+        {/* Sidebar */}
+        <div className={cx('sidebar', { 'mobile-visible': isMobileSidebarVisible })}>
           <div className={cx('doctor-info')}>
             <div className={cx('icon-doctor')}>
               <FontAwesomeIcon icon={faUserMd} className={cx('icon')} />
@@ -121,6 +155,8 @@ const DoctorLayout = () => {
             </button>
           </div>
         </div>
+
+        {/* Content */}
         <div className={cx('content')}>
           <div className={cx('tab-content')}>
             {activeTab === 'patients' && <ManagePatients />}
@@ -131,8 +167,7 @@ const DoctorLayout = () => {
         </div>
       </div>
     </div>
-
-
   );
 };
+
 export default DoctorLayout;

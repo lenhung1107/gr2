@@ -9,52 +9,74 @@ const ManageSchedules = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetch(`http://localhost:3000/schedule/getworkHourofDoctor/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         const formattedEvents = data.map((item) => ({
           title: `${item.time} - ${item.status}`,
           date: item.date,
-          allDay: true
+          allDay: true,
+          classNames: [`event-${item.status?.toLowerCase().replace(/\s+/g, '-')}`]
         }));
         setEvents(formattedEvents);
       })
-      .catch((err) => console.error('Lỗi lấy lịch làm việc:', err));
+      .catch((err) => console.error('Lỗi lấy lịch làm việc:', err))
+      .finally(() => setLoading(false));
   }, [userId]);
 
   return (
-    <div className="content">
-      <h2 className="">Lịch làm việc của bác sĩ</h2>
-      <FullCalendar
-        plugins={[dayGridPlugin]}
-        initialView="dayGridMonth"
-        events={events}
-        height="auto"
-        locale={{
-          ...viLocale,
-          buttonText: {
-            today: 'Hôm nay',
-            month: 'Tháng',
-            week: 'Tuần',
-            day: 'Ngày',
-            list: 'Lịch'
-          }
-        }}
-        headerToolbar={{
-          left: 'title',
-          center: '',
-          right: 'prev,next today',
-        }}
-        titleFormat={(date) => {
-          const month = date.date.marker.toLocaleString('vi-VN', { month: 'long' });
-          const year = date.date.marker.getFullYear();
-          const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1);
-          return `${capitalizedMonth} năm ${year}`;
-        }}
-        dayMaxEventRows={3}
-      />
+    <div className="schedule-container">
+      <div className="schedule-header">
+        <h2 className="schedule-title">
+          <span className="title-icon">📅</span>
+          Lịch làm việc của bác sĩ
+        </h2>
+        <div className="title-underline"></div>
+      </div>
+      
+      {loading ? (
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Đang tải lịch làm việc...</p>
+        </div>
+      ) : (
+        <div className="calendar-wrapper">
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView="dayGridMonth"
+            events={events}
+            height="auto"
+            locale={{
+              ...viLocale,
+              buttonText: {
+                today: 'Hôm nay',
+                month: 'Tháng',
+                week: 'Tuần',
+                day: 'Ngày',
+                list: 'Lịch'
+              }
+            }}
+            headerToolbar={{
+              left: 'title',
+              center: '',
+              right: 'prev,next today',
+            }}
+            titleFormat={(date) => {
+              const month = date.date.marker.toLocaleString('vi-VN', { month: 'long' });
+              const year = date.date.marker.getFullYear();
+              const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1);
+              return `${capitalizedMonth} năm ${year}`;
+            }}
+            dayMaxEventRows={3}
+            aspectRatio={1.8}
+            eventDisplay="block"
+          />
+        </div>
+      )}
     </div>
   );
 };
