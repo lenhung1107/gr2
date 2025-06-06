@@ -21,7 +21,7 @@ app.use(express.json());
 db.connect();
 
 route(app);
-app.listen(port, () => console.log(`listening at http://localhost:${port}`));
+app.listen(PORT, () => console.log(`listening at http://localhost:${PORT}`));
 // const express = require('express');
 // const dotenv = require('dotenv');
 // dotenv.config(); // Đảm bảo load biến môi trường từ file .env
