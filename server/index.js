@@ -5,7 +5,7 @@ dotenv.config(); // Đảm bảo load biến môi trường từ file .env
 const cookieParser = require("cookie-parser");
 const route = require('./src/routes/index');
 const app = express();
-const port = 4000;
+const PORT = process.env.PORT || 5000;
 const db = require('./src/config/index');
 
 // Routes init
