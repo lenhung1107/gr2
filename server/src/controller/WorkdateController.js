@@ -1,4 +1,4 @@
-const Workdate = require('../models/Workdate');
+const Workdate = require('../models/WorkDate');
 const Doctor = require('../models/Doctor');
 const Appointment = require('../models/Appointment');
 const mongoose = require("mongoose");
