@@ -23,7 +23,7 @@ function ManageUsers() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get("http://localhost:4000/adminpage/getUser", {
+                const response = await axios.get("https://gr2-hdy0.onrender.com/adminpage/getUser", {
                 });
                 setUsers(response.data);
                 setFilteredUsers(response.data); // Cập nhật danh sách ban đầu
@@ -60,7 +60,7 @@ function ManageUsers() {
 
     const confirmDelete = async () => {
         try {
-            await axios.delete(`http://localhost:4000/adminpage/deleteUser/${userToDelete._id}`);
+            await axios.delete(`https://gr2-hdy0.onrender.com/adminpage/deleteUser/${userToDelete._id}`);
 
             const updatedUsers = users.filter((u) => u._id !== userToDelete._id);
             setUsers(updatedUsers);
@@ -88,7 +88,7 @@ function ManageUsers() {
     const handleSaveEdit = async () => {
         try {
             const response = await axios.put(
-                `http://localhost:4000/user/editUser/${editUser._id}`,
+                `https://gr2-hdy0.onrender.com/user/editUser/${editUser._id}`,
                 editUser
             );
 

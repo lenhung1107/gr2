@@ -38,7 +38,7 @@ function PrescriptionCreate({ patient, medicines, onClose }) {
 
     const handleSubmitPrescription = async () => {
         try {
-            const response = await axios.post("http://localhost:4000/prescription/createPrescription", {
+            const response = await axios.post("https://gr2-hdy0.onrender.com/prescription/createPrescription", {
                 appointment_id: patient._id,
                 medicines: medicineList,
                 note: note,

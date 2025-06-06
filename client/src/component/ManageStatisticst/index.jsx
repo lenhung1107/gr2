@@ -14,7 +14,7 @@ function ManageStatisticst() {
     const fetchStatistics = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:4000/statistics/appointments?type=${type}`);
+        const res = await axios.get(`https://gr2-hdy0.onrender.com/statistics/appointments?type=${type}`);
         setData(res.data.data);
       } catch (error) {
         console.error("Lỗi khi fetch thống kê:", error);

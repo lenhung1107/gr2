@@ -15,7 +15,7 @@ function ManageMedicalsByAdmin() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get("http://localhost:4000/patient/getAllPatient", {
+                const response = await axios.get("https://gr2-hdy0.onrender.com/patient/getAllPatient", {
                 });
                 
                 setUsers(response.data.patients);       // 👈 chỉ lấy mảng bệnh nhân

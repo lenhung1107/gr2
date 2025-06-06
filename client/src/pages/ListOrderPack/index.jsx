@@ -9,7 +9,7 @@ import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
 
 function ListOrder() {
-    const apiUrl = "http://localhost:4000/pack/getAll"; // URL API khác cho từng trang
+    const apiUrl = "https://gr2-hdy0.onrender.com/pack/getAll"; // URL API khác cho từng trang
     const { data: packs, loading, error } = useFetchData(apiUrl);
     return (
 

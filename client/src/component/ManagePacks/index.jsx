@@ -11,11 +11,11 @@ import { ToastContainer } from "react-toastify";
 import useFetchData from "../../CustomHook/useFetchData";
 import styles from "./ManagePacks.module.scss";
 import EditPackModal from "../Edit/EditPackModal";
-import AddPack from "../add/addPack";
+import AddPack from "../Add/AddPack";
 const cx = classNames.bind(styles);
 
 function ManagePacks() {
-  const apiUrl = "http://localhost:4000/pack/getAll";
+  const apiUrl = "https://gr2-hdy0.onrender.com/pack/getAll";
   const { data: data, loading, error } = useFetchData(apiUrl);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPack, setSelectedPack] = useState(null);
@@ -62,7 +62,7 @@ function ManagePacks() {
   };
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:4000/pack/deletePack/${selectedPack._id}`);
+      await axios.delete(`https://gr2-hdy0.onrender.com/pack/deletePack/${selectedPack._id}`);
 
       // Cập nhật lại danh sách
       const updatedUsers = filteredPacks.filter((u) => u._id !== selectedPack._id);

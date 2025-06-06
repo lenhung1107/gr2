@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 function HistoryPage() {
     const user = JSON.parse(localStorage.getItem("user"));
     const userId = user?._id;
-    const apiUrl = `http://localhost:4000/appointment/getAppoinmentByUserId/${userId}`; // URL API khác cho từng trang
+    const apiUrl = `https://gr2-hdy0.onrender.com/appointment/getAppoinmentByUserId/${userId}`; // URL API khác cho từng trang
     const { data: appointments, loading, error } = useFetchData(apiUrl);
     const [filter, setFilter] = useState("Tất cả");
     const [showPopupCancel, setShowPopupCancel] = useState(false);
@@ -21,7 +21,7 @@ function HistoryPage() {
     };
     const confirmCancel = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/appointment/cancelAppointment/${selectedAppointment._id}`, {
+            const response = await fetch(`https://gr2-hdy0.onrender.com/appointment/cancelAppointment/${selectedAppointment._id}`, {
                 method: "DELETE"
             });
             if (response.ok) {

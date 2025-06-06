@@ -4,7 +4,7 @@ import useFetchData from "../../CustomHook/useFetchData";
 import axios from "axios";
 
 function ManageOrderPacks() {
-  const apiUrl = `http://localhost:4000/appointment/getAllPackAppointment`;
+  const apiUrl = `https://gr2-hdy0.onrender.com/appointment/getAllPackAppointment`;
   const { data: patientsDataRaw, loading, error } = useFetchData(apiUrl);
   const patientsData = useMemo(() => patientsDataRaw || [], [patientsDataRaw]);
   console.log(patientsData)
@@ -43,7 +43,7 @@ function ManageOrderPacks() {
 
   const handleConfirmAppointment = async () => {
     try {
-      await axios.patch(`http://localhost:4000/appointment/updateStatus/${selectedAppointment._id}`, {
+      await axios.patch(`https://gr2-hdy0.onrender.com/appointment/updateStatus/${selectedAppointment._id}`, {
         status: "Đã khám"
       });
 
@@ -69,7 +69,7 @@ function ManageOrderPacks() {
     formData.append("resultFile", uploadFile);
     try {
       const response = await axios.post(
-        `http://localhost:4000/appointment/uploadResult/${selectedAppointment._id}`,
+        `https://gr2-hdy0.onrender.com/appointment/uploadResult/${selectedAppointment._id}`,
         formData,
         {
           headers: {

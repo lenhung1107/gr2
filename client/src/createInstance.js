@@ -2,7 +2,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 export const refreshToken = async () => {  // Thêm "export const"
     try {
-        const res = await axios.post("http://localhost:4000/auth/refresh", {}, {
+        const res = await axios.post("https://gr2-hdy0.onrender.com/auth/refresh", {}, {
             withCredentials: true,
         });
         return res.data;
