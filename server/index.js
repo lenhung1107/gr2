@@ -10,9 +10,20 @@ const db = require('./src/config/index');
 
 // Routes init
 const cors = require('cors');
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://gr2-o3rfs9qy4-nhungles-projects.vercel.app'
+];
+
 app.use(cors({
-    origin: "http://localhost:5173", // Địa chỉ frontend
-    credentials: true  // ✅ Cho phép gửi cookie
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
 }));
 app.use(cookieParser());
 app.use(express.json());
