@@ -1,7 +1,7 @@
 const mongoose= require('mongoose');
 async function connect(){
     try{
-        await mongoose.connect('mongodb://localhost:27017/booking_healthcare',{
+        await mongoose.connect('mongodb+srv://cherrynhung5:123@bookinghealthcare.qdxbu9q.mongodb.net/?retryWrites=true&w=majority&appName=bookinghealthcare',{
             useNewUrlParser: true,
             useUnifiedTopology:true
 

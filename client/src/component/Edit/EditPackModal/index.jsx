@@ -40,7 +40,7 @@ function EditPackModal({ pack, onClose, onSave }) {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:3000/pack/updatePack/${formData._id}`, {
+            const response = await fetch(`http://localhost:4000/pack/updatePack/${formData._id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

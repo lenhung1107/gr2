@@ -6,7 +6,7 @@ import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
 
 function MedicalDetail({ user, onCancel }) {
-  const apiUrl = `http://localhost:3000/appointment/getAppointmentsByPatientId/${user._id}`;
+  const apiUrl = `http://localhost:4000/appointment/getAppointmentsByPatientId/${user._id}`;
   const { data: historyData, loading, error } = useFetchData(apiUrl);
   console.log(historyData);
   console.log(user._id);

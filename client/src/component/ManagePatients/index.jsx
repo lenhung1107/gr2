@@ -10,7 +10,7 @@ const medicinesData = [];
 
 function ManagePatients() {
   const { id } = useParams();
-  const apiUrl = `http://localhost:3000/appointment/getAppoinmentByDoctorId/${id}`;
+  const apiUrl = `http://localhost:4000/appointment/getAppoinmentByDoctorId/${id}`;
   const { data: patientsDataRaw, loading, error } = useFetchData(apiUrl);
   const patientsData = useMemo(() => patientsDataRaw || [], [patientsDataRaw]);
 
@@ -32,7 +32,7 @@ function ManagePatients() {
   useEffect(() => {
     const fetchTestPacks = async () => {
       try {
-        const res = await fetch("http://localhost:3000/test/getAll");
+        const res = await fetch("http://localhost:4000/test/getAll");
         const data = await res.json();
         setTestPacks(data);
       } catch (error) {
@@ -78,7 +78,7 @@ function ManagePatients() {
   
   const handleConfirmAppointment = async (patient) => {
     try {
-      const response = await fetch(`http://localhost:3000/appointment/confirmByDoctor/${patient._id}`, {
+      const response = await fetch(`http://localhost:4000/appointment/confirmByDoctor/${patient._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ function ManagePatients() {
     }
     console.log(selectedPatient.id);
     try {
-      const response = await fetch("http://localhost:3000/testOrder/create", {
+      const response = await fetch("http://localhost:4000/testOrder/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

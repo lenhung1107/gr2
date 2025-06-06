@@ -6,7 +6,7 @@ import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
 
 function ListDoctor() {
-    const apiUrl = "http://localhost:3000/doctor"; // URL API khác cho từng trang
+    const apiUrl = "http://localhost:4000/doctor"; // URL API khác cho từng trang
     const { data: doctors, loading, error } = useFetchData(apiUrl);
 
     return (

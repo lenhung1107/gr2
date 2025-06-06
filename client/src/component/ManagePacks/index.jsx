@@ -15,7 +15,7 @@ import AddPack from "../add/addPack";
 const cx = classNames.bind(styles);
 
 function ManagePacks() {
-  const apiUrl = "http://localhost:3000/pack/getAll";
+  const apiUrl = "http://localhost:4000/pack/getAll";
   const { data: data, loading, error } = useFetchData(apiUrl);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPack, setSelectedPack] = useState(null);
@@ -62,7 +62,7 @@ function ManagePacks() {
   };
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3000/pack/deletePack/${selectedPack._id}`);
+      await axios.delete(`http://localhost:4000/pack/deletePack/${selectedPack._id}`);
 
       // Cập nhật lại danh sách
       const updatedUsers = filteredPacks.filter((u) => u._id !== selectedPack._id);

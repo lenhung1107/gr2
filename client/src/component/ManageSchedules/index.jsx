@@ -13,7 +13,7 @@ const ManageSchedules = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:3000/schedule/getworkHourofDoctor/${userId}`)
+    fetch(`http://localhost:4000/schedule/getworkHourofDoctor/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         const formattedEvents = data.map((item) => ({

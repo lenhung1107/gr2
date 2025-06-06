@@ -5,7 +5,7 @@ import { deleteUserStart, deleteUserFailed, deleteUserSuccess } from "./userSlic
 export const loginUser= async(user, dispatch, callback)=>{
     dispatch(loginStart());
     try{
-        const res = await axios.post("http://localhost:3000/auth/login",user,{
+        const res = await axios.post("http://localhost:4000/auth/login",user,{
             withCredentials: true}
         );
         dispatch(loginSuccess(res.data));
@@ -20,7 +20,7 @@ export const loginUser= async(user, dispatch, callback)=>{
 export const registerUser= async(user, dispatch)=>{
     dispatch(registerStart());
     try{
-        const res = await axios.post("http://localhost:3000/auth/signup",user,{
+        const res = await axios.post("http://localhost:4000/auth/signup",user,{
             withCredentials: true
         });
         dispatch(registerSuccess(res.data));
@@ -37,7 +37,7 @@ export const registerUser= async(user, dispatch)=>{
 export const deleteUser=async(accessToken, dispatch, id) =>{
     dispatch(deleteUserStart());
     try{
-        const res= await axios.delete("http://localhost:3000/adminpage/"+id,{
+        const res= await axios.delete("http://localhost:4000/adminpage/"+id,{
             headers:{token: `Bearer ${accessToken}`},
         },{
             withCredentials: true
@@ -52,7 +52,7 @@ export const logOut= async(dispatch, id,navigate,accessToken,axiosJWT)=>{
     dispatch(logOutStart());
     try{
         console.log("AccessToken trước logout:", accessToken); // Kiểm tra token
-        await axiosJWT.post("http://localhost:3000/auth/logout",id,{
+        await axiosJWT.post("http://localhost:4000/auth/logout",id,{
              headers:{token: `Bearer ${accessToken}`}
         });
         dispatch(logOutSuccess());

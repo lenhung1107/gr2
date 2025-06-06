@@ -14,7 +14,7 @@ function ManageDoctors() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/doctor", {
+                const response = await axios.get("http://localhost:4000/doctor", {
                 });
                 setDoctorData(response.data); // Cập nhật danh sách ban đầu
                 setFilteredDoctors(response.data); // C)
@@ -52,7 +52,7 @@ function ManageDoctors() {
     };
     const confirmDelete = async () => {
         try {
-            await axios.delete(`http://localhost:3000/adminpage/deleteDoctor/${userToDelete._id}`);
+            await axios.delete(`http://localhost:4000/adminpage/deleteDoctor/${userToDelete._id}`);
             const updatedUsers = doctorData.filter((u) => u._id !== userToDelete._id);
             setDoctorData(updatedUsers);
             setFilteredDoctors(updatedUsers);

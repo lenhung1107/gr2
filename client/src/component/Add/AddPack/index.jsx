@@ -24,7 +24,7 @@ function AddPack({ onClose, onAdd }) {
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/pack/addPack", formData);
+      const res = await axios.post("http://localhost:4000/pack/addPack", formData);
       onAdd(res.data); // cập nhật UI FE
       toast.success("Đã thêm gói khám thành công!");
       onClose();

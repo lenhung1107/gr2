@@ -15,7 +15,7 @@ function AppoinmentDetail({ historyData }) {
   useEffect(() => {
     const fetchPrescription = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/prescription/getPrescriptionByAppointmentId/${appointmentId}`);
+        const res = await axios.get(`http://localhost:4000/prescription/getPrescriptionByAppointmentId/${appointmentId}`);
         setPrescription(res.data);
       } catch (err) {
         setError(err.response?.data?.message || "Lỗi khi tải đơn thuốc.");

@@ -25,7 +25,7 @@ const ProfileForm = ({ user, toggleEdit, onSave }) => {
     e.preventDefault();
 
     try {
-      const res = await axios.put(`http://localhost:3000/user/editUser/${user._id}`, formData); // thay URL nếu khác
+      const res = await axios.put(`http://localhost:4000/user/editUser/${user._id}`, formData); // thay URL nếu khác
       onSave(res.data); // cập nhật lại FE
       toast.success('✅ Cập nhật thành công!');
       setTimeout(() => {

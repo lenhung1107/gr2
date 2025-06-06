@@ -16,7 +16,7 @@ function OrderPackDetail() {
         '8:00', '9:00', '10:00', '11:00', '13:00', '14:00', '13:00', '14:00', '15:00', '16:00', '17:00'
     ];
     const { id } = useParams(); // Lấy `id` từ URL
-    const apiUrl = `http://localhost:3000/pack/getById/${id}`; // URL API khác cho từng trang
+    const apiUrl = `http://localhost:4000/pack/getById/${id}`; // URL API khác cho từng trang
     const { data: pack, loading, error } = useFetchData(apiUrl);
     // const pack = data || [];
     const [selectedDate, setSelectedDate] = useState(null);

@@ -33,7 +33,7 @@ function Register_schedules() {
     
             try {
                 setIsLoading(true);
-                const res = await fetch(`http://localhost:3000/schedule/schedulesGetByUserID/${userId}`);
+                const res = await fetch(`http://localhost:4000/schedule/schedulesGetByUserID/${userId}`);
                 const data = await res.json();
                 setWorkSchedules(data);
             } catch (err) {
@@ -81,7 +81,7 @@ function Register_schedules() {
 
         try {
             setIsLoading(true);
-            const response = await fetch("http://localhost:3000/schedule/registerSchedule", {
+            const response = await fetch("http://localhost:4000/schedule/registerSchedule", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

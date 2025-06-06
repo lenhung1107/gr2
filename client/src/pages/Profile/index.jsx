@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 
 const Profile = () => {
     const { id } = useParams();
-    const apiUrl = `http://localhost:3000/user/getUser/${id}`; // URL API khác cho từng trang
+    const apiUrl = `http://localhost:4000/user/getUser/${id}`; // URL API khác cho từng trang
     const { data: users, loading, error } = useFetchData(apiUrl);
     const [isEditing, setIsEditing] = useState(false);
     const [userData, setUserData] = useState(null);

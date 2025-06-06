@@ -9,7 +9,7 @@ import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
 
 function ManageTest() {
-    const apiUrl = "http://localhost:3000/test/getAll";
+    const apiUrl = "http://localhost:4000/test/getAll";
     const { data: data, loading, error } = useFetchData(apiUrl);
     const [tests, setTests] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -47,7 +47,7 @@ function ManageTest() {
     const handleSaveTest = async () => {
         if (modalMode === "add") {
             try {
-                const response = await fetch("http://localhost:3000/test/create", {
+                const response = await fetch("http://localhost:4000/test/create", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ function ManageTest() {
         } else if (modalMode === "edit") {
             try {
                 // Gọi API để cập nhật thông tin xét nghiệm
-                const response = await fetch(`http://localhost:3000/test/update/${selectedTest._id}`, {
+                const response = await fetch(`http://localhost:4000/test/update/${selectedTest._id}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -104,7 +104,7 @@ function ManageTest() {
     const handleDeleteTest = async (id) => {
         if (window.confirm("Bạn có chắc chắn muốn xóa xét nghiệm này?")) {
             try {
-                const response = await fetch(`http://localhost:3000/test/delete/${id}`, {
+                const response = await fetch(`http://localhost:4000/test/delete/${id}`, {
                     method: "DELETE",
                 });
 

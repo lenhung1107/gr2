@@ -6,7 +6,7 @@ import styles from "./ManageAppointments.module.scss";
 import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
 function ManageAppointments() {
-    const apiUrl = "http://localhost:3000/appointment/getAllAppoinment"; // URL API khác cho từng trang
+    const apiUrl = "http://localhost:4000/appointment/getAllAppoinment"; // URL API khác cho từng trang
     const { data, loading, error } = useFetchData(apiUrl);
     const appointments = data || [];
 
@@ -32,7 +32,7 @@ function ManageAppointments() {
     console.log("Selected appointment:", selectedAppointment);
     const handleConfirmAppointment = async (appointment) => {
         try {
-            const response = await fetch(`http://localhost:3000/appointment/confirmByAdmin/${appointment._id}`, {
+            const response = await fetch(`http://localhost:4000/appointment/confirmByAdmin/${appointment._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

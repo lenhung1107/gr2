@@ -14,8 +14,8 @@ const cx = classNames.bind(styles);
 
 function OrderDoctor() {
     const { id } = useParams();
-    const apiUrl = `http://localhost:3000/orderDoctor/${id}`;
-    const scheduleUrl = `http://localhost:3000/schedule/schedulesGetByDoctorID/${id}`;
+    const apiUrl = `http://localhost:4000/orderDoctor/${id}`;
+    const scheduleUrl = `http://localhost:4000/schedule/schedulesGetByDoctorID/${id}`;
 
     const { data: doctor, loading, error } = useFetchData(apiUrl);
     const [selectedDate, setSelectedDate] = useState(null);
