@@ -1,17 +1,13 @@
-const mongoose= require('mongoose');
-async function connect(){
-    try{
-        await mongoose.connect('mongodb+srv://cherrynhung5:123@bookinghealthcare.qdxbu9q.mongodb.net/?retryWrites=true&w=majority&appName=bookinghealthcare',{
-            useNewUrlParser: true,
-            useUnifiedTopology:true
+require('dotenv').config();
+const mongoose = require('mongoose');
 
-        });
-        console.log('connect success');
+async function connect() {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log('MongoDB connect success');
+    } catch (error) {
+        console.log('MongoDB connect failed:', error.message);
     }
-    catch(error){
-        console.log('failes');
-
-    }
-
 }
-module.exports={connect};
+
+module.exports = { connect };
