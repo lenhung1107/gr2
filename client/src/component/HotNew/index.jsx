@@ -10,11 +10,8 @@ function HotNew() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const res = await axios.get(
-          `https://newsapi.org/v2/everything?q=sức%20khoẻ&language=vi&pageSize=5&apiKey=f30caf6fa3ec4ee5a94207f343198694`
-        );
+        const res = await axios.get("https://gr2-3t8u.onrender.com/hotnews");
         console.log(res.data);
-
         setNewsList(res.data.articles);
       } catch (error) {
         console.error("Lỗi khi lấy tin tức:", error);

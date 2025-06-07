@@ -12,6 +12,7 @@ const testOrder= require('./testOrder');
 const test= require('./test');
 const userUseRoute= require('./userUse');
 const statistics = require ('./statistics');
+const hotnew =require('./hotnew')
 function route(app){
     
     // app.use('/news',newsRouter)  
@@ -29,6 +30,7 @@ function route(app){
     app.use('/testOrder',testOrder);
     app.use('/test',test);
     app.use('/statistics', statistics);
+    app.use('/hotnew',hotnew);
 
 }
 module.exports = route;
