@@ -43,8 +43,7 @@ function Home() {
                 <div className={cx('container')}>
                     <div className={cx('hero-section')}>
                         <h1 className={cx('hero-title')}>
-                            Chăm sóc sức khỏe
-                            <span className={cx('highlight')}> thông minh</span>
+                            Chăm sóc sức khỏe thông minh
                         </h1>
                         <p className={cx('hero-subtitle')}>
                             Đặt lịch khám bệnh dễ dàng, nhanh chóng và tiện lợi

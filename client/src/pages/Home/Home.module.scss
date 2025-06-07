@@ -47,7 +47,6 @@ $desktop: 1200px;
     align-items: flex-start;
   }
 }
-
 .overlay {
    background-image: url('../../../bgr.png');
     background-size: cover; /* Đảm bảo ảnh phủ kín toàn bộ phần tử */
@@ -101,13 +100,6 @@ $desktop: 1200px;
   }
 }
 
-.highlight {
-  background: linear-gradient(45deg, rgb(58, 181, 138), rgb(39, 214, 131));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: none;
-}
 
 .hero-subtitle {
   font-size: 3rem;
@@ -124,11 +116,14 @@ text-shadow: 1px 1px 6px rgba(58, 181, 138);
 }
 
 .menu-grid {
-  display: grid;
-  max-width: 600px;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  margin-top: 40px;
-
+  // display: grid;
+  // max-width: 600px;
+  // grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  // gap: 10px;
+  // margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+ padding-top: 50px;
   @include respond-to(mobile) {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -193,7 +188,7 @@ text-shadow: 1px 1px 6px rgba(58, 181, 138);
 
   :global(.button) {
     width: 100%;
-    background: rgba(255, 255, 255, 0.95);
+    background: white;
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 20px;
