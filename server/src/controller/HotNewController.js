@@ -5,7 +5,7 @@ class HotNewController {
   async getNew(req, res) {
     try {
       const response = await axios.get(
-        `https://newsapi.org/v2/everything?q=sức khỏe&language=vi&pageSize=5&apiKey=${process.env.NEWS_API_KEY}`
+        `https://newsapi.org/v2/everything?q=sức%20khoẻ&language=vi&pageSize=5&apiKey=${process.env.NEWS_API_KEY}`
       );
       res.json(response.data);
     } catch (error) {
