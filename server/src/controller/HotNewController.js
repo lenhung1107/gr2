@@ -1,5 +1,6 @@
 const Doctor = require("../models/Doctor");
 require("dotenv").config();
+const axios = require("axios");
 class HotNewController {
   async getNew(req, res) {
     try {
@@ -8,7 +9,7 @@ class HotNewController {
       );
       res.json(response.data);
     } catch (error) {
-      console.error("Lỗi khi gọi NewsAPI:", error.message);
+      console.error(error);
       res.status(500).json({ error: "Không lấy được tin tức" });
     }
   }
