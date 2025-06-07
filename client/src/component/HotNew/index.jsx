@@ -10,7 +10,7 @@ function HotNew() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const res = await axios.get("https://gr2-3t8u.onrender.com/hotnews");
+        const res = await axios.get("https://gr2-3t8u.onrender.com/hotnew");
         console.log(res.data);
         setNewsList(res.data.articles);
       } catch (error) {
