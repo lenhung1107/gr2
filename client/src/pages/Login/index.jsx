@@ -18,6 +18,7 @@ export default function Login() {
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,11 +28,10 @@ export default function Login() {
   useEffect(() => {
     if (registerSuccess) {
       setIsLogin(true);
-      navigate("/login"); // Điều hướng sang trang login
-      dispatch(registerReset()); // ✅ Reset trạng thái sau khi chuyển trang
-
+      navigate("/login");
+      dispatch(registerReset());
     }
-  }, [registerSuccess, navigate,dispatch]);
+  }, [registerSuccess, navigate, dispatch]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -44,13 +44,12 @@ export default function Login() {
         navigate("/adminpage");
       } else if (userData?.role === 2) {
         navigate(`/doctorpage/${userData._id}`);
-      } 
-      else if (userData?.role === 4) {
+      } else if (userData?.role === 4) {
         navigate(`/packManage/${userData._id}`);
-      }else {
+      } else {
         navigate("/");
       }
-    });    
+    });
   };
 
   const handleRegister = (e) => {
@@ -69,48 +68,170 @@ export default function Login() {
   };
 
   return (
-    <div className={cx("container")}> 
+    <div className={cx("container")}>
       <div className={cx("image-section")}>
-        <img src="./login.jpg" alt="Illustration" className={cx("image")} />
+        <div className={cx("image-wrapper")}>
+          <img src="./login.jpg" alt="Illustration" className={cx("image")} />
+        </div>
       </div>
-
       <div className={cx("form-section")}>
         <div className={cx("form-card")}>
-          <h2 className={cx("title")}>{isLogin ? "Đăng nhập" : "Đăng ký"}</h2>
-          <form className={cx("form")}>
-            <div className={cx("infor")}>
-              {!isLogin && (
-                <>
-                  <input type="text" placeholder="Tên của bạn" required className={cx("input")} onChange={(e) => setName(e.target.value)} />
-                  <input type="number" placeholder="Tuổi" required className={cx("input")} onChange={(e) => setAge(e.target.value)} />
-                  <input type="text" placeholder="Số điện thoại" required className={cx("input")} onChange={(e) => setPhone(e.target.value)} />
-                  <input type="text" placeholder="Địa chỉ" required className={cx("input")} onChange={(e) => setAddress(e.target.value)} />
-                  <input type="email" placeholder="Email" required className={cx("input")} onChange={(e) => setEmail(e.target.value)} />
-                  <select className={cx("input")} onChange={(e) => setGender(e.target.value)}>
-                    <option value="">Chọn giới tính</option>
-                    <option value="male">Nam</option>
-                    <option value="female">Nữ</option>
-                    <option value="other">Khác</option>
-                  </select>
-                </>
-              )}
-              <input type="text" placeholder="Tên đăng nhập" required className={cx("input")} onChange={(e) => setUsername(e.target.value)} />
-              <input type="password" placeholder="Mật khẩu" required className={cx("input")} onChange={(e) => setPassword(e.target.value)} />
+          <div className={cx("header")}>
+            <div className={cx("logo")}>
+              <div className={cx("logo-icon")}>🏥</div>
             </div>
-            {error && <p className={cx("error-message")}>{errorMessage}</p>}
-            <span>Quên mật khẩu?</span>
-            {isLogin ? (
-              <button className={cx("button")} onClick={handleLogin}>Đăng nhập</button>
-            ) : (
-              <button className={cx("button")} onClick={handleRegister}>Đăng ký</button>
-            )}
+            <p className={cx("subtitle")}>
+              {isLogin ? "Chào mừng bạn trở lại!" : "Tạo tài khoản mới"}
+            </p>
+          </div>
+
+          <form className={cx("form")}>
+            <div className={cx("form-content")}>
+              {!isLogin && (
+                <div className={cx("register-fields")}>
+                  <div className={cx("form-group")}>
+                    <label className={cx("label")}>Họ và tên</label>
+                    <input
+                      type="text"
+                      placeholder="Nhập họ và tên"
+                      required
+                      className={cx("input")}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+
+                  <div className={cx("form-row")}>
+                    <div className={cx("form-group", "half")}>
+                      <label className={cx("label")}>Tuổi</label>
+                      <input
+                        type="number"
+                        placeholder="Tuổi"
+                        required
+                        className={cx("input")}
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                      />
+                    </div>
+                    <div className={cx("form-group", "half")}>
+                      <label className={cx("label")}>Giới tính</label>
+                      <select
+                        className={cx("input", "select")}
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                      >
+                        <option value="">Chọn giới tính</option>
+                        <option value="male">Nam</option>
+                        <option value="female">Nữ</option>
+                        <option value="other">Khác</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className={cx("form-group")}>
+                    <label className={cx("label")}>Số điện thoại</label>
+                    <input
+                      type="tel"
+                      placeholder="Nhập số điện thoại"
+                      required
+                      className={cx("input")}
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </div>
+
+                  <div className={cx("form-group")}>
+                    <label className={cx("label")}>Địa chỉ</label>
+                    <input
+                      type="text"
+                      placeholder="Nhập địa chỉ"
+                      required
+                      className={cx("input")}
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
+                  </div>
+
+                  <div className={cx("form-group")}>
+                    <label className={cx("label")}>Email</label>
+                    <input
+                      type="email"
+                      placeholder="Nhập email"
+                      required
+                      className={cx("input")}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Login fields */}
+              <div className={cx("form-group")}>
+                <label className={cx("label")}>Tên đăng nhập</label>
+                <input
+                  type="text"
+                  placeholder="Nhập tên đăng nhập"
+                  required
+                  className={cx("input")}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+
+              <div className={cx("form-group")}>
+                <label className={cx("label")}>Mật khẩu</label>
+                <div className={cx("password-wrapper")}>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Nhập mật khẩu"
+                    required
+                    className={cx("input")}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    className={cx("password-toggle")}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? "🙈" : "👁️"}
+                  </button>
+                </div>
+              </div>
+
+              {error && <p className={cx("error-message")}>{errorMessage}</p>}
+
+              {isLogin && (
+                <div className={cx("forgot-password")}>
+                  <a href="#" className={cx("forgot-link")}>
+                    Quên mật khẩu?
+                  </a>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className={cx("button")}
+                onClick={isLogin ? handleLogin : handleRegister}
+              >
+                {isLogin ? "Đăng nhập" : "Đăng ký"}
+              </button>
+            </div>
           </form>
-          <p className={cx("switch-text")}>
-            {isLogin ? "Chưa có tài khoản?" : "Đã có tài khoản?"}
-            <span className={cx("switch-link")} onClick={() => setIsLogin(!isLogin)}>
-              {isLogin ? " Đăng ký ngay" : " Đăng nhập"}
-            </span>
-          </p>
+
+          {/* Switch between login/register */}
+          <div className={cx("switch-section")}>
+            <p className={cx("switch-text")}>
+              {isLogin ? "Chưa có tài khoản?" : "Đã có tài khoản?"}
+              <span
+                className={cx("switch-link")}
+                onClick={() => setIsLogin(!isLogin)}
+              >
+                {isLogin ? " Đăng ký ngay" : " Đăng nhập"}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>

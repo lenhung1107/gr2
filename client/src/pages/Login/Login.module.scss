@@ -1,123 +1,443 @@
-.container {
-  display: flex;
-  height: 100vh;
+// Variables
+$primary-color: rgb(39, 214, 131);
+$primary-hover: rgb(152, 251, 151);
+$secondary-color: #06b6d4;
+$text-primary: #1f2937;
+$text-secondary: #6b7280;
+$text-light: #9ca3af;
+$border-color: #d1d5db;
+$background-light: #f9fafb;
+$background-card: #ffffff;
+$error-color: #030101;
+$success-color: #10b981;
+
+// Mixins
+@mixin transition($property: all, $duration: 0.3s, $timing: ease) {
+  transition: $property $duration $timing;
 }
 
+@mixin shadow($level: 1) {
+  @if $level == 1 {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  } @else if $level == 2 {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  } @else if $level == 3 {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+}
+
+@mixin gradient-bg($color1, $color2) {
+  background: linear-gradient(135deg, $color1 0%, $color2 100%);
+}
+
+// Main container
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: $background-light;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
+}
+
+// Image section
 .image-section {
   width: 50%;
-  background-color: rgb(240, 252, 252);
+  position: relative;
+  @include gradient-bg($primary-color, $primary-hover);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    min-height: 300px;
+    padding: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    min-height: 200px;
+  }
+}
+
+.image-wrapper {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  @include shadow(3);
+  @include transition();
+
+  &:hover {
+    transform: translateY(-5px);
+    @include shadow(3);
+  }
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    max-width: 500px;
+  }
 }
 
 .image {
-  width: 700px;
-  height: 600px;
-  border-radius: 10px;
+  width: 600px;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    height: 250px;
+  }
+
+  @media (max-width: 768px) {
+    height: 180px;
+  }
 }
+
 
 .form-section {
   width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    padding: 1rem;
+  }
 }
 
 .form-card {
-  width: 600px;
-  padding: 20px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 650px;
+  background: $background-card;
+  border-radius: 20px;
+  @include shadow(2);
+  padding: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    border-radius: 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
 }
 
-.title {
-  font-size: 24px;
-  font-weight: bold;
+// Header
+.header {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+  }
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.logo {
+  margin-bottom: 1rem;
 }
 
-.form span {
-  font-size: 16px;
-  text-align: right;
-  margin-right: 70px;
-  cursor: pointer;
-}
-
-.form p {
-  font-size: 14px;
-  margin-left: 70px;
-  color: red;
-}
-
-.button {
-  width: 30%;
-  padding: 10px;
-  background-color: rgb(70, 222, 163);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-}
-
-.button:hover {
-  background-color: rgb(75, 192, 140);
-}
-
-.infor {
-  display: flex;
-  flex-direction: column;
+.logo-icon {
+  display: inline-flex;
   align-items: center;
-  text-align: center;
-  gap: 15px;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  @include gradient-bg($primary-color, $secondary-color);
+  border-radius: 50%;
+  font-size: 2.2rem;
+  @include shadow(2);
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+}
+
+.subtitle {
+  color: $text-secondary;
+  font-size: 2.5rem;
+  font-weight: 500;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+}
+.form {
+  width: 100%;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    gap: 1.2rem;
+  }
+}
+
+.register-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    gap: 1.2rem;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  &.half {
+    flex: 1;
+  }
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+}
+
+.label {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: 0.5rem;
 }
 
 .input {
-  width: 75%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 18px;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid $border-color;
+  border-radius: 10px;
+  font-size: 1.6rem;
+  background: $background-light;
+  color: $text-primary;
+  @include transition(border-color);
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    background: $background-card;
+    @include shadow(1);
+  }
+
+  &::placeholder {
+    color: $text-light;
+  }
+
+  &.select {
+    cursor: pointer;
+  }
+
+  // Remove number input arrows
+  &[type="number"] {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: $text-light;
+  @include transition();
+
+  &:hover {
+    color: $text-secondary;
+  }
+}
+
+.error-message {
+  color: $error-color;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  padding: 0.5rem;
+  background: rgba($error-color, 0.1);
+  border-radius: 6px;
+  border: 1px solid rgba($error-color, 0.2);
+}
+
+.forgot-password {
+  text-align: right;
+}
+
+.forgot-link {
+  color: $primary-color;
+  font-size: 1.6rem;
+  font-weight: 500;
+  text-decoration: none;
+  @include transition();
+
+  &:hover {
+    color: $primary-hover;
+    text-decoration: underline;
+  }
+}
+
+.button {
+  margin: auto;
+  width: 40%;
+  padding: 1rem;
+  @include gradient-bg($primary-color, $secondary-color);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  @include shadow(2);
+  @include transition();
+
+  &:hover {
+    transform: translateY(-2px);
+    @include shadow(3);
+    @include gradient-bg($primary-hover, #0891b2);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.875rem;
+    font-size: 1rem;
+  }
+}
+
+// Switch section
+.switch-section {
+  margin-top: 2rem;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    margin-top: 1.5rem;
+  }
 }
 
 .switch-text {
-  text-align: center;
-  margin-top: 10px;
-  font-size: 18px;
+  color: $text-secondary;
+  font-size: 1.6rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 }
 
 .switch-link {
-  color: #3b82f6;
+  color: $primary-color;
+  font-weight: 600;
   cursor: pointer;
+  @include transition();
+
+  &:hover {
+    color: $primary-hover;
+    text-decoration: underline;
+  }
 }
 
-/* Thêm CSS cho các trường mới trong form đăng ký */
-.select {
-  width: 80%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 18px;
+// Responsive adjustments
+@media (max-width: 480px) {
+  .container {
+    min-height: 100vh;
+  }
+
+  .form-card {
+    border-radius: 10px;
+    box-shadow: none;
+    border: 1px solid $border-color;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .form-content {
+    gap: 1rem;
+  }
+
+  .register-fields {
+    gap: 1rem;
+  }
 }
 
-.input[type="number"]::-webkit-inner-spin-button,
-.input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+// Animation
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.input[type="number"] {
-  -moz-appearance: textfield;
+.form-card {
+  animation: slideIn 0.6s ease-out;
+}
+
+// Loading state
+.button {
+  position: relative;
+
+  &.loading {
+    color: transparent;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
