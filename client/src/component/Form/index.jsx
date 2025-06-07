@@ -19,7 +19,7 @@ const Form = ({ onClose, service, date, time, appointmentType }) => {
       const user = JSON.parse(localStorage.getItem('user'));
       if (user && isForSelf === false) {
         try {
-          const res = await fetch(`https://gr2-hdy0.onrender.com/appointment/getAppoinmentByUserId/${user._id}`);
+          const res = await fetch(`https://gr2-3t8u.onrender.com/appointment/getAppoinmentByUserId/${user._id}`);
           const data = await res.json();
           // Lọc danh sách người từng đặt hộ và loại bỏ trùng lặp theo tên + SĐT
           const filtered = data.filter(a => a.isForSomeone &&
@@ -83,7 +83,7 @@ const Form = ({ onClose, service, date, time, appointmentType }) => {
     }
     console.log(appointmentData);
     try {
-      const response = await fetch("https://gr2-hdy0.onrender.com/appointment/bookAppointment", {
+      const response = await fetch("https://gr2-3t8u.onrender.com/appointment/bookAppointment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(appointmentData)

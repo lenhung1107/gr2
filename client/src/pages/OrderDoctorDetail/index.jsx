@@ -14,8 +14,8 @@ const cx = classNames.bind(styles);
 
 function OrderDoctor() {
     const { id } = useParams();
-    const apiUrl = `https://gr2-hdy0.onrender.com/orderDoctor/${id}`;
-    const scheduleUrl = `https://gr2-hdy0.onrender.com/schedule/schedulesGetByDoctorID/${id}`;
+    const apiUrl = `https://gr2-3t8u.onrender.com/orderDoctor/${id}`;
+    const scheduleUrl = `https://gr2-3t8u.onrender.com/schedule/schedulesGetByDoctorID/${id}`;
 
     const { data: doctor, loading, error } = useFetchData(apiUrl);
     const [selectedDate, setSelectedDate] = useState(null);

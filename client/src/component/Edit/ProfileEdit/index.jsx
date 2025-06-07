@@ -25,7 +25,7 @@ const ProfileForm = ({ user, toggleEdit, onSave }) => {
     e.preventDefault();
 
     try {
-      const res = await axios.put(`https://gr2-hdy0.onrender.com/user/editUser/${user._id}`, formData); // thay URL nếu khác
+      const res = await axios.put(`https://gr2-3t8u.onrender.com/user/editUser/${user._id}`, formData); // thay URL nếu khác
       onSave(res.data); // cập nhật lại FE
       toast.success('✅ Cập nhật thành công!');
       setTimeout(() => {

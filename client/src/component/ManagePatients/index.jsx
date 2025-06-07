@@ -10,7 +10,7 @@ const medicinesData = [];
 
 function ManagePatients() {
   const { id } = useParams();
-  const apiUrl = `https://gr2-hdy0.onrender.com/appointment/getAppoinmentByDoctorId/${id}`;
+  const apiUrl = `https://gr2-3t8u.onrender.com/appointment/getAppoinmentByDoctorId/${id}`;
   const { data: patientsDataRaw, loading, error } = useFetchData(apiUrl);
   const patientsData = useMemo(() => patientsDataRaw || [], [patientsDataRaw]);
 
@@ -32,7 +32,7 @@ function ManagePatients() {
   useEffect(() => {
     const fetchTestPacks = async () => {
       try {
-        const res = await fetch("https://gr2-hdy0.onrender.com/test/getAll");
+        const res = await fetch("https://gr2-3t8u.onrender.com/test/getAll");
         const data = await res.json();
         setTestPacks(data);
       } catch (error) {
@@ -78,7 +78,7 @@ function ManagePatients() {
   
   const handleConfirmAppointment = async (patient) => {
     try {
-      const response = await fetch(`https://gr2-hdy0.onrender.com/appointment/confirmByDoctor/${patient._id}`, {
+      const response = await fetch(`https://gr2-3t8u.onrender.com/appointment/confirmByDoctor/${patient._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ function ManagePatients() {
     }
     console.log(selectedPatient.id);
     try {
-      const response = await fetch("https://gr2-hdy0.onrender.com/testOrder/create", {
+      const response = await fetch("https://gr2-3t8u.onrender.com/testOrder/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -17,7 +17,7 @@ function ManageMedicals() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get(`https://gr2-hdy0.onrender.com/patient/getPatientByDoctorID/${id}`, {
+                const response = await axios.get(`https://gr2-3t8u.onrender.com/patient/getPatientByDoctorID/${id}`, {
                 });
                 setUsers(response.data.patients);       // 👈 chỉ lấy mảng bệnh nhân
                 setFilteredUsers(response.data.patients);

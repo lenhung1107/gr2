@@ -40,7 +40,7 @@ function EditPackModal({ pack, onClose, onSave }) {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await fetch(`https://gr2-hdy0.onrender.com/pack/updatePack/${formData._id}`, {
+            const response = await fetch(`https://gr2-3t8u.onrender.com/pack/updatePack/${formData._id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

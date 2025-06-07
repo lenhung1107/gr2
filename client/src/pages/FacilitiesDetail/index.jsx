@@ -8,7 +8,7 @@ const cx = classNames.bind(styles)
 function FacilitiesDetail() {
 
     const { id } = useParams();
-    const apiUrl = `https://gr2-hdy0.onrender.com/specialties/${id}`;
+    const apiUrl = `https://gr2-3t8u.onrender.com/specialties/${id}`;
     const { data: facility, loading, error } = useFetchData(apiUrl);
     if (loading) return <p>Đang tải...</p>;
     if (error) return <p>Có lỗi xảy ra!</p>;

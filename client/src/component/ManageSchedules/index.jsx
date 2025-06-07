@@ -13,7 +13,7 @@ const ManageSchedules = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`https://gr2-hdy0.onrender.com/schedule/getworkHourofDoctor/${userId}`)
+    fetch(`https://gr2-3t8u.onrender.com/schedule/getworkHourofDoctor/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         const formattedEvents = data.map((item) => ({

@@ -6,7 +6,7 @@ import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
 
 function ListDoctor() {
-    const apiUrl = "https://gr2-hdy0.onrender.com/doctor"; // URL API khác cho từng trang
+    const apiUrl = "https://gr2-3t8u.onrender.com/doctor"; // URL API khác cho từng trang
     const { data: doctors, loading, error } = useFetchData(apiUrl);
 
     return (

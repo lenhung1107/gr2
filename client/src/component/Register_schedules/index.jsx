@@ -33,7 +33,7 @@ function Register_schedules() {
     
             try {
                 setIsLoading(true);
-                const res = await fetch(`https://gr2-hdy0.onrender.com/schedule/schedulesGetByUserID/${userId}`);
+                const res = await fetch(`https://gr2-3t8u.onrender.com/schedule/schedulesGetByUserID/${userId}`);
                 const data = await res.json();
                 setWorkSchedules(data);
             } catch (err) {
@@ -81,7 +81,7 @@ function Register_schedules() {
 
         try {
             setIsLoading(true);
-            const response = await fetch("https://gr2-hdy0.onrender.com/schedule/registerSchedule", {
+            const response = await fetch("https://gr2-3t8u.onrender.com/schedule/registerSchedule", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

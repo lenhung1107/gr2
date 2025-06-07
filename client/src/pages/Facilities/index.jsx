@@ -8,7 +8,7 @@ import Button from "../../component/Button";
 const cx = classNames.bind(styles);
 
 function Facilities() {
-    const apiUrl = "https://gr2-hdy0.onrender.com/specialties"; // URL API khác cho từng trang
+    const apiUrl = "https://gr2-3t8u.onrender.com/specialties"; // URL API khác cho từng trang
     const { data: facilities, loading, error } = useFetchData(apiUrl);
     if (loading) return <p>Đang tải...</p>;
     if (error) return <p>Có lỗi xảy ra!</p>;

@@ -14,7 +14,7 @@ function ManageDoctors() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get("https://gr2-hdy0.onrender.com/doctor", {
+                const response = await axios.get("https://gr2-3t8u.onrender.com/doctor", {
                 });
                 setDoctorData(response.data); // Cập nhật danh sách ban đầu
                 setFilteredDoctors(response.data); // C)
@@ -52,7 +52,7 @@ function ManageDoctors() {
     };
     const confirmDelete = async () => {
         try {
-            await axios.delete(`https://gr2-hdy0.onrender.com/adminpage/deleteDoctor/${userToDelete._id}`);
+            await axios.delete(`https://gr2-3t8u.onrender.com/adminpage/deleteDoctor/${userToDelete._id}`);
             const updatedUsers = doctorData.filter((u) => u._id !== userToDelete._id);
             setDoctorData(updatedUsers);
             setFilteredDoctors(updatedUsers);
