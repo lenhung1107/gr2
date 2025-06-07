@@ -142,7 +142,7 @@ function HistoryPage() {
             {showPopupCancel && (
                 <div className={cx("popup-overlay")}>
                     <div className={cx("popup")}>
-                        <p>Bạn có chắc chắn muốn hủy lịch hẹn với <b>{selectedAppointment.doctor}</b> vào ngày <b>{selectedAppointment.date}</b> không?</p>
+                        <p>Bạn có chắc chắn muốn hủy lịch hẹn với <b>{selectedAppointment.doctor}</b> vào ngày <b>{new Date(selectedAppointment.date).toLocaleDateString('vi-VN')}</b> không?</p>
                         <div className={cx("popup-buttons")}>
                             <button onClick={confirmCancel} className={cx("confirm-btn")}>Xác nhận</button>
                             <button onClick={() => setShowPopupCancel(false)} className={cx("cancel-btn")}>Hủy</button>

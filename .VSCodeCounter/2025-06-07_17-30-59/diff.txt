@@ -1,0 +1,249 @@
+Date : 2025-06-07 17:30:59
+Directory : d:\bookingHealthCare\client
+Total : 145 files,  23315 codes, 290 comments, 2291 blanks, all 25896 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| SCSS           |         52 |      9,252 |        212 |      1,597 |     11,061 |
+| JSON           |          3 |      7,569 |          0 |          2 |      7,571 |
+| JavaScript JSX |         60 |      5,841 |         83 |        630 |      6,554 |
+| PostCSS        |          1 |        318 |          3 |         66 |        387 |
+| JavaScript     |         27 |        315 |         -8 |         -9 |        298 |
+| HTML           |          1 |         15 |          0 |          1 |         16 |
+| Markdown       |          1 |          5 |          0 |          4 |          9 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                              | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                 |        145 |     23,315 |        290 |      2,291 |     25,896 |
+| . (Files)                                                                                         |          7 |      7,665 |          1 |         10 |      7,676 |
+| ..                                                                                                |         15 |       -168 |        -10 |        -37 |       -215 |
+| ..\server                                                                                         |         15 |       -168 |        -10 |        -37 |       -215 |
+| ..\server\src                                                                                     |         15 |       -168 |        -10 |        -37 |       -215 |
+| ..\server\src\routes                                                                              |         15 |       -168 |        -10 |        -37 |       -215 |
+| src                                                                                               |        123 |     15,818 |        299 |      2,318 |     18,435 |
+| src (Files)                                                                                       |          3 |         99 |          0 |          6 |        105 |
+| src\CustomHook                                                                                    |          1 |         36 |          0 |          7 |         43 |
+| src\Layout                                                                                        |         19 |      2,794 |         82 |        470 |      3,346 |
+| src\Layout (Files)                                                                                |          1 |          2 |          0 |          0 |          2 |
+| src\Layout\AdminLayout                                                                            |          2 |        528 |         11 |         90 |        629 |
+| src\Layout\DefaultLayout                                                                          |          8 |        672 |         25 |        108 |        805 |
+| src\Layout\DefaultLayout (Files)                                                                  |          2 |         46 |          4 |          8 |         58 |
+| src\Layout\DefaultLayout\Footer                                                                   |          2 |        138 |          5 |         22 |        165 |
+| src\Layout\DefaultLayout\Header                                                                   |          2 |        319 |          7 |         42 |        368 |
+| src\Layout\DefaultLayout\Search                                                                   |          2 |        169 |          9 |         36 |        214 |
+| src\Layout\DoctorLayout                                                                           |          2 |        422 |          9 |         61 |        492 |
+| src\Layout\HomeLayout                                                                             |          2 |        482 |         15 |         86 |        583 |
+| src\Layout\PackManageLayout                                                                       |          2 |        517 |         11 |         89 |        617 |
+| src\Layout\SearchHome                                                                             |          2 |        171 |         11 |         36 |        218 |
+| src\component                                                                                     |         69 |      9,259 |        164 |      1,322 |     10,745 |
+| src\component\Add                                                                                 |          2 |        108 |          0 |         14 |        122 |
+| src\component\Add\AddPack                                                                         |          2 |        108 |          0 |         14 |        122 |
+| src\component\AppoinmentDetail                                                                    |          2 |        136 |          0 |         19 |        155 |
+| src\component\Button                                                                              |          2 |         43 |          0 |          4 |         47 |
+| src\component\Doctor                                                                              |          2 |        136 |          0 |         22 |        158 |
+| src\component\DoctorItem                                                                          |          2 |        142 |          3 |         16 |        161 |
+| src\component\Edit                                                                                |          6 |        588 |          4 |         79 |        671 |
+| src\component\Edit\EditForm                                                                       |          2 |        150 |          0 |         23 |        173 |
+| src\component\Edit\EditPackModal                                                                  |          2 |        297 |          4 |         38 |        339 |
+| src\component\Edit\ProfileEdit                                                                    |          2 |        141 |          0 |         18 |        159 |
+| src\component\FacilitiesItem                                                                      |          2 |         48 |          2 |          8 |         58 |
+| src\component\Form                                                                                |          2 |        608 |          3 |         94 |        705 |
+| src\component\GlobalStyles                                                                        |          2 |         31 |          1 |          2 |         34 |
+| src\component\HistoryFilter                                                                       |          2 |         67 |          0 |          5 |         72 |
+| src\component\HotNew                                                                              |          2 |        122 |          1 |         21 |        144 |
+| src\component\Hour                                                                                |          2 |         53 |          7 |         10 |         70 |
+| src\component\ManageAppointments                                                                  |          2 |        620 |          9 |         94 |        723 |
+| src\component\ManageDoctors                                                                       |          2 |        278 |         10 |         28 |        316 |
+| src\component\ManageMedicals                                                                      |          2 |        187 |         13 |         30 |        230 |
+| src\component\ManageMedicalsByAdmin                                                               |          2 |        321 |          9 |         62 |        392 |
+| src\component\ManageOrderPacks                                                                    |          2 |        481 |         10 |         59 |        550 |
+| src\component\ManagePacks                                                                         |          2 |        552 |          8 |         70 |        630 |
+| src\component\ManagePacksAssign                                                                   |          2 |        508 |         10 |         64 |        582 |
+| src\component\ManagePatients                                                                      |          2 |        624 |         14 |         86 |        724 |
+| src\component\ManageSchedules                                                                     |          2 |        396 |          4 |         71 |        471 |
+| src\component\ManageStatisticst                                                                   |          2 |        274 |          0 |         37 |        311 |
+| src\component\ManageTest                                                                          |          2 |        496 |          9 |         64 |        569 |
+| src\component\ManageUsers                                                                         |          2 |        377 |         12 |         57 |        446 |
+| src\component\MedicalDetail                                                                       |          2 |        674 |          2 |        106 |        782 |
+| src\component\Menu                                                                                |          2 |         33 |          0 |          7 |         40 |
+| src\component\Pack                                                                                |          2 |        108 |          2 |         16 |        126 |
+| src\component\Pagination                                                                          |          2 |         93 |          0 |         15 |        108 |
+| src\component\Popper                                                                              |          3 |         26 |          0 |          1 |         27 |
+| src\component\PrescripList                                                                        |          2 |        136 |          1 |         15 |        152 |
+| src\component\PrescriptionCreat                                                                   |          2 |        641 |         26 |         87 |        754 |
+| src\component\Register_schedules                                                                  |          2 |        352 |          4 |         59 |        415 |
+| src\data                                                                                          |          3 |        126 |          0 |         10 |        136 |
+| src\pages                                                                                         |         23 |      3,268 |         52 |        496 |      3,816 |
+| src\pages\AdminPage                                                                               |          1 |          9 |          0 |          2 |         11 |
+| src\pages\DoctorPage                                                                              |          1 |          7 |          0 |          3 |         10 |
+| src\pages\Facilities                                                                              |          2 |         62 |          0 |          7 |         69 |
+| src\pages\FacilitiesDetail                                                                        |          2 |         92 |          4 |          9 |        105 |
+| src\pages\HistoryPage                                                                             |          2 |        386 |         11 |         44 |        441 |
+| src\pages\Home                                                                                    |          2 |        345 |          5 |         54 |        404 |
+| src\pages\ListDoctor                                                                              |          2 |         67 |          0 |         14 |         81 |
+| src\pages\ListOrderPack                                                                           |          2 |         79 |          4 |         15 |         98 |
+| src\pages\Login                                                                                   |          2 |        581 |         12 |         89 |        682 |
+| src\pages\OrderDoctorDetail                                                                       |          2 |        604 |          1 |        113 |        718 |
+| src\pages\OrderPackDetail                                                                         |          2 |        411 |          1 |         58 |        470 |
+| src\pages\PackManage                                                                              |          1 |          9 |          0 |          2 |         11 |
+| src\pages\Profile                                                                                 |          2 |        616 |         14 |         86 |        716 |
+| src\redux                                                                                         |          4 |        203 |          1 |          6 |        210 |
+| src\routes                                                                                        |          1 |         33 |          0 |          1 |         34 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                                          | language       | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| d:\bookingHealthCare\client\README.md                                                             | Markdown       |          5 |          0 |          4 |          9 |
+| d:\bookingHealthCare\client\eslint.config.js                                                      | JavaScript     |         37 |          0 |          2 |         39 |
+| d:\bookingHealthCare\client\index.html                                                            | HTML           |         15 |          0 |          1 |         16 |
+| d:\bookingHealthCare\client\package-lock.json                                                     | JSON           |      7,510 |          0 |          1 |      7,511 |
+| d:\bookingHealthCare\client\package.json                                                          | JSON           |         54 |          0 |          1 |         55 |
+| d:\bookingHealthCare\client\src\App.jsx                                                           | JavaScript JSX |         42 |          0 |          4 |         46 |
+| d:\bookingHealthCare\client\src\CustomHook\useFetchData.js                                        | JavaScript     |         36 |          0 |          7 |         43 |
+| d:\bookingHealthCare\client\src\Layout\AdminLayout\AdminLayout.module.scss                        | SCSS           |        332 |          4 |         62 |        398 |
+| d:\bookingHealthCare\client\src\Layout\AdminLayout\index.jsx                                      | JavaScript JSX |        196 |          7 |         28 |        231 |
+| d:\bookingHealthCare\client\src\Layout\DefaultLayout\DefaultLayout.module.scss                    | SCSS           |         20 |          4 |          4 |         28 |
+| d:\bookingHealthCare\client\src\Layout\DefaultLayout\Footer\Footer.module.scss                    | SCSS           |         98 |          1 |         19 |        118 |
+| d:\bookingHealthCare\client\src\Layout\DefaultLayout\Footer\index.jsx                             | JavaScript JSX |         40 |          4 |          3 |         47 |
+| d:\bookingHealthCare\client\src\Layout\DefaultLayout\Header\Header.module.scss                    | SCSS           |        172 |          0 |         30 |        202 |
+| d:\bookingHealthCare\client\src\Layout\DefaultLayout\Header\index.jsx                             | JavaScript JSX |        147 |          7 |         12 |        166 |
+| d:\bookingHealthCare\client\src\Layout\DefaultLayout\Search\Search.module.scss                    | SCSS           |         94 |          6 |         15 |        115 |
+| d:\bookingHealthCare\client\src\Layout\DefaultLayout\Search\index.jsx                             | JavaScript JSX |         75 |          3 |         21 |         99 |
+| d:\bookingHealthCare\client\src\Layout\DefaultLayout\index.jsx                                    | JavaScript JSX |         26 |          0 |          4 |         30 |
+| d:\bookingHealthCare\client\src\Layout\DoctorLayout\DoctorLayout.module.scss                      | SCSS           |        270 |          3 |         46 |        319 |
+| d:\bookingHealthCare\client\src\Layout\DoctorLayout\index.jsx                                     | JavaScript JSX |        152 |          6 |         15 |        173 |
+| d:\bookingHealthCare\client\src\Layout\HomeLayout\HomeLayout.module.scss                          | SCSS           |        362 |         15 |         70 |        447 |
+| d:\bookingHealthCare\client\src\Layout\HomeLayout\index.jsx                                       | JavaScript JSX |        120 |          0 |         16 |        136 |
+| d:\bookingHealthCare\client\src\Layout\PackManageLayout\PackManageLayout.module.scss              | SCSS           |        348 |          6 |         66 |        420 |
+| d:\bookingHealthCare\client\src\Layout\PackManageLayout\index.jsx                                 | JavaScript JSX |        169 |          5 |         23 |        197 |
+| d:\bookingHealthCare\client\src\Layout\SearchHome\SearchHome.module.scss                          | SCSS           |         96 |          8 |         15 |        119 |
+| d:\bookingHealthCare\client\src\Layout\SearchHome\index.jsx                                       | JavaScript JSX |         75 |          3 |         21 |         99 |
+| d:\bookingHealthCare\client\src\Layout\index.jsx                                                  | JavaScript JSX |          2 |          0 |          0 |          2 |
+| d:\bookingHealthCare\client\src\component\Add\AddPack\AddPack.module.scss                         | SCSS           |         54 |          0 |          7 |         61 |
+| d:\bookingHealthCare\client\src\component\Add\AddPack\index.jsx                                   | JavaScript JSX |         54 |          0 |          7 |         61 |
+| d:\bookingHealthCare\client\src\component\AppoinmentDetail\AppoinmentDetail.module.scss           | SCSS           |         54 |          0 |          9 |         63 |
+| d:\bookingHealthCare\client\src\component\AppoinmentDetail\index.jsx                              | JavaScript JSX |         82 |          0 |         10 |         92 |
+| d:\bookingHealthCare\client\src\component\Button\Button.module.scss                               | SCSS           |         11 |          0 |          1 |         12 |
+| d:\bookingHealthCare\client\src\component\Button\index.jsx                                        | JavaScript JSX |         32 |          0 |          3 |         35 |
+| d:\bookingHealthCare\client\src\component\DoctorItem\DoctorItem.module.scss                       | SCSS           |         89 |          2 |         13 |        104 |
+| d:\bookingHealthCare\client\src\component\DoctorItem\index.jsx                                    | JavaScript JSX |         53 |          1 |          3 |         57 |
+| d:\bookingHealthCare\client\src\component\Doctor\Doctor.module.scss                               | SCSS           |         78 |          0 |         19 |         97 |
+| d:\bookingHealthCare\client\src\component\Doctor\index.jsx                                        | JavaScript JSX |         58 |          0 |          3 |         61 |
+| d:\bookingHealthCare\client\src\component\Edit\EditForm\EditForm.module.scss                      | SCSS           |         78 |          0 |         12 |         90 |
+| d:\bookingHealthCare\client\src\component\Edit\EditForm\index.jsx                                 | JavaScript JSX |         72 |          0 |         11 |         83 |
+| d:\bookingHealthCare\client\src\component\Edit\EditPackModal\EditPackModal.module.scss            | SCSS           |        142 |          2 |         20 |        164 |
+| d:\bookingHealthCare\client\src\component\Edit\EditPackModal\index.jsx                            | JavaScript JSX |        155 |          2 |         18 |        175 |
+| d:\bookingHealthCare\client\src\component\Edit\ProfileEdit\ProfileEdit.module.scss                | SCSS           |         42 |          0 |          5 |         47 |
+| d:\bookingHealthCare\client\src\component\Edit\ProfileEdit\index.jsx                              | JavaScript JSX |         99 |          0 |         13 |        112 |
+| d:\bookingHealthCare\client\src\component\FacilitiesItem\FacilitiesItem.module.scss               | SCSS           |         25 |          2 |          2 |         29 |
+| d:\bookingHealthCare\client\src\component\FacilitiesItem\index.jsx                                | JavaScript JSX |         23 |          0 |          6 |         29 |
+| d:\bookingHealthCare\client\src\component\Form\Form.module.scss                                   | SCSS           |        409 |          0 |         79 |        488 |
+| d:\bookingHealthCare\client\src\component\Form\index.jsx                                          | JavaScript JSX |        199 |          3 |         15 |        217 |
+| d:\bookingHealthCare\client\src\component\GlobalStyles\GlobalStyles.scss                          | SCSS           |         26 |          1 |          1 |         28 |
+| d:\bookingHealthCare\client\src\component\GlobalStyles\index.js                                   | JavaScript     |          5 |          0 |          1 |          6 |
+| d:\bookingHealthCare\client\src\component\HistoryFilter\HistoryFilter.module.scss                 | SCSS           |         37 |          0 |          1 |         38 |
+| d:\bookingHealthCare\client\src\component\HistoryFilter\index.jsx                                 | JavaScript JSX |         30 |          0 |          4 |         34 |
+| d:\bookingHealthCare\client\src\component\HotNew\HotNew.module.scss                               | SCSS           |         74 |          1 |         14 |         89 |
+| d:\bookingHealthCare\client\src\component\HotNew\index.jsx                                        | JavaScript JSX |         48 |          0 |          7 |         55 |
+| d:\bookingHealthCare\client\src\component\Hour\Hour.jsx                                           | JavaScript JSX |         18 |          1 |          5 |         24 |
+| d:\bookingHealthCare\client\src\component\Hour\Hour.module.scss                                   | SCSS           |         35 |          6 |          5 |         46 |
+| d:\bookingHealthCare\client\src\component\ManageAppointments\ManageAppointments.module.scss       | SCSS           |        470 |          9 |         84 |        563 |
+| d:\bookingHealthCare\client\src\component\ManageAppointments\index.jsx                            | JavaScript JSX |        150 |          0 |         10 |        160 |
+| d:\bookingHealthCare\client\src\component\ManageDoctors\ManageDoctors.module.scss                 | SCSS           |        127 |         10 |         17 |        154 |
+| d:\bookingHealthCare\client\src\component\ManageDoctors\index.jsx                                 | JavaScript JSX |        151 |          0 |         11 |        162 |
+| d:\bookingHealthCare\client\src\component\ManageMedicalsByAdmin\ManageMedicalsByAdmin.module.scss | SCSS           |        222 |          7 |         47 |        276 |
+| d:\bookingHealthCare\client\src\component\ManageMedicalsByAdmin\index.jsx                         | JavaScript JSX |         99 |          2 |         15 |        116 |
+| d:\bookingHealthCare\client\src\component\ManageMedicals\ManageMedicals.module.scss               | SCSS           |         86 |         12 |         17 |        115 |
+| d:\bookingHealthCare\client\src\component\ManageMedicals\index.jsx                                | JavaScript JSX |        101 |          1 |         13 |        115 |
+| d:\bookingHealthCare\client\src\component\ManageOrderPacks\ManageOrderPacks.module.scss           | SCSS           |        264 |          9 |         41 |        314 |
+| d:\bookingHealthCare\client\src\component\ManageOrderPacks\index.jsx                              | JavaScript JSX |        217 |          1 |         18 |        236 |
+| d:\bookingHealthCare\client\src\component\ManagePacksAssign\ManagePacksAssign.module.scss         | SCSS           |        272 |          9 |         42 |        323 |
+| d:\bookingHealthCare\client\src\component\ManagePacksAssign\index.jsx                             | JavaScript JSX |        236 |          1 |         22 |        259 |
+| d:\bookingHealthCare\client\src\component\ManagePacks\ManagePacks.module.scss                     | SCSS           |        373 |          3 |         60 |        436 |
+| d:\bookingHealthCare\client\src\component\ManagePacks\index.jsx                                   | JavaScript JSX |        179 |          5 |         10 |        194 |
+| d:\bookingHealthCare\client\src\component\ManagePatients\ManagePatients.module.scss               | SCSS           |        304 |         14 |         59 |        377 |
+| d:\bookingHealthCare\client\src\component\ManagePatients\index.jsx                                | JavaScript JSX |        320 |          0 |         27 |        347 |
+| d:\bookingHealthCare\client\src\component\ManageSchedules\calendar.css                            | PostCSS        |        318 |          3 |         66 |        387 |
+| d:\bookingHealthCare\client\src\component\ManageSchedules\index.jsx                               | JavaScript JSX |         78 |          1 |          5 |         84 |
+| d:\bookingHealthCare\client\src\component\ManageStatisticst\ManageStatisticst.module.scss         | SCSS           |        171 |          0 |         29 |        200 |
+| d:\bookingHealthCare\client\src\component\ManageStatisticst\index.jsx                             | JavaScript JSX |        103 |          0 |          8 |        111 |
+| d:\bookingHealthCare\client\src\component\ManageTest\ManageTest.module.scss                       | SCSS           |        258 |          2 |         46 |        306 |
+| d:\bookingHealthCare\client\src\component\ManageTest\index.jsx                                    | JavaScript JSX |        238 |          7 |         18 |        263 |
+| d:\bookingHealthCare\client\src\component\ManageUsers\ManageUsers.module.scss                     | SCSS           |        214 |         11 |         32 |        257 |
+| d:\bookingHealthCare\client\src\component\ManageUsers\index.jsx                                   | JavaScript JSX |        163 |          1 |         25 |        189 |
+| d:\bookingHealthCare\client\src\component\MedicalDetail\MedicalDetail.module.scss                 | SCSS           |        521 |          2 |         94 |        617 |
+| d:\bookingHealthCare\client\src\component\MedicalDetail\index.jsx                                 | JavaScript JSX |        153 |          0 |         12 |        165 |
+| d:\bookingHealthCare\client\src\component\Menu\Menu.module.scss                                   | SCSS           |         16 |          0 |          0 |         16 |
+| d:\bookingHealthCare\client\src\component\Menu\index.jsx                                          | JavaScript JSX |         17 |          0 |          7 |         24 |
+| d:\bookingHealthCare\client\src\component\Pack\Pack.module.scss                                   | SCSS           |         56 |          2 |          9 |         67 |
+| d:\bookingHealthCare\client\src\component\Pack\index.jsx                                          | JavaScript JSX |         52 |          0 |          7 |         59 |
+| d:\bookingHealthCare\client\src\component\Pagination\Paginations.module.scss                      | SCSS           |         32 |          0 |          4 |         36 |
+| d:\bookingHealthCare\client\src\component\Pagination\index.jsx                                    | JavaScript JSX |         61 |          0 |         11 |         72 |
+| d:\bookingHealthCare\client\src\component\Popper\Popper.module.scss                               | SCSS           |         10 |          0 |          0 |         10 |
+| d:\bookingHealthCare\client\src\component\Popper\Wrapper.jsx                                      | JavaScript JSX |         15 |          0 |          1 |         16 |
+| d:\bookingHealthCare\client\src\component\Popper\index.jsx                                        | JavaScript JSX |          1 |          0 |          0 |          1 |
+| d:\bookingHealthCare\client\src\component\PrescripList\PrescripList.module.scss                   | SCSS           |         84 |          1 |         10 |         95 |
+| d:\bookingHealthCare\client\src\component\PrescripList\index.jsx                                  | JavaScript JSX |         52 |          0 |          5 |         57 |
+| d:\bookingHealthCare\client\src\component\PrescriptionCreat\PrescriptionCreat.module.scss         | SCSS           |        429 |         18 |         71 |        518 |
+| d:\bookingHealthCare\client\src\component\PrescriptionCreat\index.jsx                             | JavaScript JSX |        212 |          8 |         16 |        236 |
+| d:\bookingHealthCare\client\src\component\Register_schedules\Register_schedules.module.scss       | SCSS           |        181 |          1 |         35 |        217 |
+| d:\bookingHealthCare\client\src\component\Register_schedules\index.jsx                            | JavaScript JSX |        171 |          3 |         24 |        198 |
+| d:\bookingHealthCare\client\src\createInstance.js                                                 | JavaScript     |         37 |          0 |          1 |         38 |
+| d:\bookingHealthCare\client\src\data\doctorData.js                                                | JavaScript     |         47 |          0 |          2 |         49 |
+| d:\bookingHealthCare\client\src\data\packData.js                                                  | JavaScript     |         31 |          0 |          2 |         33 |
+| d:\bookingHealthCare\client\src\data\userData.js                                                  | JavaScript     |         48 |          0 |          6 |         54 |
+| d:\bookingHealthCare\client\src\main.jsx                                                          | JavaScript JSX |         20 |          0 |          1 |         21 |
+| d:\bookingHealthCare\client\src\pages\AdminPage\index.jsx                                         | JavaScript JSX |          9 |          0 |          2 |         11 |
+| d:\bookingHealthCare\client\src\pages\DoctorPage\index.jsx                                        | JavaScript JSX |          7 |          0 |          3 |         10 |
+| d:\bookingHealthCare\client\src\pages\FacilitiesDetail\FacilitiesDetail.module.scss               | SCSS           |         55 |          2 |          3 |         60 |
+| d:\bookingHealthCare\client\src\pages\FacilitiesDetail\index.jsx                                  | JavaScript JSX |         37 |          2 |          6 |         45 |
+| d:\bookingHealthCare\client\src\pages\Facilities\Facilities.module.scss                           | SCSS           |         27 |          0 |          1 |         28 |
+| d:\bookingHealthCare\client\src\pages\Facilities\index.jsx                                        | JavaScript JSX |         35 |          0 |          6 |         41 |
+| d:\bookingHealthCare\client\src\pages\HistoryPage\HistoryPage.module.scss                         | SCSS           |        227 |         10 |         38 |        275 |
+| d:\bookingHealthCare\client\src\pages\HistoryPage\index.jsx                                       | JavaScript JSX |        159 |          1 |          6 |        166 |
+| d:\bookingHealthCare\client\src\pages\Home\Home.module.scss                                       | SCSS           |        274 |          5 |         49 |        328 |
+| d:\bookingHealthCare\client\src\pages\Home\index.jsx                                              | JavaScript JSX |         71 |          0 |          5 |         76 |
+| d:\bookingHealthCare\client\src\pages\ListDoctor\ListDoctor.module.scss                           | SCSS           |         37 |          0 |          9 |         46 |
+| d:\bookingHealthCare\client\src\pages\ListDoctor\index.jsx                                        | JavaScript JSX |         30 |          0 |          5 |         35 |
+| d:\bookingHealthCare\client\src\pages\ListOrderPack\ListOrderPack.module.scss                     | SCSS           |         47 |          4 |          8 |         59 |
+| d:\bookingHealthCare\client\src\pages\ListOrderPack\index.jsx                                     | JavaScript JSX |         32 |          0 |          7 |         39 |
+| d:\bookingHealthCare\client\src\pages\Login\Login.module.scss                                     | SCSS           |        362 |         10 |         71 |        443 |
+| d:\bookingHealthCare\client\src\pages\Login\index.jsx                                             | JavaScript JSX |        219 |          2 |         18 |        239 |
+| d:\bookingHealthCare\client\src\pages\OrderDoctorDetail\OrderDoctorDetail.module.scss             | SCSS           |        449 |          1 |         91 |        541 |
+| d:\bookingHealthCare\client\src\pages\OrderDoctorDetail\index.jsx                                 | JavaScript JSX |        155 |          0 |         22 |        177 |
+| d:\bookingHealthCare\client\src\pages\OrderPackDetail\OrderPackDetail.module.scss                 | SCSS           |        276 |          0 |         47 |        323 |
+| d:\bookingHealthCare\client\src\pages\OrderPackDetail\index.jsx                                   | JavaScript JSX |        135 |          1 |         11 |        147 |
+| d:\bookingHealthCare\client\src\pages\PackManage\index.jsx                                        | JavaScript JSX |          9 |          0 |          2 |         11 |
+| d:\bookingHealthCare\client\src\pages\Profile\Profile.module.scss                                 | SCSS           |        462 |          9 |         68 |        539 |
+| d:\bookingHealthCare\client\src\pages\Profile\index.jsx                                           | JavaScript JSX |        154 |          5 |         18 |        177 |
+| d:\bookingHealthCare\client\src\redux\apiRequest.js                                               | JavaScript     |         63 |          1 |          1 |         65 |
+| d:\bookingHealthCare\client\src\redux\authSlice.js                                                | JavaScript     |         76 |          0 |          3 |         79 |
+| d:\bookingHealthCare\client\src\redux\store.js                                                    | JavaScript     |         33 |          0 |          1 |         34 |
+| d:\bookingHealthCare\client\src\redux\userSlice.js                                                | JavaScript     |         31 |          0 |          1 |         32 |
+| d:\bookingHealthCare\client\src\routes\index.jsx                                                  | JavaScript JSX |         33 |          0 |          1 |         34 |
+| d:\bookingHealthCare\client\vercel.json                                                           | JSON           |          5 |          0 |          0 |          5 |
+| d:\bookingHealthCare\client\vite.config.js                                                        | JavaScript     |         39 |          1 |          1 |         41 |
+| d:\bookingHealthCare\server\src\routes\appointments.js                                            | JavaScript     |        -32 |         -3 |         -3 |        -38 |
+| d:\bookingHealthCare\server\src\routes\auththentication.js                                        | JavaScript     |         -8 |          0 |         -1 |         -9 |
+| d:\bookingHealthCare\server\src\routes\doctorDetail.js                                            | JavaScript     |         -5 |          0 |         -1 |         -6 |
+| d:\bookingHealthCare\server\src\routes\doctors.js                                                 | JavaScript     |         -5 |          0 |         -4 |         -9 |
+| d:\bookingHealthCare\server\src\routes\index.js                                                   | JavaScript     |        -31 |         -1 |         -3 |        -35 |
+| d:\bookingHealthCare\server\src\routes\packs.js                                                   | JavaScript     |         -9 |          0 |         -3 |        -12 |
+| d:\bookingHealthCare\server\src\routes\patient.js                                                 | JavaScript     |         -7 |          0 |         -3 |        -10 |
+| d:\bookingHealthCare\server\src\routes\prescription.js                                            | JavaScript     |         -6 |          0 |          0 |         -6 |
+| d:\bookingHealthCare\server\src\routes\specialties.js                                             | JavaScript     |         -6 |         -2 |         -2 |        -10 |
+| d:\bookingHealthCare\server\src\routes\statistics.js                                              | JavaScript     |         -5 |          0 |         -3 |         -8 |
+| d:\bookingHealthCare\server\src\routes\test.js                                                    | JavaScript     |         -8 |          0 |         -1 |         -9 |
+| d:\bookingHealthCare\server\src\routes\testOrder.js                                               | JavaScript     |        -25 |         -4 |         -4 |        -33 |
+| d:\bookingHealthCare\server\src\routes\user.js                                                    | JavaScript     |         -7 |          0 |         -4 |        -11 |
+| d:\bookingHealthCare\server\src\routes\userUse.js                                                 | JavaScript     |         -6 |          0 |         -4 |        -10 |
+| d:\bookingHealthCare\server\src\routes\workdate.js                                                | JavaScript     |         -8 |          0 |         -1 |         -9 |
+| Total                                                                                             |                |     23,315 |        290 |      2,291 |     25,896 |
++---------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

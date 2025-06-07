@@ -1,14 +1,327 @@
-.background{
-    background-image: url('../../../bgr.png');
+@use "sass:color";
+
+// Mixins và Variables
+$primary-color: rgb(58, 181, 138);
+$secondary-color: rgb(36, 172, 124);
+$accent-color: rgb(70, 222, 163);
+$text-dark: #2c3e50;
+$text-light: #7f8c8d;
+$white: #ffffff;
+$shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+$shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.15);
+
+// Breakpoints
+$mobile: 768px;
+$tablet: 1024px;
+$desktop: 1200px;
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: $mobile) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet {
+    @media (max-width: $tablet) {
+      @content;
+    }
+  }
+  @if $breakpoint == desktop {
+    @media (min-width: $desktop) {
+      @content;
+    }
+  }
+}
+
+.background {
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  @include respond-to(mobile) {
+    background-attachment: scroll;
+    min-height: auto;
+    padding: 20px 0;
+    align-items: flex-start;
+  }
+}
+
+.overlay {
+   background-image: url('../../../bgr.png');
     background-size: cover; /* Đảm bảo ảnh phủ kín toàn bộ phần tử */
     background-position: center; /* Canh giữa ảnh */
     width: 100%;
     height: 95vh; /* Chiều cao toàn màn hình */
     display: flex;
+
+  @include respond-to(mobile) {
+    min-height: auto;
+    align-items: flex-start;
+    padding: 40px 0;
+  }
 }
-.wrapper{
-   margin-top: 80px;
-   margin-left: 120px;
-    width:700px;
-    height: 500px;
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  width: 100%;
+
+  @include respond-to(mobile) {
+    padding: 20px 15px;
+  }
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 60px;
+
+  @include respond-to(mobile) {
+    margin-bottom: 40px;
+  }
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  color: $white;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  text-shadow: 1px 2px 4px rgba(0, 151, 123);
+
+  @include respond-to(mobile) {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+  }
+
+  @include respond-to(tablet) {
+    font-size: 2.8rem;
+  }
+}
+
+.highlight {
+  background: linear-gradient(45deg, rgb(58, 181, 138), rgb(39, 214, 131));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+}
+
+.hero-subtitle {
+  font-size: 3rem;
+  color: $white;
+  font-weight: 500;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+text-shadow: 1px 1px 6px rgba(58, 181, 138);
+  @include respond-to(mobile) {
+    font-size: 1.1rem;
+    padding: 0 10px;
+  }
+}
+
+.menu-grid {
+  display: grid;
+  max-width: 600px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: 40px;
+
+  @include respond-to(mobile) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 30px;
+  }
+
+  @include respond-to(tablet) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+}
+
+.menu-item {
+  transform: translateY(0);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  animation: fadeInUp 0.6s ease forwards;
+
+  @for $i from 1 through 5 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-10px);
+
+    @include respond-to(mobile) {
+      transform: translateY(-5px);
+    }
+  }
+
+  // Color variations
+  &.primary {
+    --accent: #{$primary-color};
+    --accent-light: #{color.scale($primary-color, $lightness: 10%)};
+  }
+
+  &.secondary {
+    --accent: #{$secondary-color};
+    --accent-light: #{color.scale($secondary-color, $lightness: 10%)};
+  }
+
+  &.tertiary {
+    --accent: #{$accent-color};
+    --accent-light: #{color.scale($accent-color, $lightness: 10%)};
+  }
+
+  &.quaternary {
+    --accent: #e74c3c;
+    --accent-light: #{color.scale(#e74c3c, $lightness: 10%)};
+  }
+
+  &.quinary {
+    --accent: #9b59b6;
+    --accent-light: #{color.scale(#9b59b6, $lightness: 10%)};
+  }
+}
+
+.menu-link {
+  display: block;
+  text-decoration: none;
+
+  :global(.button) {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: $shadow;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+
+    @include respond-to(mobile) {
+      padding: 25px 20px;
+      border-radius: 15px;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+      );
+      transition: left 0.6s;
+    }
+
+    &:hover {
+      transform: none;
+      box-shadow: $shadow-hover;
+      border-color: var(--accent);
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+:global(.menu-content) {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-align: left;
+
+  @include respond-to(mobile) {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .menu-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+    @include respond-to(mobile) {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+      filter: brightness(0) invert(1);
+
+      @include respond-to(mobile) {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+
+  .menu-text {
+    flex: 1;
+
+    .menu-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: $text-dark;
+      margin-bottom: 5px;
+
+      @include respond-to(mobile) {
+        font-size: 1.2rem;
+      }
+    }
+
+    .menu-description {
+      font-size: 0.95rem;
+      color: $text-light;
+      line-height: 1.4;
+
+      @include respond-to(mobile) {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Scroll behavior
+@media (prefers-reduced-motion: no-preference) {
+  .background {
+    scroll-behavior: smooth;
+  }
 }

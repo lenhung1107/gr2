@@ -1,0 +1,446 @@
+@use "sass:color";
+
+// Variables
+$primary-color: #00977b;
+$secondary-color: #16a085;
+$accent-color: rgb(39, 215, 132);
+$text-dark: #2c3e50;
+$text-light: #7f8c8d;
+$background-light: #f8f9fa;
+$white: #ffffff;
+$shadow-light: 0 5px 15px rgba(0, 0, 0, 0.08);
+$shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.1);
+$shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.15);
+
+// Breakpoints
+$mobile: 768px;
+$tablet: 1024px;
+$desktop: 1200px;
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: $mobile) { @content; }
+  }
+  @if $breakpoint == tablet {
+    @media (max-width: $tablet) { @content; }
+  }
+  @if $breakpoint == desktop {
+    @media (min-width: $desktop) { @content; }
+  }
+}
+
+// Layout wrapper
+.layout-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    
+    @include respond-to(mobile) {
+        padding: 0 15px;
+    }
+}
+
+// Hero section
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+// Search section
+.search-section {
+    background: linear-gradient(135deg, $background-light, #ffffff);
+    // padding: 60px 0;
+    
+    @include respond-to(mobile) {
+        padding: 40px 0;
+    }
+}
+
+// Doctors section
+.doctors-section {
+    background: rgb(241, 253, 246);
+    padding: 50px 0;
+    
+    @include respond-to(mobile) {
+        padding: 60px 0;
+    }
+}
+
+.section-title {
+    font-size: 3rem;
+    text-align: center;
+    color: $primary-color;
+    margin-bottom: 50px;
+    font-weight: 700;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    
+    @include respond-to(mobile) {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+        gap: 10px;
+    }
+    
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, $primary-color, $secondary-color);
+        border-radius: 2px;
+    }
+}
+
+.title-icon {
+    font-size: 2.5rem;
+    
+    @include respond-to(mobile) {
+        font-size: 2rem;
+    }
+}
+
+// News section
+.news-section {
+    background: linear-gradient(135deg, #f7f9fc, #e8f4f8);
+    padding: 80px 0;
+    
+    @include respond-to(mobile) {
+        padding: 60px 0;
+    }
+}
+
+// About section
+.about-section {
+    background: $white;
+    padding: 100px 0;
+    position: relative;
+    
+    @include respond-to(mobile) {
+        padding: 70px 0;
+    }
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, $primary-color, $secondary-color, $accent-color);
+    }
+}
+
+.about-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 50px;
+    
+    @include respond-to(mobile) {
+        margin-bottom: 40px;
+    }
+}
+
+.about-title {
+    font-size: 3rem;
+    color: $text-dark;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.3;
+    
+    @include respond-to(mobile) {
+        font-size: 2.2rem;
+        margin-bottom: 15px;
+    }
+}
+
+.title-underline {
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, $primary-color, $secondary-color);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+.about-intro {
+    margin-bottom: 60px;
+    
+    @include respond-to(mobile) {
+        margin-bottom: 50px;
+    }
+}
+
+.intro-text {
+    font-size: 1.8rem;
+    line-height: 1.8;
+    color: $text-dark;
+    text-align: center;
+    background: linear-gradient(135deg, #f8f9fa, #ffffff);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: $shadow-light;
+    border-left: 5px solid $primary-color;
+    
+    @include respond-to(mobile) {
+        font-size: 1.1rem;
+        padding: 30px 20px;
+        border-radius: 15px;
+    }
+    
+    strong {
+        color: $primary-color;
+        font-weight: 600;
+    }
+}
+
+.features-section {
+    margin-bottom: 50px;
+}
+
+.features-title {
+    font-size: 2.5rem;
+    color: $secondary-color;
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    
+    @include respond-to(mobile) {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+        gap: 8px;
+    }
+}
+
+.star-icon {
+    font-size: 1.8rem;
+    
+    @include respond-to(mobile) {
+        font-size: 1.5rem;
+    }
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    
+    @include respond-to(mobile) {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}
+
+.feature-card {
+    background: $white;
+    padding: 35px 25px;
+    border-radius: 20px;
+    box-shadow: $shadow-medium;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid rgba(0, 151, 123, 0.1);
+    position: relative;
+    overflow: hidden;
+    
+    @include respond-to(mobile) {
+        padding: 30px 20px;
+        border-radius: 15px;
+    }
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, $primary-color, $secondary-color);
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+    }
+    
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: $shadow-heavy;
+        
+        @include respond-to(mobile) {
+            transform: translateY(-4px);
+        }
+        
+        &::before {
+            transform: scaleX(1);
+        }
+    }
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: inline-block;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(0, 151, 123, 0.1), rgba(22, 160, 133, 0.1));
+    border-radius: 50%;
+    
+    @include respond-to(mobile) {
+        font-size: 2.5rem;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+}
+
+.feature-title {
+    font-size: 1.8rem;
+    color: $text-dark;
+    font-weight: 600;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    
+    @include respond-to(mobile) {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+}
+
+.feature-description {
+    font-size: 1.6rem;
+    color: $text-light;
+    line-height: 1.6;
+    
+    @include respond-to(mobile) {
+        font-size: 0.95rem;
+    }
+}
+
+.conclusion {
+    text-align: center;
+    margin-top: 50px;
+    
+    @include respond-to(mobile) {
+        margin-top: 40px;
+    }
+}
+
+.conclusion-text {
+    font-size: 1.8rem;
+    line-height: 1.8;
+    color: $text-dark;
+    background: linear-gradient(135deg, rgba(0, 151, 123, 0.05), rgba(22, 160, 133, 0.05));
+    padding: 35px;
+    border-radius: 20px;
+    border: 2px solid rgba(0, 151, 123, 0.1);
+    
+    @include respond-to(mobile) {
+        font-size: 1rem;
+        padding: 25px 20px;
+        border-radius: 15px;
+    }
+    
+    strong {
+        color: $primary-color;
+        font-weight: 600;
+    }
+}
+
+// Global heading styles
+h1 {
+    font-size: 2.6rem;
+    text-align: center;
+    color: $primary-color;
+    
+    @include respond-to(mobile) {
+        font-size: 2rem;
+    }
+}
+
+// Animations
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-card {
+    animation: fadeInUp 0.6s ease forwards;
+    
+    @for $i from 1 through 4 {
+        &:nth-child(#{$i}) {
+            animation-delay: #{$i * 0.15}s;
+        }
+    }
+}
+
+// Responsive typography
+@include respond-to(mobile) {
+    .about-title,
+    .section-title,
+    .features-title {
+        text-align: center;
+        padding: 0 10px;
+    }
+}
+
+// Scroll animations
+@media (prefers-reduced-motion: no-preference) {
+    .feature-card,
+    .intro-text,
+    .conclusion-text {
+        opacity: 0;
+        animation: fadeInUp 0.8s ease forwards;
+    }
+    
+    .intro-text {
+        animation-delay: 0.2s;
+    }
+    
+    .conclusion-text {
+        animation-delay: 0.4s;
+    }
+}
+
+// Print styles
+@media print {
+    .about-section {
+        background: white !important;
+        box-shadow: none !important;
+    }
+    
+    .feature-card {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        break-inside: avoid;
+    }
+}
+
+// Optional (dùng nếu bạn cần các biến màu sáng hơn)
+:root {
+  --primary-light: #{color.adjust($primary-color, $lightness: 10%)};
+  --secondary-light: #{color.adjust($secondary-color, $lightness: 10%)};
+  --accent-light: #{color.adjust($accent-color, $lightness: 10%)};
+}

@@ -1,7 +1,7 @@
 // Variables
 $primary-color: rgb(39, 214, 131);
-$primary-hover: rgb(152, 251, 151);
-$secondary-color: #06b6d4;
+$primary-hover: rgb(121, 201, 172);
+$secondary-color: rgb(75, 192, 140);
 $text-primary: #1f2937;
 $text-secondary: #6b7280;
 $text-light: #9ca3af;
@@ -45,7 +45,7 @@ $success-color: #10b981;
 .image-section {
   width: 50%;
   position: relative;
-  @include gradient-bg($primary-color, $primary-hover);
+  @include gradient-bg($primary-color, $background-card);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,7 +168,7 @@ $success-color: #10b981;
   font-weight: 500;
 
   @media (max-width: 768px) {
-    font-size: 0.9rem;
+    font-size: 1.6rem;
   }
 }
 .form {
@@ -286,7 +286,7 @@ $success-color: #10b981;
 
 .error-message {
   color: $error-color;
-  font-size: 0.875rem;
+  font-size: 1.6rem;
   margin-top: 0.5rem;
   text-align: center;
   padding: 0.5rem;
@@ -316,7 +316,7 @@ $success-color: #10b981;
   margin: auto;
   width: 40%;
   padding: 1rem;
-  @include gradient-bg($primary-color, $secondary-color);
+  @include gradient-bg($primary-color, $primary-hover);
   color: white;
   border: none;
   border-radius: 12px;
@@ -329,7 +329,7 @@ $success-color: #10b981;
   &:hover {
     transform: translateY(-2px);
     @include shadow(3);
-    @include gradient-bg($primary-hover, #0891b2);
+    @include gradient-bg($primary-hover, $success-color);
   }
 
   &:active {
