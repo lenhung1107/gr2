@@ -1,60 +1,96 @@
-.wrapper{
+.wrapper {
     background-image: url('/bg-info.png');
-    background-size: cover; /* Đảm bảo ảnh phủ kín toàn bộ phần tử */
-    background-position: center; /* Canh giữa ảnh */
-    // width: 100%;
-    // height: 95vh; /* Chiều cao toàn màn hình */
+    background-size: cover;
+    background-position: center;
     display: flex;
+    padding: 20px 10px;
 }
-.container{
+
+.container {
     display: flex;
     flex-direction: column;
     row-gap: 30px;
     width: 70%;
     margin: 50px auto;
     background-color: white;
+
+    @media (max-width: 768px) {
+        width: 95%;
+        margin: 20px auto;
+    }
 }
-.detail{
+
+.detail {
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 10px 10px;
+    padding: 10px;
     box-shadow: 0 0 2px 2px rgba(188, 188, 188, 0.3);
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 .facilitiesImage {
     width: 180px;
     height: 150px;
-    border-radius: 20px; /* Bo tròn hình ảnh */
+    border-radius: 20px;
     object-fit: cover;
-   margin-top: 10px;
-   margin-left: 30px;
-  }
-  .descri {
+    margin-top: 10px;
+    margin-left: 30px;
+
+    @media (max-width: 768px) {
+        margin-left: 0;
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+}
+
+.descri {
     margin-top: 10px;
     margin-right: 10px;
     padding: 10px;
-    h2{
+
+    h2 {
         font-size: 2.5rem;
-        
+
+        @media (max-width: 768px) {
+            font-size: 2rem;
+        }
     }
-    p{
+
+    p {
         font-size: 1.6rem;
+
+        @media (max-width: 768px) {
+            font-size: 1.4rem;
+        }
     }
-    
-  }
-  .listDoctor{
+}
+
+.listDoctor {
     display: flex;
-      box-shadow: 0 0 2px 2px rgba(188, 188, 188, 0.3);
-      flex-direction: column;
-      text-align: center;
-    h2{
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 0 0 2px 2px rgba(188, 188, 188, 0.3);
+
+    h2 {
         font-size: 2.5rem;
         color: rgb(0, 151, 123);
+
+        @media (max-width: 768px) {
+            font-size: 2rem;
+        }
     }
-    .item{
-        margin-left: 35px;
-        margin-right: 35px;
-        margin-bottom: 30px;
+
+    .item {
+        margin: 20px;
+
+        @media (max-width: 768px) {
+            margin: 10px;
+        }
     }
 }

@@ -6,40 +6,75 @@ const cx = classNames.bind(styles);
 function DoctorItem({ doctors }) {
     const scrollLeft = () => {
         const wrapper = document.querySelector(`.${cx("wrapper")}`);
-        wrapper.scrollBy({ left: -300, behavior: "smooth" }); // Cuộn sang trái 300px
+        wrapper.scrollBy({ left: -300, behavior: "smooth" });
     };
 
     const scrollRight = () => {
         const wrapper = document.querySelector(`.${cx("wrapper")}`);
-        wrapper.scrollBy({ left: 300, behavior: "smooth" }); // Cuộn sang phải 300px
+        wrapper.scrollBy({ left: 300, behavior: "smooth" });
     };
-    return (
-        <div >
-            {/* <h1>Bác sĩ nổi bật</h1> */}
-            <div className={cx('container')}>
 
-                <button onClick={scrollLeft} className={cx('arrow', 'left')}>❮</button>
+    return (
+        <div className={cx('doctor-section')}>
+            <div className={cx('container')}>
+                <button 
+                    onClick={scrollLeft} 
+                    className={cx('arrow', 'left')}
+                    aria-label="Scroll left"
+                >
+                    ❮
+                </button>
+                
                 <div className={cx('wrapper')}>
                     {doctors.map((doctor, index) => (
-                        <div className={cx('pack-list')}key={index}>
-                            <div className={cx('grid-container')}>
-                                <div className={cx('image')}>
-                                    <img src={doctor.image} height={50} width={160} alt="Logo" />
+                        <div className={cx('doctor-card')} key={index}>
+                            <div className={cx('card-content')}>
+                                <div className={cx('image-container')}>
+                                    <img 
+                                        src={doctor.image} 
+                                        alt={`Bác sĩ ${doctor.name}`}
+                                        className={cx('doctor-image')}
+                                    />
                                 </div>
                                 <div className={cx('info')}>
-                                    <h2>Bác sĩ : {doctor.name} </h2>
-                                    <p>{doctor.bio}</p>
-                                    <p>Chuyên khoa: {doctor.specialty}</p>
-                                    <p style={{ color: 'rgb(75, 192, 140)' }}>{doctor.price}</p>
+                                    <h3 className={cx('doctor-name')}>
+                                        BS. {doctor.name}
+                                    </h3>
+                                    <p className={cx('doctor-bio')}>{doctor.bio}</p>
+                                    <p className={cx('specialty')}>
+                                        <span className={cx('label')}>Chuyên khoa:</span> 
+                                        {doctor.specialty}
+                                    </p>
+                                    <div className={cx('rating-appointments')}>
+                                        <span className={cx('rating')}>
+                                            ⭐ {doctor.rating}
+                                        </span>
+                                        <span className={cx('appointments')}>
+                                            {doctor.appointments} lượt khám
+                                        </span>
+                                    </div>
+                                    <p className={cx('price')}>{doctor.price}</p>
+                                    <button className={cx('book-btn')}>
+                                        Đặt khám
+                                    </button>
                                 </div>
                             </div>
-                        </div>))}
+                        </div>
+                    ))}
                 </div>
-                <button onClick={scrollRight} className={cx('arrow', 'right')}>❯</button>
+                
+                <button 
+                    onClick={scrollRight} 
+                    className={cx('arrow', 'right')}
+                    aria-label="Scroll right"
+                >
+                    ❯
+                </button>
             </div>
         </div>
     );
 }
+
 DoctorItem.propTypes = {
     doctors: PropTypes.arrayOf(
         PropTypes.shape({
@@ -49,9 +84,10 @@ DoctorItem.propTypes = {
             appointments: PropTypes.number.isRequired,
             image: PropTypes.string.isRequired,
             orderLink: PropTypes.string.isRequired,
-            price:PropTypes.string.isRequired,
-            bio:PropTypes.string.isRequired,
+            price: PropTypes.string.isRequired,
+            bio: PropTypes.string.isRequired,
         })
     ).isRequired,
 };
+
 export default DoctorItem;

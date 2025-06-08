@@ -1,6 +1,6 @@
 @use "sass:color";
 
-// Mixins và Variables
+// Variables
 $primary-color: rgb(58, 181, 138);
 $secondary-color: rgb(36, 172, 124);
 $accent-color: rgb(70, 222, 163);
@@ -10,7 +10,6 @@ $white: #ffffff;
 $shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 $shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.15);
 
-// Breakpoints
 $mobile: 768px;
 $tablet: 1024px;
 $desktop: 1200px;
@@ -47,13 +46,14 @@ $desktop: 1200px;
     align-items: flex-start;
   }
 }
+
 .overlay {
-   background-image: url('../../../bgr.png');
-    background-size: cover; /* Đảm bảo ảnh phủ kín toàn bộ phần tử */
-    background-position: center; /* Canh giữa ảnh */
-    width: 100%;
-    height: 95vh; /* Chiều cao toàn màn hình */
-    display: flex;
+  background-image: url('../../../bgr.png');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 95vh;
+  display: flex;
 
   @include respond-to(mobile) {
     min-height: auto;
@@ -91,7 +91,7 @@ $desktop: 1200px;
   text-shadow: 1px 2px 4px rgba(0, 151, 123);
 
   @include respond-to(mobile) {
-    font-size: 2.2rem;
+    font-size: 2.6rem;
     margin-bottom: 15px;
   }
 
@@ -100,7 +100,6 @@ $desktop: 1200px;
   }
 }
 
-
 .hero-subtitle {
   font-size: 3rem;
   color: $white;
@@ -108,30 +107,28 @@ $desktop: 1200px;
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
-text-shadow: 1px 1px 6px rgba(58, 181, 138);
+  text-shadow: 1px 1px 6px rgba(58, 181, 138);
+
   @include respond-to(mobile) {
-    font-size: 1.1rem;
+    font-size: 1.6rem;
     padding: 0 10px;
   }
 }
 
 .menu-grid {
-  // display: grid;
-  // max-width: 600px;
-  // grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  // gap: 10px;
-  // margin-top: 40px;
   display: flex;
   flex-direction: row;
- padding-top: 50px;
+  padding-top: 5px;
+
   @include respond-to(mobile) {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     gap: 20px;
     margin-top: 30px;
   }
 
   @include respond-to(tablet) {
-    grid-template-columns: repeat(2, 1fr);
+    flex-wrap: wrap;
+    justify-content: space-between;
     gap: 25px;
   }
 }
@@ -155,7 +152,6 @@ text-shadow: 1px 1px 6px rgba(58, 181, 138);
     }
   }
 
-  // Color variations
   &.primary {
     --accent: #{$primary-color};
     --accent-light: #{color.scale($primary-color, $lightness: 10%)};
@@ -210,12 +206,7 @@ text-shadow: 1px 1px 6px rgba(58, 181, 138);
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.4),
-        transparent
-      );
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
       transition: left 0.6s;
     }
 
@@ -286,7 +277,7 @@ text-shadow: 1px 1px 6px rgba(58, 181, 138);
       margin-bottom: 5px;
 
       @include respond-to(mobile) {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
       }
     }
 
@@ -296,13 +287,12 @@ text-shadow: 1px 1px 6px rgba(58, 181, 138);
       line-height: 1.4;
 
       @include respond-to(mobile) {
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
     }
   }
 }
 
-// Animation keyframes
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -314,7 +304,6 @@ text-shadow: 1px 1px 6px rgba(58, 181, 138);
   }
 }
 
-// Scroll behavior
 @media (prefers-reduced-motion: no-preference) {
   .background {
     scroll-behavior: smooth;

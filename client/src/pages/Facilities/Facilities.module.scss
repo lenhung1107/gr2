@@ -1,28 +1,64 @@
-.brg{
+.brg {
     background-image: url('/bg-info.png');
-    background-size: cover; /* Đảm bảo ảnh phủ kín toàn bộ phần tử */
-    background-position: center; /* Canh giữa ảnh */
+    background-size: cover;
+    background-position: center;
     width: 100%;
-    height: 95vh; /* Chiều cao toàn màn hình */
-    
+    height: auto; // không cố định chiều cao màn hình nhỏ
+    padding-bottom: 40px; // thêm padding dưới để tránh cắt item cuối
 }
-.content{
-    margin-top: 40px;
-    margin-left: 160px;
-    width:1200px;
-    height: 500px;
+
+.content {
+    // margin: 40px auto 0 auto;
+    margin-top: 20px;
+    width: 90%;
+    max-width: 1200px;
+    height: auto;
+
+    @media (max-width: 768px) {
+        margin-top: 50px;
+        width: 95%;
+
+    }
 }
-.menu-facilities{
+
+.menu-facilities {
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: repeat(4, 1fr);
     margin-top: 30px;
-    row-gap: 20px; 
-    margin-left: 50px;
-    gap: 10px;
+    row-gap: 20px;
+    column-gap: 10px;
+    margin-left: 0;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
 }
-.title span{
+
+.title span {
     font-size: 2.5rem;
     color: black;
     font-weight: 600;
     margin-left: 50px;
+
+    @media (max-width: 768px) {
+        font-size: 2rem;
+        margin-left: 10px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 2rem;
+        margin-left: 0;
+        text-align: center;
+        display: block;
+    }
 }
