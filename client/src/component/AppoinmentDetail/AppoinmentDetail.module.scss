@@ -1,62 +1,383 @@
-.table {
+// Container chính
+.prescription-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(39, 215, 132, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid rgba(58, 181, 138, 0.1);
+}
+
+// Header
+.prescription-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(58, 181, 138, 0.2);
+  
+  .title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .appointment-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    
+    .appointment-date {
+      background: linear-gradient(135deg, rgb(58, 181, 138), rgb(39, 215, 132));
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1.4rem;
+      box-shadow: 0 2px 10px rgba(58, 181, 138, 0.4);
+    }
+  }
+}
+
+// Loading states
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #dcfce7;
+    border-top: 4px solid rgb(58, 181, 138);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1.5rem;
+  }
+  
+  .loading-text {
+    font-size: 1.6rem;
+    color: #059669;
+    font-weight: 500;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  background: #fef2f2;
+  border-radius: 12px;
+  border: 1px solid #fecaca;
+  
+  .error-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .error-text {
+    font-size: 1.6rem;
+    color: #dc2626;
+    font-weight: 500;
+  }
+}
+
+// Desktop Table View
+.desktop-view {
+  display: block;
+  
+  .table-container {
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(39, 215, 132, 0.1);
+    background: white;
+    border: 1px solid rgba(58, 181, 138, 0.1);
+  }
+  
+  .table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
-    font-size: 1.6rem; /* Đặt cỡ chữ toàn bộ bảng */
-  
-    th, td {
-      border: 1px solid #ddd;
-      padding: 0.5rem;
-      text-align: left;
-    }
-  
-    th {
-      background-color: #f4f4f4;
-      font-weight: bold;
-    }
-  
-    a {
-      color: blue;
-      text-decoration: underline;
-      margin: 0 0.5rem;
-    }
-  }
-  .table td a:hover {
-    text-decoration: underline; /* Gạch chân khi hover */
-  }
-  @media (max-width: 768px) {
-  .table {
     font-size: 1.4rem;
-
-    thead {
-      display: none;
-    }
-
-    tbody tr {
-      display: block;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      padding: 1rem;
-      border-radius: 8px;
-      background-color: #fff;
-    }
-
-    tbody td {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.5rem 0;
+    background: white;
+    
+    th {
+      background: rgb(39, 214, 131);
+      color: white;
+      font-weight: 600;
+      padding: 5px 15px;
+      text-align: left;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       border: none;
+      
+      &:first-child {
+        border-top-left-radius: 12px;
+      }
+      
+      &:last-child {
+        border-top-right-radius: 12px;
+      }
     }
-
-    tbody td::before {
-      content: attr(data-label);
-      font-weight: bold;
-      flex: 1;
-      margin-right: 1rem;
+    
+    td {
+      padding: 1.5rem 1rem;
+      border-bottom: 1px solid #dcfce7;
+      vertical-align: top;
+      transition: background-color 0.2s ease;
+      font-weight: 500;
+      
+      &:hover {
+        background-color: #f0fdf4;
+      }
+    }  
+    tr:last-child td {
+      border-bottom: none;
     }
+    .medicine-list {
+      .medicine-item {
+        background: #f0fdf4;
+        padding: 0.5rem 0.8rem;
+        margin: 0.3rem 0;
+        border-radius: 8px;
+        border-left: 3px solid rgb(58, 181, 138);
+        font-size: 1.3rem;
+        color: #065f46;
+      }
+    } 
+    .result-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 15px;
+      background: linear-gradient(135deg, rgb(70, 222, 163), rgb(39, 215, 132));
+      color: white !important;
+      padding: 5px 10px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.2rem;      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(70, 222, 163, 0.5);
+        text-decoration: none;
+      }
+    }
+    
+    .no-result {
+      color: #6b7280;
+      font-style: italic;
+    }
+    
+    .notes {
+      background: #f7fee7;
+      border-left: 3px solid #84cc16;
+      font-style: italic;
+      color: #365314;
+    }
+  }
+}
 
-    a {
-      word-break: break-word;
+// Mobile Card View
+.mobile-view {
+  display: none;
+  
+  .prescription-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(39, 215, 132, 0.1);
+    border: 1px solid rgba(58, 181, 138, 0.1);
+    
+    .card-section {
+      border-bottom: 1px solid #dcfce7;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid #dcfce7;
+        
+        .section-icon {
+          font-size: 2rem;
+        }
+        
+        h3 {
+          font-size: 1.6rem;
+          font-weight: 600;
+          color: #064e3b;
+          margin: 0;
+        }
+      }
+      
+      .section-content {
+        padding: 2rem;
+        
+        p {
+          margin: 0.8rem 0;
+          font-size: 1.5rem;
+          line-height: 1.6;
+          color: #065f46;
+          
+          strong {
+            color: #064e3b;
+            font-weight: 600;
+          }
+        }
+        
+        .mobile-medicine {
+          display: flex;
+          align-items: flex-start;
+          gap: 1rem;
+          background: #f0fdf4;
+          padding: 1rem 1.5rem;
+          margin: 0.8rem 0;
+          border-radius: 10px;
+          border-left: 4px solid rgb(58, 181, 138);
+          
+          .medicine-bullet {
+            color: rgb(58, 181, 138);
+            font-weight: bold;
+            font-size: 1.8rem;
+          }
+        }
+        
+        .mobile-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.8rem;
+          background: linear-gradient(135deg, rgb(70, 222, 163), rgb(39, 215, 132));
+          color: white !important;
+          padding: 1.2rem 2rem;
+          border-radius: 30px;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 1.5rem;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(70, 222, 163, 0.4);
+          width: 100%;
+          justify-content: center;
+          
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(70, 222, 163, 0.5);
+            text-decoration: none;
+          }
+        }
+        
+        &.notes-content {
+          background: #f7fee7;
+          border-radius: 10px;
+          border-left: 4px solid #84cc16;
+          
+          p {
+            color: #365314;
+            font-style: italic;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .prescription-container {
+    padding: 1.5rem;
+  }
+  
+  .prescription-header .title {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .prescription-container {
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 12px;
+  }
+  
+  .prescription-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    
+    .title {
+      font-size: 2.2rem;
+    }
+    
+    .appointment-info .appointment-date {
+      font-size: 1.3rem;
+      padding: 0.6rem 1.2rem;
+    }
+  }
+  
+  .desktop-view {
+    display: none;
+  }
+  
+  .mobile-view {
+    display: block;
+  }
+  
+  .loading-container,
+  .error-container {
+    padding: 3rem 1rem;
+    margin: 1rem;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .prescription-container {
+    margin: 0.5rem;
+    padding: 0.8rem;
+  }
+  
+  .prescription-header .title {
+    font-size: 2rem;
+  }
+  
+  .mobile-view .prescription-card .card-section {
+    .section-header {
+      padding: 1.2rem 1.5rem;
+      
+      h3 {
+        font-size: 1.4rem;
+      }
+    }
+    
+    .section-content {
+      padding: 1.5rem;
+      
+      p {
+        font-size: 1.4rem;
+      }
+      
+      .mobile-link {
+        padding: 1rem 1.5rem;
+        font-size: 1.4rem;
+      }
     }
   }
 }
