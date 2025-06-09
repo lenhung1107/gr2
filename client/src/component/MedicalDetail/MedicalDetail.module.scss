@@ -85,13 +85,14 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     width: 900px;
     margin: 0 auto;
+    position: relative;
 
     span {
         font-size: 1.6rem;
         position: absolute;
         top: 20px;
         right: 20px;
-        background: #007bff;
+        background: rgb(58, 181, 138);
         color: white;
         padding: 5px 10px;
         border-radius: 5px;

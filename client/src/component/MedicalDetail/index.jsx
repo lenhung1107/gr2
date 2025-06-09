@@ -30,18 +30,18 @@ function MedicalDetail({ user, onCancel }) {
           <div className={cx("content")}>
             {activeTab === "info" && (
               <div className={cx("infoContent")}>
+                 <span><strong>{user.patient_code}</strong></span>
                 <img src="/doctor.jpg" alt="Avatar bệnh nhân" />
                 <div className={cx("infoText")}>
                   <h2>{user.name}</h2>
                   <p><strong>Giới tính: </strong> {user.gender}</p>
-                  <p><strong>Ngày sinh: </strong>{user.age} </p>
+                  <p><strong>Tuổi: </strong>{user.age} </p>
                   <p><strong>Nghề nghiệp: </strong></p>
                   <p><strong>Địa chỉ: </strong>{user.address}</p>
-                  <p><strong>Ghi chú: </strong> Bệnh nhân thường xuyên bị chảy máu cam</p>
                   <p><strong>Liên hệ: </strong> {user.email}</p>
                   <p><strong>Số điện thoại liên hệ: </strong>{user.phone}</p>
                 </div>
-                <span><strong>{user.patient_code}</strong></span>
+               
               </div>
             )}
 

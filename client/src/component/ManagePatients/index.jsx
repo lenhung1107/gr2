@@ -6,7 +6,6 @@ import styles from "./ManagePatients.module.scss";
 import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
-const medicinesData = [];
 
 function ManagePatients() {
   const { id } = useParams();
@@ -14,15 +13,14 @@ function ManagePatients() {
   const { data: patientsDataRaw, loading, error } = useFetchData(apiUrl);
   const patientsData = useMemo(() => patientsDataRaw || [], [patientsDataRaw]);
 
+  // States
   const [selectedDate, setSelectedDate] = useState("");
   const [filteredPatients, setFilteredPatients] = useState([]);
-  const [showPopupAgree, setShowPopupAgree] = useState(false);
-  const [selectedPatient, setSelectedPatient] = useState(null);
-  const [showTestOrderPopup, setShowTestOrderPopup] = useState(false);
+  const [showModal, setShowModal] = useState({ type: null, patient: null });
   const [selectedTestPack, setSelectedTestPack] = useState([]);
-  const [prescripCreat, setPrescripCreat] = useState(false);
   const [testPacks, setTestPacks] = useState([]);
 
+  // Effects
   useEffect(() => {
     if (patientsData.length > 0) {
       setFilteredPatients(patientsData);
@@ -42,6 +40,7 @@ function ManagePatients() {
     fetchTestPacks();
   }, []);
 
+  // Handlers
   const handleDateChange = (e) => {
     const date = e.target.value;
     setSelectedDate(date);
@@ -49,25 +48,15 @@ function ManagePatients() {
     setFilteredPatients(filtered);
   };
 
-  const handleSendPrescription = (patient) => {
-    setSelectedPatient(patient);
-    setPrescripCreat(true);
+  const openModal = (type, patient) => {
+    setShowModal({ type, patient });
   };
 
-  const handleClosePrescription = () => {
-    setPrescripCreat(false);
-    setSelectedPatient(null);
+  const closeModal = () => {
+    setShowModal({ type: null, patient: null });
+    setSelectedTestPack([]);
   };
 
-  const handleAgreeClick = (patient) => {
-    setSelectedPatient(patient);
-    setShowPopupAgree(true);
-  };
-
-  const handleTestOrderClick = (patient) => {
-    setSelectedPatient(patient);
-    setShowTestOrderPopup(true);
-  };
   const handleCheckboxChange = (packId) => {
     setSelectedTestPack(prev =>
       prev.includes(packId)
@@ -75,14 +64,12 @@ function ManagePatients() {
         : [...prev, packId]
     );
   };
-  
-  const handleConfirmAppointment = async (patient) => {
+
+  const handleConfirmAppointment = async () => {
     try {
-      const response = await fetch(`https://gr2-3t8u.onrender.com/appointment/confirmByDoctor/${patient._id}`, {
+      const response = await fetch(`https://gr2-3t8u.onrender.com/appointment/confirmByDoctor/${showModal.patient._id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
       });
 
       if (response.ok) {
@@ -96,27 +83,27 @@ function ManagePatients() {
       alert('Có lỗi xảy ra khi xác nhận');
       console.error(error);
     }
-
-    setShowPopupAgree(false);
+    closeModal();
   };
 
   const handleSendTestOrder = async () => {
-    if (!selectedTestPack) {
+    if (selectedTestPack.length === 0) {
       alert("Vui lòng chọn gói xét nghiệm");
       return;
     }
-    console.log(selectedPatient.id);
+
     try {
       const response = await fetch("https://gr2-3t8u.onrender.com/testOrder/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          appointment_id: selectedPatient._id,
+          appointment_id: showModal.patient._id,
           doctor_id: id,
           pack_ids: selectedTestPack,
           note: "Chỉ định từ bác sĩ",
         }),
       });
+
       if (response.ok) {
         const result = await response.json();
         alert(result.message);
@@ -129,19 +116,137 @@ function ManagePatients() {
       console.error("Lỗi gửi chỉ định xét nghiệm", error);
       alert("Lỗi gửi chỉ định xét nghiệm!");
     }
-
-    setShowTestOrderPopup(false);
+    closeModal();
   };
 
   const getStatusClass = (status) => {
-    switch (status) {
-      case "Đang chờ xác nhận": return cx("status", "waiting");
-      case "Đang khám": return cx("status", "in-progress");
-      case "Chờ kết quả xét nghiệm": return cx("status", "pending-result");
-      case "Có kết quả xét nghiệm": return cx("status", "result-ready");
-      case "Đã khám": return cx("status", "completed");
-      default: return cx("status");
+    const statusMap = {
+      "Đang chờ xác nhận": "waiting",
+      "Đang chờ khám":"accept",
+      "Đang khám": "examining",
+      "Chờ kết quả xét nghiệm": "pending",
+      "Có kết quả xét nghiệm": "ready",
+      "Đã khám": "completed",
+      "Đã hủy":"cancel",
+    };
+    return cx("status", statusMap[status]);
+  };
+
+  const renderActionButtons = (patient) => {
+    const { status } = patient;
+    
+    if (status === "Đang chờ khám") {
+      return (
+        <button
+          className={cx("btn", "btn-primary")}
+          onClick={() => openModal("confirm", patient)}
+        >
+          Xác nhận
+        </button>
+      );
     }
+    
+    if (status === "Đang khám") {
+      return (
+        <div className={cx("btn-group")}>
+          <button
+            className={cx("btn", "btn-secondary")}
+            onClick={() => openModal("prescription", patient)}
+          >
+            Ghi chú
+          </button>
+          <button
+            className={cx("btn", "btn-info")}
+            onClick={() => openModal("test", patient)}
+          >
+            Xét nghiệm
+          </button>
+        </div>
+      );
+    }
+    
+    if (status === "Có kết quả xét nghiệm") {
+      return (
+        <div className={cx("btn-group")}>
+          <a
+            href={patient.result_file}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cx("btn", "btn-info")}
+          >
+            Xem kết quả
+          </a>
+          <button
+            className={cx("btn", "btn-secondary")}
+            onClick={() => openModal("prescription", patient)}
+          >
+            Ghi chú
+          </button>
+        </div>
+      );
+    }
+    
+    if (status === "Đã khám" && patient.hasPrescription) {
+      return <span className={cx("completed-text")}>Đã gửi đơn thuốc</span>;
+    }
+    
+    return null;
+  };
+
+  const renderModal = () => {
+    if (!showModal.type) return null;
+
+    const modalConfigs = {
+      confirm: {
+        title: "Xác nhận cuộc hẹn",
+        content: "Bạn có chắc chắn muốn xác nhận cuộc hẹn này không?",
+        onConfirm: handleConfirmAppointment
+      },
+      test: {
+        title: "Chọn gói xét nghiệm",
+        content: (
+          <div className={cx("checkbox-group")}>
+            {testPacks.map((pack) => (
+              <label key={pack._id} className={cx("checkbox-item")}>
+                <input
+                  type="checkbox"
+                  value={pack._id}
+                  checked={selectedTestPack.includes(pack._id)}
+                  onChange={() => handleCheckboxChange(pack._id)}
+                />
+                <span>{pack.name} - {pack.room}</span>
+              </label>
+            ))}
+          </div>
+        ),
+        onConfirm: handleSendTestOrder
+      }
+    };
+
+    const config = modalConfigs[showModal.type];
+    if (!config) return null;
+
+    return (
+      <div className={cx("modal-overlay")} onClick={closeModal}>
+        <div className={cx("modal")} onClick={e => e.stopPropagation()}>
+          <div className={cx("modal-header")}>
+            <h3>{config.title}</h3>
+            <button className={cx("close-btn")} onClick={closeModal}>×</button>
+          </div>
+          <div className={cx("modal-body")}>
+            {typeof config.content === 'string' ? <p>{config.content}</p> : config.content}
+          </div>
+          <div className={cx("modal-footer")}>
+            <button className={cx("btn", "btn-primary")} onClick={config.onConfirm}>
+              {showModal.type === 'test' ? 'Gửi chỉ định' : 'Xác nhận'}
+            </button>
+            <button className={cx("btn", "btn-cancel")} onClick={closeModal}>
+              Hủy
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   if (loading) return <div className={cx("loading")}>Đang tải dữ liệu...</div>;
@@ -152,26 +257,25 @@ function ManagePatients() {
       <div className={cx("header")}>
         <h1 className={cx("title")}>Quản Lý Bệnh Nhân</h1>
         <div className={cx("date-picker")}>
-          <label htmlFor="date-select">Chọn ngày khám</label>
+          <label htmlFor="date-select">Chọn ngày khám:</label>
           <input
             id="date-select"
             type="date"
             value={selectedDate}
             onChange={handleDateChange}
-            required
           />
         </div>
       </div>
 
-      <div className={cx("table-container")}>
-        <table className={cx("patient-table")}>
+      <div className={cx("table-wrapper")}>
+        <table className={cx("table")}>
           <thead>
             <tr>
-              <th>#</th>
+              <th>STT</th>
               <th>Ngày khám</th>
-              <th>Giờ khám</th>
+              <th>Giờ</th>
               <th>Tên bệnh nhân</th>
-              <th>Số điện thoại</th>
+              <th>SĐT</th>
               <th>Tuổi</th>
               <th>Lý do khám</th>
               <th>Trạng thái</th>
@@ -195,62 +299,13 @@ function ManagePatients() {
                     </span>
                   </td>
                   <td className={cx("actions")}>
-                    {patient.status === "Đang chờ khám" && (
-                      <button
-                        className={cx("button", "primary")}
-                        onClick={() => handleAgreeClick(patient)}
-                      >
-                        Xác nhận
-                      </button>
-                    )}
-                    {patient.status === "Đang khám" && (
-                      <div className={cx("action-buttons")}>
-                        <button
-                          className={cx("button", "secondary")}
-                          onClick={() => handleSendPrescription(patient)}
-                        >
-                          Ghi chú
-                        </button>
-                        <button
-                          className={cx("button", "secondary")}
-                          onClick={() => handleTestOrderClick(patient)}
-                        >
-                          Xét nghiệm
-                        </button>
-                      </div>
-                    )}
-                    {patient.status === "Có kết quả xét nghiệm" && (
-                      <div className="flex gap-4 mt-4">
-                        <a
-                          href={patient.result_file}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                        >
-                          Xem kết quả
-                        </a>
-                        <button
-                          className={cx("button", "secondary")}
-                          onClick={() => handleSendPrescription(patient)}
-                        >
-                          Ghi chú
-                        </button>
-                      </div>
-                    )}
-
-                    {patient.status === "Đã khám" && patient.hasPrescription && (
-                      <div className={cx("prescription-sent")}>
-                        Đã gửi đơn thuốc
-                      </div>
-                    )}
-
-                    
+                    {renderActionButtons(patient)}
                   </td>
                 </tr>
               ))
             ) : (
-              <tr className={cx("no-data")}>
-                <td colSpan="9">
+              <tr>
+                <td colSpan="9" className={cx("no-data")}>
                   Không có bệnh nhân nào trong ngày này
                 </td>
               </tr>
@@ -259,87 +314,20 @@ function ManagePatients() {
         </table>
       </div>
 
-      {prescripCreat && (
-        <>
-          <div className={cx("modal-overlay")}></div>
+      {/* Prescription Modal */}
+      {showModal.type === "prescription" && (
+        <div className={cx("modal-overlay")}>
           <div className={cx("modal-container")}>
             <PrescriptionCreat
-              patient={selectedPatient}
-              medicines={medicinesData}
-              onClose={handleClosePrescription}
+              patient={showModal.patient}
+              medicines={[]}
+              onClose={closeModal}
             />
           </div>
-        </>
-      )}
-
-      {showPopupAgree && (
-        <div className={cx("modal-overlay")}>
-          <div className={cx("modal")}>
-            <div className={cx("modal-header")}>
-              <h4>Xác nhận cuộc hẹn</h4>
-            </div>
-            <div className={cx("modal-body")}>
-              <p>Bạn có chắc chắn muốn xác nhận cuộc hẹn này không?</p>
-            </div>
-            <div className={cx("modal-footer")}>
-              <button
-                className={cx("button", "primary")}
-                onClick={() => handleConfirmAppointment(selectedPatient)}
-              >
-                Xác nhận
-              </button>
-              <button
-                className={cx("button", "cancel")}
-                onClick={() => setShowPopupAgree(false)}
-              >
-                Hủy
-              </button>
-            </div>
-          </div>
         </div>
       )}
 
-      {showTestOrderPopup && (
-        <div className={cx("modal-overlay")}>
-          <div className={cx("modal")}>
-            <div className={cx("modal-header")}>
-              <h4>Chọn gói xét nghiệm</h4>
-            </div>
-            <div className={cx("modal-body")}>
-              <div className={cx("form-group")}>
-                {testPacks.map((pack) => (
-                  <div key={pack._id} className={cx("checkbox-item")}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        value={pack._id}
-                        checked={selectedTestPack.includes(pack._id)}
-                        onChange={() => handleCheckboxChange(pack._id)}
-                      />
-                      {pack.name} - {pack.room}
-                    </label>
-                  </div>
-                ))}
-              </div>
-
-            </div>
-            <div className={cx("modal-footer")}>
-              <button
-                className={cx("button", "primary")}
-                onClick={handleSendTestOrder}
-              >
-                Gửi chỉ định
-              </button>
-              <button
-                className={cx("button", "cancel")}
-                onClick={() => setShowTestOrderPopup(false)}
-              >
-                Hủy
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {renderModal()}
     </div>
   );
 }
