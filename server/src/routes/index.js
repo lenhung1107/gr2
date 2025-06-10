@@ -12,10 +12,8 @@ const testOrder= require('./testOrder');
 const test= require('./test');
 const userUseRoute= require('./userUse');
 const statistics = require ('./statistics');
-const hotnew =require('./hotnew')
+const reviews = require('./review');
 function route(app){
-    
-    // app.use('/news',newsRouter)  
     app.use('/doctor', doctorRoute);
     app.use('/pack', packRoute);
     app.use('/orderDoctor',doctorDetailRoute);
@@ -30,7 +28,7 @@ function route(app){
     app.use('/testOrder',testOrder);
     app.use('/test',test);
     app.use('/statistics', statistics);
-    app.use('/hotnew',hotnew);
+    app.use('/review',reviews);
 
 }
 module.exports = route;
