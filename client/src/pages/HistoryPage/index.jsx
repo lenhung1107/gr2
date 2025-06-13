@@ -32,7 +32,7 @@ function HistoryPage() {
   };
   const submitReview = async () => {
     try {
-      console.log(selectedAppointment.service);
+      console.log("patient_id", selectedAppointment.patient_id);
       const response = await fetch(
         "https://gr2-3t8u.onrender.com/review/createReviews",
         {

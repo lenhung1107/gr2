@@ -7,6 +7,7 @@ class ReviewController {
     try {
       const { appointment_id, patient_id, doctor_id, rating, comment } =
         req.body;
+      console.log("patient_id", req.patient_id);
       const appointment = await Appointment.findById(appointment_id);
       if (!appointment || appointment.status !== "Đã khám") {
         return res

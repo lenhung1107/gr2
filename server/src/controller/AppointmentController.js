@@ -201,16 +201,13 @@ class AppointmentController {
                     select: 'name'
                 })
                 .populate({
-                    path: 'pack_id', //  Thêm populate pack_id vào đây
+                    path: 'pack_id', 
                     select: 'name'
-                });
-
-            // Xử lý dữ liệu
+                })
             const formattedAppointments = appointments.map((appt) => {
                 const patient = appt.patient_id;
 
-                // Nếu không còn thông tin bệnh nhân (bị xoá), gán giá trị mặc định
-                const isForSomeone = patient?.isForSomeone ?? true; // mặc định là true
+                const isForSomeone = patient?.isForSomeone ?? true; 
                 const patientName = isForSomeone
                     ? patient?.name || "Đã xoá"
                     : patient?.user_id?.name || "Đã xoá";
@@ -238,7 +235,9 @@ class AppointmentController {
                     hour: appt.appointment_time,
                     service: serviceName,
                     symptoms: appt.symptoms,
-                    status: appt.status
+                    status: appt.status,
+                    patient_id: appt.patient_id._id,
+                    doctor_id: appt.doctor_id._id
                 };
             });
             res.status(200).json(formattedAppointments);
