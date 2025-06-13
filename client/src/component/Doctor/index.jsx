@@ -13,20 +13,34 @@ function Doctor({ doctors }) {
             {currentItems.map((doctor, index) => {
                 return (
                     <div className={cx('doctor-item')} key={index}>
-                        <div className={cx('imgDoctor')}>
-                            <img src={doctor.image} height={170} width={170} alt="Doctor" className={cx('img')} />
+                        <div className={cx('doctor-avatar')}>
+                            <img 
+                                src={doctor.image} 
+                                alt={doctor.name}
+                                className={cx('avatar-img')} 
+                            />
                         </div>
-                        <div className={cx('infor')}>
-                            <h3 className={cx('name')}>{doctor.name}</h3>
-                            <div className={cx('detail')}>
-                                <span className={cx('specialty')} style={{ fontSize: '1.8rem' }}> {doctor.specialty}</span>
-                                <span><FontAwesomeIcon icon={faStar} className={cx('icon')} /> Đánh giá: {doctor.rating}</span>
-                                <span><FontAwesomeIcon icon={faCalendarCheck} className={cx('icon')} /> Số lượt đặt khám: {doctor.appointments}</span>
+                        <div className={cx('doctor-info')}>
+                            <h3 className={cx('doctor-name')}>{doctor.name}</h3>
+                            <div className={cx('doctor-details')}>
+                                <div className={cx('specialty')}>
+                                    <span>{doctor.specialty}</span>
+                                </div>
+                                <div className={cx('stats')}>
+                                    <div className={cx('stat-item')}>
+                                        <FontAwesomeIcon icon={faStar} className={cx('icon')} />
+                                        <span>Đánh giá: {doctor.rating}</span>
+                                    </div>
+                                    <div className={cx('stat-item')}>
+                                        <FontAwesomeIcon icon={faCalendarCheck} className={cx('icon')} />
+                                        <span>Lượt khám: {doctor.appointments}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <Link to={`/orderDoctor/${doctor._id}`}>
-                            <div className={cx('order')}>
-                                <span>Đặt khám</span>
+                        <Link to={`/orderDoctor/${doctor._id}`} className={cx('order-link')}>
+                            <div className={cx('order-btn')}>
+                                <span className={cx('order-text')}>Đặt khám</span>
                             </div>
                         </Link>
                     </div>
@@ -36,25 +50,27 @@ function Doctor({ doctors }) {
     );
 
     return (
-        <Paginations
-            data={doctors}
-            renderItems={renderDoctors}
-            itemsPerPage={6}
-        />
+        <div className={cx('doctor-wrapper')}>
+            <Paginations
+                data={doctors}
+                renderItems={renderDoctors}
+                itemsPerPage={6}
+            />
+        </div>
     )
 }
+
 Doctor.propTypes = {
     doctors: PropTypes.arrayOf(
         PropTypes.shape({
+            _id: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
             specialty: PropTypes.string.isRequired,
             rating: PropTypes.number.isRequired,
             appointments: PropTypes.number.isRequired,
             image: PropTypes.string.isRequired,
-            orderLink: PropTypes.string.isRequired,
-            price: PropTypes.string.isRequired,
-            bio: PropTypes.string.isRequired,
         })
     ).isRequired,
 };
+
 export default Doctor;

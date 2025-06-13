@@ -6,47 +6,53 @@ import Paginations from '../Pagination';
 const cx = classNames.bind(styles);
 
 function OrderByPack({ packData }) {
-    const navigate = useNavigate(); // Hook để điều hướng
+    const navigate = useNavigate(); 
 
     const handlePackClick = (_id) => {
-        navigate(`/orderPack/${_id}`); // Điều hướng đến URL tương ứng
+        navigate(`/orderPack/${_id}`); 
     };
 
     const renderPacks = (currentItems) => (
         <div className={cx('pack-list')}>
             {currentItems.map((pack) => (
-                <Link to={`/orderPack/${pack._id}`} key={pack._idid}>
+                <Link 
+                    to={`/orderPack/${pack._id}`} 
+                    key={pack._id} 
+                    className={cx('pack-link')}
+                >
                     <div
                         className={cx('grid-container')}
-                        onClick={() => handlePackClick(pack.id)} // Xử lý khi click
+                        onClick={() => handlePackClick(pack._id)} 
                     >
                         <div className={cx('image')}>
-                            <img src={pack.image} height={100} width={200} alt="Logo" />
+                            <img src={pack.image} alt={pack.name} />
                         </div>
                         <div className={cx('info')}>
-                            <h2>{pack.name}</h2>
-                            <p>{pack.room}</p>
-                            <p style={{ color: 'rgb(75, 192, 140)' }}>{pack.price}</p>
+                            <h2 className={cx('pack-name')}>{pack.name}</h2>
+                            <p className={cx('pack-room')}>{pack.room}</p>
+                            <p className={cx('pack-price')}>{pack.price}</p>
                         </div>
                     </div>
                 </Link>
-
             ))}
         </div>
     );
+    
     return (
-        <Paginations
-            data={packData}
-            renderItems={renderPacks}
-            itemsPerPage={6}
-        />
+        <div className={cx('order-pack-wrapper')}>
+            <Paginations
+                data={packData}
+                renderItems={renderPacks}
+                itemsPerPage={6}
+            />
+        </div>
     )
 }
 
 OrderByPack.propTypes = {
     packData: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.number.isRequired,
+            _id: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
             room: PropTypes.string.isRequired,
             image: PropTypes.string.isRequired,

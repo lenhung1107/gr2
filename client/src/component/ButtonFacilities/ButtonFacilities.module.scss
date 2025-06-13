@@ -1,0 +1,22 @@
+.wrapper {
+ display: block;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    max-width: 280px;
+    
+    &:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    &:focus {
+        outline: 2px solid #4caf50;
+        outline-offset: 2px;
+        border-radius: 16px;
+    }
+    
+    @media (max-width: 768px) {
+        max-width: 100%;
+    }
+}

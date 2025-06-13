@@ -5,7 +5,7 @@ import styles from "./HistoryPage.module.scss";
 import {
   faCalendarXmark,
   faInfoCircle,
-  faStar
+  faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import AppoinmentDetail from "../../component/AppoinmentDetail";
 import useFetchData from "../../CustomHook/useFetchData";
@@ -162,7 +162,7 @@ function HistoryPage() {
                   <td>{app.status}</td>
                   <td>
                     {app.status === "Đã khám" && (
-                      <>
+                      <div className={cx("card-icons")}>
                         <div
                           className={cx("icon", "view-info")}
                           data-tooltip="Xem chi tiết"
@@ -177,7 +177,7 @@ function HistoryPage() {
                         >
                           <FontAwesomeIcon icon={faStar} />
                         </div>
-                      </>
+                      </div>
                     )}
                     {app.status === "Đang chờ xác nhận" && (
                       <div
@@ -219,12 +219,21 @@ function HistoryPage() {
               </div>
               <div className={cx("card-actions")}>
                 {app.status === "Đã khám" && (
-                  <div
-                    className={cx("icon", "view-info")}
-                    data-tooltip="Xem chi tiết"
-                    onClick={() => handleViewClick(app)}
-                  >
-                    <FontAwesomeIcon icon={faInfoCircle} />
+                  <div className={cx("card-icons")}>
+                    <div
+                      className={cx("icon", "view-info")}
+                      data-tooltip="Xem chi tiết"
+                      onClick={() => handleViewClick(app)}
+                    >
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                    </div>
+                    <div
+                      className={cx("icon", "review-icon")}
+                      data-tooltip="Đánh giá"
+                      onClick={() => handleReviewClick(app)}
+                    >
+                      <FontAwesomeIcon icon={faStar} />
+                    </div>
                   </div>
                 )}
                 {app.status === "Đang chờ xác nhận" && (

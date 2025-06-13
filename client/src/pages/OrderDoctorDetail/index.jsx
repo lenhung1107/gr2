@@ -1,11 +1,12 @@
 import classNames from "classnames/bind";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./OrderDoctorDetail.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faArrowLeft,
   faCalendarDays,
   faHouseMedicalCircleCheck,
   faLocationDot,
@@ -20,6 +21,11 @@ const cx = classNames.bind(styles);
 
 function OrderDoctor() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const handleBack = () => {
+    navigate("/listDoctor");
+  };
+
   const apiUrl = `https://gr2-3t8u.onrender.com/orderDoctor/${id}`;
   const scheduleUrl = `https://gr2-3t8u.onrender.com/schedule/schedulesGetByDoctorID/${id}`;
 
@@ -104,7 +110,7 @@ function OrderDoctor() {
 
     const formattedDate = getFormattedDate(date);
 
-    const doctorHours = workSchedule[formattedDate] || defaultHours; // nếu bác sĩ không có lịch => lấy default
+    const doctorHours = workSchedule[formattedDate] || defaultHours;
     const bookedHours = bookedAppointments[formattedDate] || [];
 
     const sortedHours = doctorHours.slice().sort((a, b) => {
@@ -125,6 +131,13 @@ function OrderDoctor() {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("brg")}>
+        <div className={cx("tooltip-wrapper")}>
+          <button className={cx("back-button")} onClick={handleBack}>
+            <FontAwesomeIcon icon={faArrowLeft} className={cx("icon")} />
+          </button>
+          <span className={cx("tooltip-text")}>Quay lại danh sách bác sĩ</span>
+        </div>
+
         <div className={cx("content")}>
           <div className={cx("grid-container")}>
             <div className={cx("image")}>

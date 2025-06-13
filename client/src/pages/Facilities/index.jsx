@@ -4,7 +4,7 @@ import styles from "./Facilities.module.scss";
 import Search from "../../Layout/DefaultLayout/Search";
 import FacilitiesItem from "../../component/FacilitiesItem";
 import useFetchData from "../../CustomHook/useFetchData";
-import Button from "../../component/Button";
+import ButtonFacilities from "../../component/ButtonFacilities";
 const cx = classNames.bind(styles);
 
 function Facilities() {
@@ -25,9 +25,9 @@ function Facilities() {
                     </div>
                     <div className={cx('menu-facilities')}>
                         {facilities && facilities.map((facility) => (
-                            <Button key={facility._id} to={`/facilitiesDetail/${facility._id}`}>
+                            <ButtonFacilities key={facility._id} to={`/facilitiesDetail/${facility._id}`}>
                                 <FacilitiesItem facility={facility} />
-                            </Button>
+                            </ButtonFacilities>
                         ))}
                     </div>
 
