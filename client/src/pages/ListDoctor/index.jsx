@@ -6,7 +6,7 @@ import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
 
 function ListDoctor() {
-    const apiUrl = "https://gr2-3t8u.onrender.com/doctor"; // URL API khác cho từng trang
+    const apiUrl = "https://gr2-3t8u.onrender.com/doctor"; 
     const { data: doctors, loading, error } = useFetchData(apiUrl);
 
     return (
@@ -21,7 +21,7 @@ function ListDoctor() {
                         {loading && <div>Đang tải danh sách bác sĩ...</div>}
                         {error && <div>Có lỗi xảy ra: {error}</div>}
                         {!loading && !error && doctors && (
-                            <Doctor doctors={doctors} /> // Truyền dữ liệu từ API
+                            <Doctor doctors={doctors} /> 
                         )}
 
                     </div>

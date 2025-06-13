@@ -5,6 +5,7 @@ import styles from "./HistoryPage.module.scss";
 import {
   faCalendarXmark,
   faInfoCircle,
+  faStar
 } from "@fortawesome/free-solid-svg-icons";
 import AppoinmentDetail from "../../component/AppoinmentDetail";
 import useFetchData from "../../CustomHook/useFetchData";
@@ -174,7 +175,7 @@ function HistoryPage() {
                           data-tooltip="Đánh giá"
                           onClick={() => handleReviewClick(app)}
                         >
-                          ⭐
+                          <FontAwesomeIcon icon={faStar} />
                         </div>
                       </>
                     )}
@@ -193,7 +194,6 @@ function HistoryPage() {
             </tbody>
           </table>
         </div>
-        {/* Hiển thị dạng thẻ nếu là thiết bị nhỏ */}
         <div className={cx("mobile-list")}>
           {filteredAppointments.map((app, index) => (
             <div key={app.id} className={cx("appointment-card")}>

@@ -13,6 +13,7 @@ const test= require('./test');
 const userUseRoute= require('./userUse');
 const statistics = require ('./statistics');
 const reviews = require('./review');
+const hotnew= require('./hotnew');
 function route(app){
     app.use('/doctor', doctorRoute);
     app.use('/pack', packRoute);
@@ -28,6 +29,7 @@ function route(app){
     app.use('/testOrder',testOrder);
     app.use('/test',test);
     app.use('/statistics', statistics);
+    app.use('/hotnew', hotnew);
     app.use('/review',reviews);
 
 }
