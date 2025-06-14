@@ -8,6 +8,7 @@ export async function subscribeUserToPush() {
     console.warn("❌ Trình duyệt không hỗ trợ Push Notification");
     return;
   }
+
   try {
     console.log("ℹ️ Đang đợi Service Worker sẵn sàng...");
     const registration = await navigator.serviceWorker.ready;
@@ -20,10 +21,22 @@ export async function subscribeUserToPush() {
     });
     console.log("✅ Đã đăng ký push subscription:", subscription);
 
-    console.log("ℹ️ Gửi subscription lên server...");
+    // 🔍 Lấy userId từ localStorage
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user?._id;
+
+    if (!userId) {
+      console.warn("❌ Không tìm thấy userId trong localStorage");
+      return;
+    }
+
+    console.log("ℹ️ Gửi subscription lên server với userId:", userId);
     const res = await fetch('https://gr2-3t8u.onrender.com/notification/subscribe', {
       method: 'POST',
-      body: JSON.stringify(subscription),
+      body: JSON.stringify({
+        userId,         // 👈 Gửi userId lên server
+        subscription,   // 👈 Kèm theo subscription
+      }),
       headers: {
         'Content-Type': 'application/json'
       },

@@ -3,20 +3,20 @@ const Subscription = require("../models/Subscription");
 class NotificationController {
   async subscribe(req, res) {
     try {
-      const subscription = req.body;
-      const userId = req.user ? req.user._id : null;
-      const existing = await Subscription.findOne({
-        endpoint: subscription.endpoint,
-      });
+      const { userId, subscription } = req.body;
 
-      if (!existing) {
-        await Subscription.create({ ...subscription, userId });
+      if (!userId || !subscription) {
+        return res
+          .status(400)
+          .json({ message: "Thiếu userId hoặc subscription" });
       }
+      await Subscription.deleteMany({ userId });
+      await Subscription.create({ userId, ...subscription });
 
-      res.status(201).json({ message: "Đăng ký nhận thông báo thành công." });
+      res.status(201).json({ message: "Đăng ký thông báo thành công" });
     } catch (error) {
-      console.error("Lỗi đăng ký nhận thông báo:", error);
-      res.status(500).json({ error: "Lỗi server" });
+      console.error("Lỗi khi lưu subscription:", error);
+      res.status(500).json({ message: "Lỗi server" });
     }
   }
 }

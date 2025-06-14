@@ -9,13 +9,10 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   useEffect(() => {
     console.log("App mounted! Gọi subscribeUserToPush...");
-
-    // 👇 Gọi xin quyền notification
     if ("Notification" in window && navigator.serviceWorker) {
       Notification.requestPermission().then((permission) => {
         console.log("Notification permission:", permission);
         if (permission === "granted") {
-          // Sau khi được phép thì mới đăng ký push
           subscribeUserToPush()
             .then(() => {
               console.log("✅ Push notification đã được đăng ký!");
