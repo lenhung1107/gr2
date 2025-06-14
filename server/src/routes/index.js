@@ -14,6 +14,7 @@ const userUseRoute= require('./userUse');
 const statistics = require ('./statistics');
 const reviews = require('./review');
 const hotnew= require('./hotnew');
+const notification = require('./notification');
 function route(app){
     app.use('/doctor', doctorRoute);
     app.use('/pack', packRoute);
@@ -31,6 +32,7 @@ function route(app){
     app.use('/statistics', statistics);
     app.use('/hotnew', hotnew);
     app.use('/review',reviews);
+    app.use('/notification', notification);
 
 }
 module.exports = route;
