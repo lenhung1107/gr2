@@ -7,4 +7,5 @@ self.addEventListener('push', function (event) {
   });
 });
 
+// ⚠️ Dòng này là bắt buộc để workbox inject manifest
 self.__WB_MANIFEST;

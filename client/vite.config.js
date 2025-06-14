@@ -8,8 +8,8 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       strategies: "injectManifest",
-      srcDir: "src/sw",           // đường dẫn đến folder chứa service worker
-      filename: "custom-sw.js",   // tên file sw gốc để inject manifest
+      srcDir: "src/sw", // Đúng folder chứa custom-sw.js
+      filename: "sw.js", // File name (không phải path tuyệt đối)
       includeAssets: [
         "favicon.svg",
         "favicon.ico",
@@ -39,5 +39,4 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/",
 });
