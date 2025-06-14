@@ -6,3 +6,4 @@ self.addEventListener('push', function (event) {
     icon: data.icon || '/pwa-192x192.png',
   });
 });
+self.__WB_MANIFEST;
