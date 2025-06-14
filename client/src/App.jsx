@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   useEffect(() => {
+      console.log("App mounted! Gọi subscribeUserToPush...");
     // 👇 Gọi hàm đăng ký push notification khi app khởi động
     subscribeUserToPush().then(() => {
       console.log("✅ Push notification đã được đăng ký!");
