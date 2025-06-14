@@ -15,7 +15,7 @@ const allowedOrigins = [
      'http://localhost:5174',
     'https://gr2-o3rfs9qy4-nhungles-projects.vercel.app',
     'https://gr2-liard.vercel.app',
-    'http://localhost:4173/'
+    'http://localhost:4173'
 ];
 
 app.use(cors({
