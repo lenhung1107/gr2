@@ -46,7 +46,6 @@ class AppointmentController {
       let patient;
 
       if (isForSomeoneElse) {
-        // Kiểm tra đã có hồ sơ bệnh nhân hộ chưa (theo tên và số điện thoại + user_id là người đặt)
         patient = await Patient.findOne({
           user_id,
           name: patient_name,
@@ -119,7 +118,6 @@ class AppointmentController {
       const patientId = appointment.patient_id;
       appointment.status = "Đã hủy";
       await appointment.save();
-      // Kiểm tra xem bệnh nhân này còn dùng cho cuộc hẹn nào khác không
       const otherAppointments = await Appointment.find({
         patient_id: patientId,
         _id: { $ne: new mongoose.Types.ObjectId(id) }, // ép kiểu
@@ -267,9 +265,11 @@ class AppointmentController {
       if (!updatedAppointment) {
         return res.status(404).json({ message: "Không tìm thấy cuộc hẹn" });
       }
+      console.log("Đã cập nhật cuộc hẹn:", updatedAppointment);
       const subscriptions = await Subscription.find({
         userId: updatedAppointment.user_id,
       });
+      console.log("Subscriptions:", subscriptions);
       const payload = JSON.stringify({
         title: "Xác nhận lịch khám",
         body: `Lịch khám của bạn đã được xác nhận!`,
@@ -430,7 +430,6 @@ class AppointmentController {
       res.status(500).json({ message: "Lỗi server", err: err.message });
     }
   }
-  // controllers/appointmentController.js
 
   async getAllPackAppointments(req, res) {
     try {

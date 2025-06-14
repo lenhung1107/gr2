@@ -8,7 +8,6 @@ export async function subscribeUserToPush() {
     console.warn("❌ Trình duyệt không hỗ trợ Push Notification");
     return;
   }
-
   try {
     console.log("ℹ️ Đang đợi Service Worker sẵn sàng...");
     const registration = await navigator.serviceWorker.ready;

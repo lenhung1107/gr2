@@ -1,6 +1,5 @@
 import { precacheAndRoute } from "workbox-precaching";
 
-// Đây là nơi Workbox inject manifest
 precacheAndRoute(self.__WB_MANIFEST);
 
 self.addEventListener("push", function (event) {
