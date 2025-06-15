@@ -2,11 +2,11 @@ const Appointment = require("../models/Appointment");
 const Patient = require("../models/Patient");
 const Doctor = require("../models/Doctor");
 const Pack = require("../models/Pack");
-const Prescription = require("../models/Prescription"); // Nhớ import model Prescription nếu chưa
+const Prescription = require("../models/Prescription");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
-const Subscription = require("../models/Subscription");
-const webpush = require("../config/webpush");
+const sendNotificationToUser = require("../utils/sendNotification");
+
 class AppointmentController {
   async uploadFile(req, res) {
     try {
@@ -20,7 +20,6 @@ class AppointmentController {
         { _id: appointmentId },
         { result_file: fileUrl }
       );
-      // Xử lý file sau khi tải lên
       res.status(200).json({ message: "File tải lên thành công!", fileUrl });
     } catch (error) {
       console.error("Lỗi tải file:", error);
@@ -54,7 +53,6 @@ class AppointmentController {
         });
 
         if (!patient) {
-          // Nếu chưa có, tạo mới
           patient = new Patient({
             user_id,
             isForSomeone: true,
@@ -120,7 +118,7 @@ class AppointmentController {
       await appointment.save();
       const otherAppointments = await Appointment.find({
         patient_id: patientId,
-        _id: { $ne: new mongoose.Types.ObjectId(id) }, // ép kiểu
+        _id: { $ne: new mongoose.Types.ObjectId(id) },
       });
       const patient = await Patient.findById(patientId);
       if (otherAppointments.length === 0 && patient?.isForSomeone) {
@@ -129,7 +127,28 @@ class AppointmentController {
       return res.status(200).json({ message: "Đã hủy cuộc hẹn thành công." });
     } catch (error) {
       console.error("Lỗi BE:", error);
-      return res.status(500).json({ message: "Đã xảy ra lỗi server." }); // ✅ THÊM DÒNG NÀY
+      return res.status(500).json({ message: "Đã xảy ra lỗi server." });
+    }
+  }
+  async cancelByAdmin(req, res) {
+    try {
+      const appointmentId = req.params.id;
+      const appointment = await Appointment.findById(appointmentId);
+      if (!appointment) {
+        return res.status(404).json({ message: "Không tìm thấy cuộc hẹn" });
+      }
+      appointment.status = "Đã hủy";
+      appointment.cancel_reason = req.body.reason;
+      await appointment.save();
+      await sendNotificationToUser(appointment.user_id, {
+        title: "Yêu cầu đặt khám của bạn bị hủy",
+        body: `Lịch khám của bạn đã bị hủy!`,
+        icon: "/pwa-192x192.png",
+      });
+      res.status(200).json({ message: "Hủy cuộc hẹn thành công", appointment });
+    } catch (error) {
+      console.error("Lỗi khi hủy lịch hẹn:", error);
+      res.status(500).json({ message: "Hủy cuộc hẹn thất bại" });
     }
   }
   async getAllAppointments(req, res) {
@@ -140,7 +159,7 @@ class AppointmentController {
           populate: {
             path: "user_id",
             model: "TestUser",
-            select: "name age phone", // Chỉ lấy các trường cần thiết
+            select: "name age phone",
           },
         })
         .populate({
@@ -148,7 +167,7 @@ class AppointmentController {
           select: "name",
         })
         .populate({
-          path: "pack_id", //  Thêm populate pack_id vào đây
+          path: "pack_id",
           select: "name",
         });
 
@@ -199,7 +218,7 @@ class AppointmentController {
           populate: {
             path: "user_id",
             model: "TestUser",
-            select: "name age phone", // Chỉ lấy các trường cần thiết
+            select: "name age phone",
           },
         })
         .populate({
@@ -265,23 +284,11 @@ class AppointmentController {
       if (!updatedAppointment) {
         return res.status(404).json({ message: "Không tìm thấy cuộc hẹn" });
       }
-      console.log("Đã cập nhật cuộc hẹn:", updatedAppointment);
-      const subscriptions = await Subscription.find({
-        userId: updatedAppointment.user_id,
-      });
-      console.log("Subscriptions:", subscriptions);
-      const payload = JSON.stringify({
-        title: "Xác nhận lịch khám",
+      await sendNotificationToUser(updatedAppointment.user_id, {
+        title: "Yêu cầu đặt khám của bạn đã được xác nhận",
         body: `Lịch khám của bạn đã được xác nhận!`,
         icon: "/pwa-192x192.png",
       });
-      for (const sub of subscriptions) {
-        try {
-          await webpush.sendNotification(sub, payload);
-        } catch (err) {
-          console.error("Lỗi khi gửi thông báo:", err);
-        }
-      }
       res.json({
         message: "Đã xác nhận lịch hẹn thành công",
         appointment: updatedAppointment,
@@ -305,14 +312,13 @@ class AppointmentController {
           populate: {
             path: "user_id",
             model: "TestUser",
-            select: "name age phone", // Chỉ lấy các trường cần thiết
+            select: "name age phone",
           },
         })
         .populate({
           path: "doctor_id",
           select: "name",
         });
-      // console.log(appointments)
       const prescriptionList = await Prescription.find({
         appointment_id: { $in: appointments.map((a) => a._id) },
       }).select("appointment_id");
@@ -320,7 +326,6 @@ class AppointmentController {
       const appointmentIdsWithPrescription = new Set(
         prescriptionList.map((p) => p.appointment_id.toString())
       );
-      // Xử lý dữ liệu
       const formattedAppointments = appointments.map((appt) => {
         const patient = appt.patient_id;
         const isForSomeone = patient?.isForSomeone ?? true;
@@ -370,6 +375,11 @@ class AppointmentController {
       if (!updatedAppointment) {
         return res.status(404).json({ message: "Không tìm thấy cuộc hẹn" });
       }
+      await sendNotificationToUser(updatedAppointment.user_id, {
+        title: "Bác sĩ đã tiếp nhận khám",
+        body: "Bác sĩ đã tiếp nhận cuộc hẹn của bạn. Vui lòng chờ khám.",
+        icon: "/pwa-192x192.png",
+      });
       res.json({
         message: "Xác nhận bệnh nhân đang khám",
         appointment: updatedAppointment,
@@ -403,8 +413,6 @@ class AppointmentController {
           const prescription = await Prescription.findOne({
             appointment_id: appointment._id,
           });
-
-          // 💥 Xử lý lấy tên dịch vụ (bác sĩ hoặc gói khám)
           let serviceName = "";
           if (appointment.appointment_type === "doctor") {
             serviceName = appointment.doctor_id?.name || "Đã xoá bác sĩ";
@@ -415,7 +423,7 @@ class AppointmentController {
           return {
             date: appointment.appointment_date,
             hour: appointment.appointment_time,
-            service: serviceName, // 👉 thay vì chỉ lấy doctor cố định
+            service: serviceName,
             symptoms: appointment.symptoms,
             diagnosis: prescription?.diagnosis || "",
             note: prescription?.note || "",
@@ -446,8 +454,6 @@ class AppointmentController {
           path: "pack_id",
           select: "name",
         });
-
-      // Xử lý dữ liệu tương tự
       const formattedAppointments = appointments.map((appt) => {
         const patient = appt.patient_id;
         const isForSomeone = patient?.isForSomeone ?? true;
@@ -496,7 +502,11 @@ class AppointmentController {
       if (!updatedAppointment) {
         return res.status(404).json({ message: "Không tìm thấy cuộc hẹn" });
       }
-
+      await sendNotificationToUser(updatedAppointment.user_id, {
+        title: "Lịch khám đã hoàn tất",
+        body: "Cuộc hẹn khám bệnh của bạn đã được hoàn tất.",
+        icon: "/pwa-192x192.png",
+      });
       res.json({
         message: "Cập nhật thành công",
         appointment: updatedAppointment,

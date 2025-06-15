@@ -1,4 +1,4 @@
-export async function subscribeUserToPush() {
+export async function subscribeUserToPush(userId) {
   if (!('serviceWorker' in navigator)) {
     console.warn("❌ Trình duyệt không hỗ trợ Service Worker");
     return;
@@ -6,6 +6,11 @@ export async function subscribeUserToPush() {
 
   if (!('PushManager' in window)) {
     console.warn("❌ Trình duyệt không hỗ trợ Push Notification");
+    return;
+  }
+
+  if (!userId) {
+    console.warn("❌ Không có userId được cung cấp để gửi subscription");
     return;
   }
 
@@ -21,21 +26,12 @@ export async function subscribeUserToPush() {
     });
     console.log("✅ Đã đăng ký push subscription:", subscription);
 
-    // 🔍 Lấy userId từ localStorage
-    const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user?._id;
-
-    if (!userId) {
-      console.warn("❌ Không tìm thấy userId trong localStorage");
-      return;
-    }
-
     console.log("ℹ️ Gửi subscription lên server với userId:", userId);
     const res = await fetch('https://gr2-3t8u.onrender.com/notification/subscribe', {
       method: 'POST',
       body: JSON.stringify({
-        userId,         // 👈 Gửi userId lên server
-        subscription,   // 👈 Kèm theo subscription
+        userId,
+        subscription,
       }),
       headers: {
         'Content-Type': 'application/json'

@@ -39,7 +39,31 @@ export default function Login() {
       username,
       password,
     };
-    loginUser(newUser, dispatch, (userData) => {
+
+    loginUser(newUser, dispatch, async (userData) => {
+      localStorage.setItem("user", JSON.stringify(userData));
+      const userId = userData?._id;
+      if ("Notification" in window && navigator.serviceWorker) {
+        try {
+          const permission = await Notification.requestPermission();
+          if (permission === "granted") {
+            const { subscribeUserToPush } = await import(
+              "../../CustomHook/usePushNotification"
+            );
+            subscribeUserToPush(userId) 
+              .then(() => {
+                console.log("✅ Push subscription sent with user ID:", userId);
+              })
+              .catch((err) => {
+                console.error("❌ Lỗi đăng ký push:", err);
+              });
+          }
+        } catch (err) {
+          console.error("❌ Lỗi xin quyền thông báo:", err);
+        }
+      }
+
+      // ✅ Chuyển trang tương ứng
       if (userData?.admin) {
         navigate("/adminpage");
       } else if (userData?.role === 2) {

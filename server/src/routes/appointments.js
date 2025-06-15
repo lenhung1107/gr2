@@ -2,24 +2,21 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const AppointmentController = require("../controller/AppointmentController");
-// const { route } = require('./doctors');
 require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-// Cấu hình Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Tạo storage multer để upload trực tiếp lên Cloudinary
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'healthcare_uploads', // tên thư mục lưu trữ trên Cloudinary
-    allowed_formats: ['jpg', 'jpeg', 'png', 'pdf'], // cho phép định dạng
+    folder: 'healthcare_uploads', 
+    allowed_formats: ['jpg', 'jpeg', 'png', 'pdf'], 
   },
 });
 
@@ -35,4 +32,5 @@ router.get('/getAppointmentsByPatientId/:patientId', AppointmentController.getAp
 router.get('/getAllPackAppointment', AppointmentController.getAllPackAppointments);
 router.patch('/updateStatus/:id', AppointmentController.confirmAppointmentByManagePack);
 router.post('/uploadResult/:id', upload.single('resultFile'), AppointmentController.uploadFile);
+router.put('/cancelByAdmin/:id', AppointmentController.cancelByAdmin);
 module.exports = router;

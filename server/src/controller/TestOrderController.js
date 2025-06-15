@@ -45,7 +45,7 @@ class TestOrderController {
         })
         .populate({
           path: 'doctor_id',
-          model: 'TestUser', // Vì doctor_id là user_id
+          model: 'TestUser', 
           select: 'name'
         })
         .populate({
@@ -54,7 +54,6 @@ class TestOrderController {
         });
         
       const formatted = testOrders.map(order => {
-        // console.log(order.pack_ids)
         const appointment = order.appointment_id;
         const patient = appointment?.patient_id;
         const isForSomeone = patient?.isForSomeone ?? true;
@@ -93,7 +92,6 @@ class TestOrderController {
   }
   async confirmTestOrder(req, res) {
     try {
-      // Cập nhật trạng thái TestOrder
       const updatedTestOrder = await TestOrder.findByIdAndUpdate(
         req.params.id,
         { status: 'Hoàn tất' },
@@ -104,7 +102,6 @@ class TestOrderController {
         return res.status(404).json({ message: 'Không tìm thấy TestOrder' });
       }
 
-      // Cập nhật trạng thái Appointment liên quan
       res.json({ message: 'Đã cập nhật trạng thái thành công', data: updatedTestOrder });
     } catch (error) {
       console.error('Lỗi cập nhật trạng thái:', error);
@@ -118,10 +115,8 @@ class TestOrderController {
       if (!file) {
         return res.status(400).json({ message: 'Không có file được upload.' });
       }
-      // File đã được upload lên Cloudinary và có link tại file.path
       const fileUrl = file.path;
 
-      // Cập nhật TestOrder
       const updatedTestOrder = await TestOrder.findByIdAndUpdate(
         testOrderId,
         {
@@ -134,10 +129,8 @@ class TestOrderController {
         return res.status(404).json({ message: 'Không tìm thấy TestOrder.' });
       }
 
-      // Lấy appointment_id từ testOrder vừa cập nhật
       const appointmentId = updatedTestOrder.appointment_id;
 
-      // Cập nhật Appointment tương ứng
       await Appointment.findByIdAndUpdate(
         appointmentId,
         {

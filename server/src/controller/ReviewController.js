@@ -1,6 +1,6 @@
 const Review = require("../models/Review");
 const Appointment = require("../models/Appointment");
-const Doctor = require("../models/Doctor"); // Thêm dòng này vào đầu file
+const Doctor = require("../models/Doctor"); 
 
 class ReviewController {
   async createReview(req, res) {

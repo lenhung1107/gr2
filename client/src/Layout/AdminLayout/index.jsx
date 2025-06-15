@@ -57,7 +57,6 @@ const AdminLayout = () => {
     }
   }, []);
 
-  // Đóng sidebar khi resize về desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
@@ -68,8 +67,6 @@ const AdminLayout = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  // Đóng sidebar khi nhấn ESC
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -83,7 +80,6 @@ const AdminLayout = () => {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    // Đóng sidebar trên mobile sau khi chọn menu
     if (window.innerWidth <= 768) {
       closeSidebar();
     }
@@ -98,7 +94,6 @@ const AdminLayout = () => {
 
   return (
     <div className={cx('layout')}>
-      {/* Header */}
       <div className={cx('header')}>
         <div className={cx('logo')}>
           <button 
@@ -139,8 +134,6 @@ const AdminLayout = () => {
           )}
         </div>
       </div>
-
-      {/* Overlay cho mobile */}
       {isSidebarOpen && (
         <div 
           className={cx('sidebar-overlay')} 
@@ -195,7 +188,6 @@ const AdminLayout = () => {
             >
               Quản Lý Dịch Vụ Gói Khám
             </button>
-            
             <button
               className={cx('menu-itemList', { active: activeTab === 'testOrder' })}
               onClick={() => handleTabChange('testOrder')}

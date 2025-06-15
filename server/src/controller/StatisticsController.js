@@ -5,7 +5,6 @@ class StatisticsController {
         try {
             const { type = 'month', from, to, appointment_type, status, doctor_id, pack_id } = req.query;
 
-            // Khởi tạo bộ lọc
             const match = {};
             if (from || to) {
                 match.appointment_date = {};
@@ -18,7 +17,6 @@ class StatisticsController {
             if (doctor_id) match.doctor_id = new mongoose.Types.ObjectId(doctor_id);
             if (pack_id) match.pack_id = new mongoose.Types.ObjectId(pack_id);
 
-            // Format ngày tùy theo type
             let dateFormat;
             if (type === 'day') dateFormat = { $dateToString: { format: "%Y-%m-%d", date: "$appointment_date" } };
             else if (type === 'month') dateFormat = { $dateToString: { format: "%Y-%m", date: "$appointment_date" } };

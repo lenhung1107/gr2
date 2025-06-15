@@ -10,7 +10,6 @@ class UserController {
             res.status(400).json({ error: 'error!' });
         }
     }
-    //delete user 
     async editUser(req, res) {
         try {
             const updatedUser = await User.findByIdAndUpdate(

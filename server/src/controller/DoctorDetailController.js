@@ -10,8 +10,6 @@ class DoctorDetailController {
             if (!doctor) {
                 return res.status(404).json({ message: 'Không tìm thấy bác sĩ.' });
             }
-
-            // Chuyển specialty thành tên
             doctor.specialty = doctor.specialty?.name || null;
 
             res.json(doctor);

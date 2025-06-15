@@ -38,6 +38,7 @@ const Appointment = new Schema({
   symptoms: { type: String }, 
   result_file: { type: String }, 
   review: { type: Boolean, default: false },
+  cancel_reason: { type: String },
 });
 
 module.exports = mongoose.model("Appointment", Appointment);

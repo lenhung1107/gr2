@@ -18,11 +18,9 @@ class WorkdateController {
             const workDateDocs = [];
 
             for (const [dayWork, hourList] of Object.entries(schedules)) {
-                // Kiểm tra xem ngày đó đã tồn tại trong DB cho bác sĩ chưa
                 const existing = await Workdate.findOne({ dayWork, doctor_id: doctorId });
 
                 if (existing) {
-                    // Cập nhật thêm giờ mới (không trùng lặp)
                     const newHours = hourList.filter(hour => !existing.hourWork.includes(hour));
                     if (newHours.length > 0) {
                         existing.hourWork.push(...newHours);
@@ -30,7 +28,6 @@ class WorkdateController {
                         workDateDocs.push(existing);
                     }
                 } else {
-                    // Tạo mới
                     const newWorkDate = new Workdate({
                         dayWork,
                         hourWork: hourList,

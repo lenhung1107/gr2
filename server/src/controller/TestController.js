@@ -29,7 +29,7 @@ class TestController {
             const updated = await Test.findByIdAndUpdate(
                 id,
                 { name, room },
-                { new: true } // Trả về bản ghi sau khi cập nhật
+                { new: true } 
             );
 
             if (!updated) {

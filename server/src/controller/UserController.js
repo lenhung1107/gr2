@@ -11,10 +11,8 @@ class UserController {
         }
     }
 
-    //delete user
     async deleteUser(req, res) {
         try {
-            //đang giả sử tìm, nếu muốn xóa thật thì dùng findByIdAndDelete
             const deletedUser = await User.findByIdAndDelete(req.params.id);
             if (!deletedUser) {
                 return res.status(404).json({ message: 'Không tìm thấy người dùng' });
