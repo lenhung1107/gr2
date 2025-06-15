@@ -204,7 +204,7 @@ function ManageAppointments() {
               <input type="text" id="reason" name="reason" required />
             </div>
             <div className={cx("popup-buttons")}>
-              <button onClick={confirmCancel} className={cx("confirm-btn")}>
+              <button onClick={() => confirmCancel(selectedAppointment)} className={cx("confirm-btn")}>
                 Xác nhận
               </button>
               <button
