@@ -195,7 +195,7 @@ function ManageAppointments() {
           </tbody>
         </table>
       </div>
-      {showPopupCancel && (
+      {showPopupCancel && selectedAppointment && (
         <div className={cx("popup-overlay")}>
           <div className={cx("popup")}>
             <p>Bạn có chắc chắn muốn hủy cuộc hẹn khám này không?</p>

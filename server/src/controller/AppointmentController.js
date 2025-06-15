@@ -131,9 +131,9 @@ class AppointmentController {
     }
   }
   async cancelByAdmin(req, res) {
+     const { id } = req.params;
     try {
-      const appointmentId = req.params.id;
-      const appointment = await Appointment.findById(appointmentId);
+      const appointment = await Appointment.findById(id);
       if (!appointment) {
         return res.status(404).json({ message: "Không tìm thấy cuộc hẹn" });
       }
