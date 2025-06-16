@@ -19,5 +19,20 @@ class NotificationController {
       res.status(500).json({ message: "Lỗi server" });
     }
   }
+  async getUserNotifications(req, res) {
+    try {
+      const { userId } = req.params;
+
+      if (!userId) {
+        return res.status(400).json({ message: "Thiếu userId" });
+      }
+
+      const notis = await Notification.find({ userId }).sort({ createdAt: -1 });
+      res.status(200).json(notis);
+    } catch (error) {
+      console.error("Lỗi khi lấy thông báo:", error);
+      res.status(500).json({ message: "Lỗi server" });
+    }
+  }
 }
 module.exports = new NotificationController();
