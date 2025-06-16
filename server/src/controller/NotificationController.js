@@ -23,8 +23,8 @@ class NotificationController {
     try {
       const { userId } = req.params;
 
-      if (!userId) {
-        return res.status(400).json({ message: "Thiếu userId" });
+      if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ message: "userId không hợp lệ" });
       }
 
       const notis = await Notification.find({ userId }).sort({ createdAt: -1 });

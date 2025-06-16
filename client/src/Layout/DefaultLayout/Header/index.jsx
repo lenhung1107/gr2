@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Header.module.scss";
 import { Wrapper as PopperWrapper } from "../../../component/Popper";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; 
 import { useSelector, useDispatch } from "react-redux";
 import { loginSuccess, logOutSuccess } from "../../../redux/authSlice";
 import { logOut } from "../../../redux/apiRequest";
@@ -14,7 +14,7 @@ import { createAxios, refreshToken } from "../../../createInstance";
 import NotificationBell from "../../../component/NotificationBell";
 const cx = classNames.bind(styles);
 function Header() {
-  const navigate = useNavigate(); // Khai báo hook useNavigate
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -43,7 +43,7 @@ function Header() {
       let newAccessToken = accessToken;
 
       if (currentUser) {
-        const newTokenData = await refreshToken(); // Gọi refresh token trước
+        const newTokenData = await refreshToken(); 
         if (newTokenData?.accessToken) {
           newAccessToken = newTokenData.accessToken;
         } else {
@@ -63,6 +63,7 @@ function Header() {
       navigate("/login");
     }
   };
+console.log("Header currentUser:", currentUser);
 
   return (
     <div className={cx("wrapper")}>
@@ -82,7 +83,7 @@ function Header() {
                 {isMenuVisible && (
                   <div
                     className={cx("menu-dropdown")}
-                    onMouseLeave={hideMenu} // Ẩn menu khi chuột rời khỏi
+                    onMouseLeave={hideMenu}
                   >
                     <Link
                       to={`/profile/${currentUser._id}`}
