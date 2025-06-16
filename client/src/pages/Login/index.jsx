@@ -62,8 +62,6 @@ export default function Login() {
           console.error("❌ Lỗi xin quyền thông báo:", err);
         }
       }
-
-      // ✅ Chuyển trang tương ứng
       if (userData?.admin) {
         navigate("/adminpage");
       } else if (userData?.role === 2) {
@@ -244,7 +242,6 @@ export default function Login() {
             </div>
           </form>
 
-          {/* Switch between login/register */}
           <div className={cx("switch-section")}>
             <p className={cx("switch-text")}>
               {isLogin ? "Chưa có tài khoản?" : "Đã có tài khoản?"}

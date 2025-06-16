@@ -9,7 +9,7 @@ import useFetchData from "../../CustomHook/useFetchData";
 const cx = classNames.bind(styles);
 
 function ListOrder() {
-    const apiUrl = "https://gr2-3t8u.onrender.com/pack/getAll"; // URL API khác cho từng trang
+    const apiUrl = "https://gr2-3t8u.onrender.com/pack/getAll"; 
     const { data: packs, loading, error } = useFetchData(apiUrl);
     return (
 
@@ -27,7 +27,7 @@ function ListOrder() {
                         {loading && <div>Đang tải danh sách bác sĩ...</div>}
                         {error && <div>Có lỗi xảy ra: {error}</div>}
                         {!loading && !error && packs && (
-                            <OrderByPack packData={packs} /> // Truyền dữ liệu từ API
+                            <OrderByPack packData={packs} /> 
                         )}
                     </div>
 
