@@ -131,7 +131,7 @@ class AppointmentController {
     }
   }
   async cancelByAdmin(req, res) {
-     const { id } = req.params;
+    const { id } = req.params;
     try {
       const appointment = await Appointment.findById(id);
       if (!appointment) {
@@ -262,7 +262,12 @@ class AppointmentController {
           symptoms: appt.symptoms,
           status: appt.status,
           patient_id: appt.patient_id._id,
-          doctor_id: appt.doctor_id._id,
+          doctor_id:
+            appt.appointment_type === "doctor"
+              ? appt.doctor_id?._id
+              : undefined,
+          pack_id:
+            appt.appointment_type === "pack" ? appt.pack_id?._id : undefined,
         };
       });
       res.status(200).json(formattedAppointments);

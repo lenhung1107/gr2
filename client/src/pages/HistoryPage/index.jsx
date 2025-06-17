@@ -32,24 +32,29 @@ function HistoryPage() {
   };
   const submitReview = async () => {
     try {
-      console.log("patient_id", selectedAppointment.patient_id);
-      const response = await fetch(
-        "https://gr2-3t8u.onrender.com/review/createReviews",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            appointment_id: selectedAppointment._id,
-            patient_id: selectedAppointment.patient_id,
-            doctor_id: selectedAppointment.doctor_id,
-            rating,
-            comment: reviewText,
-          }),
-        }
-      );
+      const payload = {
+      appointment_id: selectedAppointment._id,
+      patient_id: selectedAppointment.patient_id,
+      rating,
+      comment: reviewText,
+    };
 
+    if (selectedAppointment.doctor_id) {
+      payload.doctor_id = selectedAppointment.doctor_id;
+    } else if (selectedAppointment.pack_id) {
+      payload.pack_id = selectedAppointment.pack_id;
+    }
+
+    const response = await fetch(
+      "https://gr2-3t8u.onrender.com/review/createReviews",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    );
       const data = await response.json();
       if (response.ok) {
         alert("Đánh giá thành công!");

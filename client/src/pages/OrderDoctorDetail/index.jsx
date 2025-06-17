@@ -25,7 +25,6 @@ function OrderDoctor() {
   const handleBack = () => {
     navigate("/listDoctor");
   };
-
   const apiUrl = `https://gr2-3t8u.onrender.com/orderDoctor/${id}`;
   const scheduleUrl = `https://gr2-3t8u.onrender.com/schedule/schedulesGetByDoctorID/${id}`;
 

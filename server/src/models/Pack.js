@@ -6,7 +6,8 @@ const Pack = new Schema(
         room:{type:String},
         image:{type: String},
         price:{type: String},
-        des:{type:String}
+        des:{type:String},
+         rating: { type: Number, min: 0, max: 5 },
       
     }
 );
