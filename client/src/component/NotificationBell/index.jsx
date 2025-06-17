@@ -40,8 +40,6 @@ function NotificationBell({ userId }) {
 
     fetchNotifications();
   }, [userId, show]);
-
-  // Đóng dropdown khi click outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (show && !event.target.closest(`.${cx("wrapper")}`)) {

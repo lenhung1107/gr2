@@ -2,15 +2,19 @@ import Footer from "../DefaultLayout/Footer";
 import Header from "../DefaultLayout/Header";
 import DoctorItem from "../../component/DoctorItem";
 import SearchHome from "../../Layout/SearchHome";
-import doctorList from "../../data/doctorData";
 import styles from "./HomeLayout.module.scss";
 import HotNew from "../../component/HotNew";
+import useFetchData from "../../CustomHook/useFetchData";
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 
 const cx = classNames.bind(styles);
 
 function HomeLayout({ children }) {
+  const apiUrl = "https://gr2-3t8u.onrender.com/doctor"; 
+    const { data: doctorList, loading, error } = useFetchData(apiUrl);
+    if (loading) return <p style={{ fontSize: "1.6rem", color: "#000" }}>Đang tải gói khám...</p>;
+    if (error) return <p style={{ fontSize: "1.6rem", color: "red" }}>{error}</p>;
   return (
     <div className={cx("layout-wrapper")}>
       <Header />
