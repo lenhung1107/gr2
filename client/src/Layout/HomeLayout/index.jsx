@@ -11,9 +11,9 @@ import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
 
 function HomeLayout({ children }) {
-  const apiUrl = "https://gr2-3t8u.onrender.com/doctor"; 
+  const apiUrl = "https://gr2-3t8u.onrender.com/doctor/top"; 
     const { data: doctorList, loading, error } = useFetchData(apiUrl);
-    if (loading) return <p style={{ fontSize: "1.6rem", color: "#000" }}>Đang tải gói khám...</p>;
+    if (loading) return <p style={{ fontSize: "1.6rem", color: "#000" }}>Đang tải nội dung..</p>;
     if (error) return <p style={{ fontSize: "1.6rem", color: "red" }}>{error}</p>;
   return (
     <div className={cx("layout-wrapper")}>

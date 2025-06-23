@@ -5,7 +5,7 @@ const Doctor = new Schema(
     {
         user_id: {
             type: Schema.Types.ObjectId,
-            ref: 'TestUser', // Tham chiếu đến bảng User
+            ref: 'TestUser', 
             required: true
         },
         name: { type: String, required: true },
@@ -14,7 +14,7 @@ const Doctor = new Schema(
             ref: 'Specialty',
         },
         bio: { type: String },
-        rating: { type: Number, min: 0, max: 5 },
+        rating: { type: Number, min: 0, max: 5,default: 0 },
         appointments: { type: Number },
         image: { type: String },
         price: { type: String }
