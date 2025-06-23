@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./DoctorItem.module.scss";
 import PropTypes from 'prop-types';
+import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function DoctorItem({ doctors }) {
@@ -9,11 +10,11 @@ function DoctorItem({ doctors }) {
         wrapper.scrollBy({ left: -300, behavior: "smooth" });
     };
 
+    const navigate = useNavigate();
     const scrollRight = () => {
         const wrapper = document.querySelector(`.${cx("wrapper")}`);
         wrapper.scrollBy({ left: 300, behavior: "smooth" });
     };
-
     return (
         <div className={cx('doctor-section')}>
             <div className={cx('container')}>
@@ -54,7 +55,8 @@ function DoctorItem({ doctors }) {
                                         </span>
                                     </div>
                                     <p className={cx('price')}>{doctor.price}</p>
-                                    <button className={cx('book-btn')}>
+                                    <button className={cx('book-btn')}
+                                    onClick={() => navigate(`/orderDoctor/${doctor._id}`)}>
                                         Đặt khám
                                     </button>
                                 </div>
