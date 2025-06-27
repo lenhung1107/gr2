@@ -5,13 +5,10 @@ const jwt = require("jsonwebtoken");
 let refreshTokens = [];
 
 class AuthenticationController {
-  // Đăng ký
   async register(req, res, next) {
     try {
-      // console.log("Dữ liệu gửi lên:", req.body); // Kiểm tra dữ liệu từ FE
       const salt = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(req.body.password, salt);
-      // console.log("Mật khẩu đã mã hóa:", hashed);
       const newUser = new user({
         name: req.body.name,
         username: req.body.username,
@@ -31,7 +28,6 @@ class AuthenticationController {
     }
   }
 
-  // Đăng nhập
   async login(req, res) {
     try {
       const User = await user.findOne({ username: req.body.username });
@@ -44,7 +40,6 @@ class AuthenticationController {
         return res.status(404).json({ message: "Sai mật khẩu!" });
       }
 
-      // Tạo token
       const accessToken = jwt.sign(
         { id: User._id, admin: User.admin },
         process.env.JWT_ACCESS_KEY,
@@ -74,7 +69,6 @@ class AuthenticationController {
     }
   }
 
-  // Yêu cầu refresh token
   async requestRefreshToken(req, res) {
     const refresh = req.cookies.refreshToken;
 
@@ -93,10 +87,8 @@ class AuthenticationController {
           .json({ message: "Token hết hạn hoặc không hợp lệ!" });
       }
 
-      // Xóa token cũ khỏi danh sách
       refreshTokens = refreshTokens.filter((token) => token !== refresh);
 
-      // Tạo token mới
       const newAccessToken = jwt.sign(
         { id: User.id, admin: User.admin },
         process.env.JWT_ACCESS_KEY,
@@ -122,7 +114,7 @@ class AuthenticationController {
     });
   }
 
-  // Đăng xuất
+  
   async logout(req, res) {
     res.clearCookie("refreshToken");
     refreshTokens = refreshTokens.filter(

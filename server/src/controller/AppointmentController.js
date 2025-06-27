@@ -507,6 +507,11 @@ class AppointmentController {
       if (!updatedAppointment) {
         return res.status(404).json({ message: "Không tìm thấy cuộc hẹn" });
       }
+      if (updatedAppointment.doctor_id) {
+        await Doctor.findByIdAndUpdate(updatedAppointment.doctor_id, {
+          $inc: { appointments: 1 },
+        });
+      }
       await sendNotificationToUser(updatedAppointment.user_id, {
         title: "Lịch khám đã hoàn tất",
         body: "Cuộc hẹn khám bệnh của bạn đã được hoàn tất.",

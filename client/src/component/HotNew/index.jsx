@@ -11,7 +11,6 @@ function HotNew() {
     const fetchNews = async () => {
       try {
         const res = await axios.get("https://gr2-3t8u.onrender.com/hotnew");
-        console.log(res.data);
         setNewsList(res.data.articles);
       } catch (error) {
         console.error("Lỗi khi lấy tin tức:", error);

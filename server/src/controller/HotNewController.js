@@ -1,13 +1,19 @@
 const Doctor = require("../models/Doctor");
-require('dotenv').config();
+require("dotenv").config();
 const axios = require("axios");
 class HotNewController {
   async getNew(req, res) {
     try {
-        console.log(process.env.NEWS_API_KEY);
-      const response = await axios.get(
-        `https://newsapi.org/v2/everything?q=s%E1%BB%A9c%20kho%E1%BA%BB&language=vi&pageSize=5&apiKey=${process.env.NEWS_API_KEY}`
-      );
+      const response = await axios.get(`https://newsapi.org/v2/everything`, {
+        params: {
+          q: "sức khỏe OR y tế",
+          sortBy: "publishedAt",
+          language: "vi",
+          pageSize: 5,
+          from: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), 
+          apiKey: process.env.NEWS_API_KEY,
+        },
+      });
       res.json(response.data);
     } catch (error) {
       console.error(error);
