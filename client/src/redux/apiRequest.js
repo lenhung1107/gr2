@@ -9,7 +9,7 @@ export const loginUser= async(user, dispatch, callback)=>{
             withCredentials: true}
         );
         dispatch(loginSuccess(res.data));
-        localStorage.setItem("user", JSON.stringify(res.data)); // ✅ Lưu vào localStorage
+        localStorage.setItem("user", JSON.stringify(res.data));
         if(callback) callback(res.data);
     }
     catch(err){

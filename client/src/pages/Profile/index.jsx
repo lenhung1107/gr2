@@ -56,12 +56,11 @@ const Profile = () => {
             ) : (
                 userData && (
                     <div className={cx('wrapper')}>
-                        {/* Profile Header Section */}
                         <div className={cx('profile-header')}>
                             <div className={cx('avatar-section')}>
                                 <div className={cx('avatar-wrapper')}>
                                     <img 
-                                        src="/doctor.jpg" 
+                                        src={userData.img || "/doctor.jpg"}
                                         height={120} 
                                         width={120} 
                                         alt="Profile" 
