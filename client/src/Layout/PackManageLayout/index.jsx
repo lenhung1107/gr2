@@ -16,6 +16,7 @@ const PackManageLayout = () => {
   const [activeTab, setActiveTab] = useState('packs');
   const [adminName, setAdminName] = useState('');
   const [userName, setUserName] = useState('');
+  const [user, setUser]= useState('');
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
@@ -39,7 +40,8 @@ const PackManageLayout = () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       try {
-        const userData = JSON.parse(storedUser);    
+        const userData = JSON.parse(storedUser);  
+        setUser(userData);  
         setAdminName(userData.name);
         setUserName(userData.username);
       } catch (error) {
@@ -48,7 +50,6 @@ const PackManageLayout = () => {
     }
   }, []);
 
-  // Đóng sidebar khi click outside trên mobile
   useEffect(() => {
     const handleClickOutside = (event) => {
       const sidebar = document.querySelector(`.${cx('sidebar')}`);
@@ -71,7 +72,6 @@ const PackManageLayout = () => {
  
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    // Đóng sidebar sau khi chọn tab trên mobile
     if (window.innerWidth <= 768) {
       setIsSidebarVisible(false);
     }
@@ -86,10 +86,8 @@ const PackManageLayout = () => {
 
   return (
     <div className={cx('layout')}>
-      {/* Header */}
       <div className={cx('header')}>
         <div className={cx('header-left')}>
-          {/* Hamburger menu cho mobile */}
           <button 
             className={cx('hamburger-menu')}
             onClick={toggleSidebar}
@@ -111,7 +109,7 @@ const PackManageLayout = () => {
             <div className={cx('user-section')}>
               <p className={cx('username')}>{userName}</p>
               <img
-                src="/doctor.jpg"
+                src={user.img}
                 alt="Avatar bác sĩ"
                 onClick={toggleMenu}
                 className={cx('avatar-img')}
@@ -135,7 +133,6 @@ const PackManageLayout = () => {
         </div>
       </div>
 
-      {/* Overlay cho mobile khi sidebar mở */}
       {isSidebarVisible && <div className={cx('overlay')} onClick={closeSidebar}></div>}
 
       <div className={cx('main')}>

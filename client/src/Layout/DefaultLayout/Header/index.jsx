@@ -76,7 +76,7 @@ console.log("Header currentUser:", currentUser);
               <span>Xin chào {currentUser.username}</span>
               <div className={cx("avatar")} onClick={toggleMenu}>
                 <img
-                  src="/path-to-avatar.jpg"
+                  src={currentUser.img || "/default-avatar.png"}
                   alt="Avatar"
                   className={cx("avatar-img")}
                 />
@@ -107,10 +107,6 @@ console.log("Header currentUser:", currentUser);
             </>
           )}
         </div>
-        {/* <div className={cx('user')}>
-                
-              </div> */}
-
         <div className={cx("menu")}>
           <div className={cx("logo")}>
             <img src="/ava_v2.png" height={40} width={200} alt="Logo" />
