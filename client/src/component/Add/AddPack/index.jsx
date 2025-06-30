@@ -25,7 +25,7 @@ function AddPack({ onClose, onAdd }) {
   const handleSubmit = async () => {
     try {
       const res = await axios.post("https://gr2-3t8u.onrender.com/pack/addPack", formData);
-      onAdd(res.data); // cập nhật UI FE
+      onAdd(res.data); 
       toast.success("Đã thêm gói khám thành công!");
       onClose();
     } catch (err) {

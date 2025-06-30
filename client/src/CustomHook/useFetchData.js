@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 
 function useFetchData(apiUrl) {
-    const [data, setData] = useState(null); // Dữ liệu từ API
-    const [loading, setLoading] = useState(true); // Trạng thái đang tải
-    const [error, setError] = useState(null); // Lỗi khi gọi API
+    const [data, setData] = useState(null); 
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
 
     useEffect(() => {
-        let isMounted = true; // Đảm bảo component chưa bị unmount
+        let isMounted = true; 
         const fetchData = async () => {
             try {
                 setLoading(true);
@@ -32,7 +32,7 @@ function useFetchData(apiUrl) {
         fetchData();
 
         return () => {
-            isMounted = false; // Cleanup khi component unmount
+            isMounted = false; 
         };
     }, [apiUrl]);
 

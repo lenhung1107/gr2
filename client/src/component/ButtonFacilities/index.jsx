@@ -28,7 +28,7 @@ ButtonFacilities.propTypes = {
     to: PropTypes.string,
     href: PropTypes.string,
     primary: PropTypes.bool,
-    children: PropTypes.node.isRequired, // Yêu cầu phải có
+    children: PropTypes.node.isRequired, 
     onClick: PropTypes.func,
 };
 

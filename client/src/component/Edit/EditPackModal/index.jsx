@@ -19,8 +19,6 @@ function EditPackModal({ pack, onClose, onSave }) {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
-
-        // Cập nhật preview hình ảnh khi URL thay đổi
         if (name === "image") {
             setPreview(value);
         }
@@ -31,7 +29,6 @@ function EditPackModal({ pack, onClose, onSave }) {
     };
 
     const handlePriceChange = (e) => {
-        // Chỉ cho phép nhập số
         const value = e.target.value.replace(/\D/g, '');
         setFormData(prev => ({ ...prev, price: value }));
     };

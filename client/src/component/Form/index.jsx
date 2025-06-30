@@ -21,7 +21,6 @@ const Form = ({ onClose, service, date, time, appointmentType }) => {
         try {
           const res = await fetch(`https://gr2-3t8u.onrender.com/appointment/getAppoinmentByUserId/${user._id}`);
           const data = await res.json();
-          // Lọc danh sách người từng đặt hộ và loại bỏ trùng lặp theo tên + SĐT
           const filtered = data.filter(a => a.isForSomeone &&
             a.name !== "Đã xoá" &&
             a.phone !== "Không có").map(a => ({
@@ -101,11 +100,9 @@ const Form = ({ onClose, service, date, time, appointmentType }) => {
 
   return (
     <div className={cx('overlay')}>
-      {/* <div className={cx('wrapper')}> */}
     
       {successMessage ? (
         <div className={cx('successPopup')}>
-          {/* <span className={cx('successIcon')}>✅</span> */}
           <FontAwesomeIcon icon={faCircleCheck} className={cx('successIcon')} />
           <p>{successMessage}</p>
           <button onClick={() => window.location.href = '/'}>OK</button>

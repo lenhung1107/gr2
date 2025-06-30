@@ -1,4 +1,4 @@
-// Variables
+
 $primary-color: #4bc488;
 $secondary-color: #2c5282;
 $text-color: #2d3748;
@@ -27,7 +27,6 @@ $transition: all 0.3s ease;
     scroll-behavior: smooth;
     scrollbar-width: none;
     gap: 20px;
-    // padding: 20px 0;
     flex: 1;
     
     &::-webkit-scrollbar {
@@ -194,7 +193,7 @@ $transition: all 0.3s ease;
     }
 }
 
-// Responsive Design
+
 @media (max-width: 768px) {
     .doctor-section {
         padding: 0 8px;

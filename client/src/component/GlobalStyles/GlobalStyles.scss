@@ -11,18 +11,17 @@ html{
 }
 body{
     font-family: "Roboto", serif;
-    // font-size: 2rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
 }
 html, body {
-    height: 100%; /* Đảm bảo body chiếm toàn bộ chiều cao */
+    height: 100%; 
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Ngăn cuộn ngang */
+    overflow-x: hidden;
 }
 .custom-toast {
-  font-size: 1.6rem;        /* 👈 Cỡ chữ to hơn */
-  font-weight: bold;      /* 👈 Tuỳ chọn: in đậm */
+  font-size: 1.6rem;       
+  font-weight: bold;     
   padding: 12px 16px;
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-export const refreshToken = async () => {  // Thêm "export const"
+export const refreshToken = async () => { 
     try {
         const res = await axios.post("https://gr2-3t8u.onrender.com/auth/refresh", {}, {
             withCredentials: true,
@@ -8,7 +8,7 @@ export const refreshToken = async () => {  // Thêm "export const"
         return res.data;
     } catch (err) {
         console.log(err);
-        return null; // Tránh lỗi nếu không nhận được data
+        return null; 
     }
 };
 
