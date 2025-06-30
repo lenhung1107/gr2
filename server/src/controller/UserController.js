@@ -4,14 +4,12 @@ const Doctor = require('../models/Doctor');
 class UserController {
     async getUser(req, res) {
         try {
-            const users = await User.find({});
-            console.log(users);
+            const users = await User.find({role: 1});
             res.json(users);
         } catch (err) {
             res.status(400).json({ error: 'error!' });
         }
     }
-
     async deleteUser(req, res) {
         try {
             const deletedUser = await User.findByIdAndDelete(req.params.id);

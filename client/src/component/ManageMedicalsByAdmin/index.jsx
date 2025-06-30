@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 
 
 function ManageMedicalsByAdmin() {
-    const [users, setUsers] = useState([]);  // Danh sách tất cả người dùng
+    const [users, setUsers] = useState([]);  
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -18,7 +18,7 @@ function ManageMedicalsByAdmin() {
                 const response = await axios.get("https://gr2-3t8u.onrender.com/patient/getAllPatient", {
                 });
                 
-                setUsers(response.data.patients);       // 👈 chỉ lấy mảng bệnh nhân
+                setUsers(response.data.patients);       
                 setFilteredUsers(response.data.patients);
 
             } catch (error) {
@@ -28,15 +28,15 @@ function ManageMedicalsByAdmin() {
         fetchUsers();
     }, []);
     const [searchName, setSearchName] = useState("");
-    const [filteredUsers, setFilteredUsers] = useState(users); // Lưu danh sách bác sĩ được lọc
+    const [filteredUsers, setFilteredUsers] = useState(users); 
     const [ShowMedical, setShowMedical] = useState(false);
     const [editUser, setEditUser] = useState(null);
     const handleSearch = () => {
         const filtered = users.filter((user) => {
-            // Chuyển chuỗi tìm kiếm về chữ thường
+           
             const searchText = searchName.toLowerCase();
 
-            // Kiểm tra nếu chuỗi tìm kiếm xuất hiện ở bất kỳ trường nào
+           
             const matchesName = user.name.toLowerCase().includes(searchText);
             const matchesAge = user.age.toString().includes(searchText);
             const matchesGender = user.gender.toLowerCase().includes(searchText);

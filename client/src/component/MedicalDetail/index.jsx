@@ -8,8 +8,6 @@ const cx = classNames.bind(styles);
 function MedicalDetail({ user, onCancel }) {
   const apiUrl = `https://gr2-3t8u.onrender.com/appointment/getAppointmentsByPatientId/${user._id}`;
   const { data: historyData, loading, error } = useFetchData(apiUrl);
-  console.log(historyData);
-  console.log(user._id);
   const [activeTab, setActiveTab] = useState("info");
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const finalHistoryData = Array.isArray(historyData) && historyData.length > 0 ? historyData : [];
@@ -112,9 +110,6 @@ function MedicalDetail({ user, onCancel }) {
                       )}
 
                     </div>
-
-
-
                   </div>
                 )}
               </div>

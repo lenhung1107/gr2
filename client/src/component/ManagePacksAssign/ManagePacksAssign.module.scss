@@ -1,6 +1,5 @@
 @use "sass:color";
 
-// Define primary color variables based on requested colors
 $primary-color: rgb(58, 181, 138);
 $primary-light: rgb(39, 214, 131);
 $primary-medium: rgb(75, 192, 140);
@@ -12,7 +11,6 @@ $border-radius: 8px;
 $box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 $transition: all 0.3s ease;
 
-// Mixins for reusable styles
 @mixin button {
   padding: 8px 16px;
   border-radius: $border-radius;
@@ -36,10 +34,8 @@ $transition: all 0.3s ease;
   }
 }
 
-// Main component styles
 .wrapper {
   width: 100%;
-  // padding: 24px;
   background-color: $white;
   border-radius: $border-radius;
   min-height: 100vh;
@@ -48,7 +44,6 @@ $transition: all 0.3s ease;
 }
 
 .header {
-  // margin-bottom: 32px;
   padding-bottom: 16px;
   h3 {
     font-size: 2rem;
@@ -164,7 +159,6 @@ $transition: all 0.3s ease;
   font-style: italic;
 }
 
-// Status styles
 .status {
   display: inline-block;
   padding: 6px 12px;
@@ -186,9 +180,8 @@ $transition: all 0.3s ease;
   border: 1px solid rgba($primary-color, 0.3);
   font-size: 1.2rem;
 }
-// Button styles
 .confirmBtn {
-  font-size: 1.2rem;
+  font-size: 1.2rem !important;
   @include button;
   background-color: $primary-color;
   
@@ -198,7 +191,7 @@ $transition: all 0.3s ease;
 }
 
 .uploadBtn {
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   @include button;
   background-color: $primary-light;
   
@@ -216,11 +209,13 @@ $transition: all 0.3s ease;
 
 .cancelBtn {
   @include button;
+  font-size: 1.2rem !important;
   background-color: $gray;
   color: $dark-gray;
   
   &:hover {
-    background-color: color.adjust($gray, $lightness: -5%);
+    background-color: red;
+    color: $white;
   }
 }
 
@@ -241,7 +236,6 @@ $transition: all 0.3s ease;
   }
 }
 
-// Popup styles
 .popupOverlay {
   position: fixed;
   top: 0;
@@ -267,7 +261,7 @@ $transition: all 0.3s ease;
     color: $primary-color;
     margin-top: 0;
     margin-bottom: 16px;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     border-bottom: 2px solid $primary-light;
     padding-bottom: 10px;
   }
@@ -275,6 +269,7 @@ $transition: all 0.3s ease;
   p {
     margin-bottom: 24px;
     color: $dark-gray;
+    font-size: 1.4rem;
   }
 }
 
@@ -303,7 +298,6 @@ $transition: all 0.3s ease;
   }
 }
 
-// Loading and error states
 .loadingContainer, .errorContainer {
   display: flex;
   justify-content: center;

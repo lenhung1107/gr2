@@ -11,8 +11,8 @@ import axios from "axios";
 const cx = classNames.bind(styles);
 
 function ManageUsers() {
-    const [users, setUsers] = useState([]);  // Danh sách tất cả người dùng
-    const [filteredUsers, setFilteredUsers] = useState([]); // Danh sách lọc theo tìm kiếm
+    const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [searchName, setSearchName] = useState("");
 
     const [showConfirmDelete, setshowConfirmDelete] = useState(false);
@@ -26,7 +26,7 @@ function ManageUsers() {
                 const response = await axios.get("https://gr2-3t8u.onrender.com/adminpage/getUser", {
                 });
                 setUsers(response.data);
-                setFilteredUsers(response.data); // Cập nhật danh sách ban đầu
+                setFilteredUsers(response.data);
             } catch (error) {
                 console.error("Lỗi khi lấy danh sách người dùng:", error);
             }

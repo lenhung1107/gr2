@@ -61,6 +61,9 @@ class PatientController {
                     return {
                         _id: p._id,
                         name: user?.name || null,
+                        gender: user?.gender || null,
+                        address: user?.address || null,
+                        email: user?.email || null,
                         age: user?.age || null,
                         phone: user?.phone || null,
                         patient_code: p.patient_code,

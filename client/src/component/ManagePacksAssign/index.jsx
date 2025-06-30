@@ -93,7 +93,6 @@ function ManagePacksAssign() {
 
       console.log(response.data);
       const updatedFileUrl = response.data?.fileUrl;
-      // Cập nhật lại trạng thái local
       const updatedPatients = filteredPatients.map((patient) =>
         patient._id === selectedAppointment._id
           ? {
@@ -127,7 +126,6 @@ function ManagePacksAssign() {
         <p>Lỗi: {error}</p>
       </div>
     );
-  console.log(filteredPatients);
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -166,7 +164,7 @@ function ManagePacksAssign() {
             <tbody>
               {filteredPatients.length > 0 ? (
                 filteredPatients.map((patient, index) => {
-                  console.log("File URL:", patient.result_file); // 👉 Log URL để kiểm tra
+                  console.log("File URL:", patient.result_file); 
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
