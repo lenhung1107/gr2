@@ -5,7 +5,6 @@ import styles from './DoctorLayout.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMd, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-// Các component quản lý
 import ManagePatients from '../../component/ManagePatients';
 import ManageSchedules from '../../component/ManageSchedules';
 import ManageMedicals from '../../component/ManageMedicals';
@@ -23,7 +22,6 @@ const DoctorLayout = () => {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    // Đóng sidebar trên mobile sau khi chọn tab
     setIsMobileSidebarVisible(false);
   };
 
@@ -67,7 +65,7 @@ const DoctorLayout = () => {
 
   return (
     <div className={cx('layout')}>
-      {/* Header */}
+
       <div className={cx('header')}>
         <div className={cx('logo')}>
           <button 
@@ -109,15 +107,12 @@ const DoctorLayout = () => {
       </div>
 
       <div className={cx('main')}>
-        {/* Overlay cho mobile */}
         {isMobileSidebarVisible && (
           <div 
             className={cx('mobile-overlay')} 
             onClick={closeMobileSidebar}
           />
         )}
-
-        {/* Sidebar */}
         <div className={cx('sidebar', { 'mobile-visible': isMobileSidebarVisible })}>
           <div className={cx('doctor-info')}>
             <div className={cx('icon-doctor')}>
@@ -156,7 +151,6 @@ const DoctorLayout = () => {
           </div>
         </div>
 
-        {/* Content */}
         <div className={cx('content')}>
           <div className={cx('tab-content')}>
             {activeTab === 'patients' && <ManagePatients />}

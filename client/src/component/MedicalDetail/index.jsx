@@ -11,7 +11,7 @@ function MedicalDetail({ user, onCancel }) {
   const [activeTab, setActiveTab] = useState("info");
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const finalHistoryData = Array.isArray(historyData) && historyData.length > 0 ? historyData : [];
-  if (loading) return <p style={{ fontSize: "1.6rem", color: "#000" }}>Đang tải đơn thuốc...</p>;
+  if (loading) return <p style={{ fontSize: "1.6rem", color: "#000" }}></p>;
   if (error) return <p style={{ fontSize: "1.6rem", color: "red" }}>{error}</p>;
   return (
     <div className={cx("popupEdit")}>
@@ -34,7 +34,6 @@ function MedicalDetail({ user, onCancel }) {
                   <h2>{user.name}</h2>
                   <p><strong>Giới tính: </strong> {user.gender}</p>
                   <p><strong>Tuổi: </strong>{user.age} </p>
-                  <p><strong>Nghề nghiệp: </strong></p>
                   <p><strong>Địa chỉ: </strong>{user.address}</p>
                   <p><strong>Liên hệ: </strong> {user.email}</p>
                   <p><strong>Số điện thoại liên hệ: </strong>{user.phone}</p>

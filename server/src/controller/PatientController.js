@@ -12,7 +12,6 @@ class PatientController {
             const patients = await Patient.find({ doctor_id: doctor._id });
             const detailedPatients = await Promise.all(patients.map(async (p) => {
                 if (p.isForSomeone) {
-                    // Trường hợp khám hộ => thông tin đã có trong bảng Patient
                     return {
                         _id: p._id,
                         name: p.name,
@@ -26,6 +25,9 @@ class PatientController {
                     return {
                         _id: p._id,
                         name: user?.name || null,
+                        gender: user?.gender || null,
+                        address: user?.address || null,
+                        email: user?.email || null,
                         age: user?.age || null,
                         phone: user?.phone || null,
                         patient_code: p.patient_code,

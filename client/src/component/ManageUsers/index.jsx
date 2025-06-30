@@ -47,7 +47,6 @@ function ManageUsers() {
         setFilteredUsers(filtered);
     };
 
-    // Reset danh sách về ban đầu
     const handleReset = () => {
         setSearchName("");
         setFilteredUsers(users);
