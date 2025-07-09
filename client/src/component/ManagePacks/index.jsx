@@ -30,7 +30,6 @@ function ManagePacks() {
       setPacks(data);
     }
   }, [data]);
-  // const [editingPack, setEditingPack] = useState(null);
   const filteredPacks = (packs || []).filter(pack =>
     pack.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     pack.room.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -46,7 +45,7 @@ function ManagePacks() {
     setPacks(prev =>
       prev.map(pack => pack._id === updatedPack._id ? updatedPack : pack)
     );
-    setEditingPack(null); // 👈 Ẩn popup
+    setEditingPack(null); 
   };
   const handleViewDetails = (pack) => {
     setSelectedPack(pack);
@@ -63,13 +62,9 @@ function ManagePacks() {
   const confirmDelete = async () => {
     try {
       await axios.delete(`https://gr2-3t8u.onrender.com/pack/deletePack/${selectedPack._id}`);
-
-      // Cập nhật lại danh sách
       const updatedUsers = filteredPacks.filter((u) => u._id !== selectedPack._id);
       setPacks(updatedUsers);
-      // Reset lại popup
       setDelPopup(false);
-      // Thông báo
       toast.success("Xóa gói khám!");
 
     } catch (error) {

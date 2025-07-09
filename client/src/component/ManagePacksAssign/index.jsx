@@ -74,7 +74,6 @@ function ManagePacksAssign() {
   const handleFileChange = (e) => {
     setUploadFile(e.target.files[0]);
   };
-
   const handleUpload = async () => {
     if (!uploadFile || !selectedAppointment) return;
     const formData = new FormData();
@@ -164,7 +163,7 @@ function ManagePacksAssign() {
             <tbody>
               {filteredPatients.length > 0 ? (
                 filteredPatients.map((patient, index) => {
-                  console.log("File URL:", patient.result_file); 
+                  console.log("File URL:", patient.result_file);
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
@@ -212,14 +211,22 @@ function ManagePacksAssign() {
                             </button>
                           )}
                         {patient.status === "Đã xét nghiệm" && (
-                          <a
-                            href={patient.result_file}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.resultLink}
-                          >
-                            Xem kết quả
-                          </a>
+                          <>
+                            <a
+                              href={patient.result_file}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.resultLink}
+                            >
+                              Xem kết quả
+                            </a>
+                            <button
+                              className={styles.uploadBtn}
+                              onClick={() => handleSendResult(patient)}
+                            >
+                              Upload lại
+                            </button>
+                          </>
                         )}
                       </td>
                     </tr>
